@@ -9,14 +9,23 @@ class ListManager {
   protected $api;
   protected $resourcePrefix = '/api/v1/';
 
+  /**
+   * @todo: Document.
+   */
   public function __construct(KlaviyoApi $api) {
     $this->api = $api;
   }
 
+  /**
+   * @todo: Document.
+   */
   public function getResourcePath($resource) {
     return $this->resourcePrefix . $resource;
   }
 
+  /**
+   * @todo: Document.
+   */
   public function getAllLists() {
     $list_page = $this->getListPage();
 
@@ -29,6 +38,9 @@ class ListManager {
     return $lists;
   }
 
+  /**
+   * @todo: Document.
+   */
   public function getListPage($page = 0, $count = 0) {
     $options = ['query' => ['page' => $page, 'count' => $count]];
     $response = $this->api->request('GET', $this->getResourcePath('lists'), $options);

@@ -49,40 +49,42 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
         ],
       ]
     ];
-    $container = $responses = [];
-    $responses[] = new Response(200, [], json_encode($this->requestPageZero));
     $this->requestPageOne = $this->requestPageZero;
     $this->requestPageOne['start'] = 2;
     $this->requestPageOne['end'] = 3;
     $this->requestPageOne['page'] = 1;
+  }
+
+  public function getMultiPageListManager() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->requestPageZero));
     $responses[] = new Response(200, [], json_encode($this->requestPageOne));
 
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, 'asdf');
-    $this->listManager = new ListManager($api);
-  }
 
-  public function assertListAreSame($raw) {
+    return new ListManager($api);
   }
 
   public function testGetListPage() {
-    $list_page_zero = $this->listManager->getListPage(0);
-    $list_page_one = $this->listManager->getListPage(1);
+    $list_manager = $this->getMultiPageListManager();
+    $list_page_zero = $list_manager->getListPage();
 
-    $this->assertCount(2, $list_page_one['data'], 'There should be two records.');
-    $this->assertSame(4, $list_page_one['total'], 'There should be a total of 4 list records available.');
-    $this->assertSame(2, $list_page_one['start'], 'It should had started at the 3rd record.');
-    $this->assertSame(3, $list_page_one['end'], 'It should had ended at the 4th record.');
-    $this->assertSame(1, $list_page_one['page'], 'It should had been on the 2nd page.');
+    $this->assertCount(2, $list_page_zero['data'], 'There should be two records.');
+    $this->assertSame(4, $list_page_zero['total'], 'There should be a total of 4 list records available.');
+    $this->assertSame(0, $list_page_zero['start'], 'It should had started at the 1st record.');
+    $this->assertSame(1, $list_page_zero['end'], 'It should had ended at the 2nd record.');
+    $this->assertSame(0, $list_page_zero['page'], 'It should had been on the 1st page.');
 
-    $list_two = new ListModel($this->requestPageOne['data'][0]);
-    $this->assertEquals($list_two, $list_page_one['data'][0]);
-    $list_three = new ListModel($this->requestPageOne['data'][1]);
-    $this->assertEquals($list_three, $list_page_one['data'][1]);
+    $list_zero = new ListModel($this->requestPageZero['data'][0]);
+    $this->assertEquals($list_zero, $list_page_zero['data'][0]);
+    $list_one = new ListModel($this->requestPageZero['data'][1]);
+    $this->assertEquals($list_one, $list_page_zero['data'][1]);
   }
 
   public function testGetAllLists() {
-    $lists = $this->listManager->getAllLists();
+    $list_manager = $this->getMultiPageListManager();
+    $lists = $list_manager->getAllLists();
 
     $this->assertCount(4, $lists);
 
