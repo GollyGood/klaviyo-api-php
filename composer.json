@@ -1,0 +1,14 @@
+{
+    "name": "grndlvl/klaviyo-api-php",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "6.2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "GollyGood Software",
+            "email": "info@gollygoodsoftware.com"
+        }
+    ]
+}
