@@ -2,7 +2,7 @@
 
 namespace Klaviyo\Model;
 
-class KlaviyoModel {
+class KlaviyoModel implements \JsonSerializable {
 
   public function __construct($configuration) {
     foreach ($configuration as $key => $value) {
@@ -17,6 +17,13 @@ class KlaviyoModel {
   public static function createFromJson($json) {
     $configuration = json_decode($json, TRUE);
     return new static($configuration);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function jsonSerialize() {
+    return get_object_vars($this);
   }
 
 }

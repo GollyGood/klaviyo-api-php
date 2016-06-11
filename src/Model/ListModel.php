@@ -10,6 +10,7 @@ class ListModel extends KlaviyoModel {
   protected $created;
   protected $updated;
   protected $personCount;
+  protected $dateFormat = 'Y-m-d H:i:s';
 
   public function __construct($configuration) {
     $this->id = $configuration['id'];
@@ -44,4 +45,17 @@ class ListModel extends KlaviyoModel {
     return $this->personCount;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function jsonSerialize() {
+    return [
+      'id' => $this->getId(),
+      'name' => $this->getName(),
+      'list_type' => $this->getListType(),
+      'created' => $this->getCreated()->format($this->dateFormat),
+      'updated' => $this->getUpdated()->format($this->dateFormat),
+      'person_count' => $this->getPersonCount(),
+    ];
+  }
 }
