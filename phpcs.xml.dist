@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="klaviyo-api-php">
+ <description>Default PHP CodeSniffer configuration for Klaviyo PHP API Library.</description>
+
+ <file>./src</file>
+
+ <rule ref="vendor/drupal/coder/coder_sniffer/Drupal"/>
+</ruleset>
