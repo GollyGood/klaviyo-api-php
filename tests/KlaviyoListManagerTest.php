@@ -11,11 +11,11 @@ use Psr\Http\Message\ResponseInterface;
 class KlaviyoListManagerTest extends KlaviyoTestCase {
 
   protected $listManager;
-  protected $requestPageOne;
-  protected $requestPageTwo;
+  protected $responsePageOne;
+  protected $responsePageTwo;
 
   public function setUp() {
-    $this->requestPageZero = [
+    $this->responsePageZero = [
       'object' => '$list',
       'start' => 0,
       'end' => 1,
@@ -49,16 +49,16 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
         ],
       ]
     ];
-    $this->requestPageOne = $this->requestPageZero;
-    $this->requestPageOne['start'] = 2;
-    $this->requestPageOne['end'] = 3;
-    $this->requestPageOne['page'] = 1;
+    $this->responsePageOne = $this->responsePageZero;
+    $this->responsePageOne['start'] = 2;
+    $this->responsePageOne['end'] = 3;
+    $this->responsePageOne['page'] = 1;
   }
 
   public function getMultiPageListManager() {
     $container = $responses = [];
-    $responses[] = new Response(200, [], json_encode($this->requestPageZero));
-    $responses[] = new Response(200, [], json_encode($this->requestPageOne));
+    $responses[] = new Response(200, [], json_encode($this->responsePageZero));
+    $responses[] = new Response(200, [], json_encode($this->responsePageOne));
 
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, 'asdf');
@@ -76,9 +76,9 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $this->assertSame(1, $list_page_zero['end'], 'It should had ended at the 2nd record.');
     $this->assertSame(0, $list_page_zero['page'], 'It should had been on the 1st page.');
 
-    $list_zero = new ListModel($this->requestPageZero['data'][0]);
+    $list_zero = new ListModel($this->responsePageZero['data'][0]);
     $this->assertEquals($list_zero, $list_page_zero['data'][0]);
-    $list_one = new ListModel($this->requestPageZero['data'][1]);
+    $list_one = new ListModel($this->responsePageZero['data'][1]);
     $this->assertEquals($list_one, $list_page_zero['data'][1]);
   }
 
@@ -88,14 +88,19 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
 
     $this->assertCount(4, $lists);
 
-    $listZero = new ListModel($this->requestPageZero['data'][0]);
+    $listZero = new ListModel($this->responsePageZero['data'][0]);
     $this->assertEquals($listZero, $lists[0]);
-    $listOne = new ListModel($this->requestPageZero['data'][1]);
+    $listOne = new ListModel($this->responsePageZero['data'][1]);
     $this->assertEquals($listOne, $lists[1]);
-    $listTwo = new ListModel($this->requestPageOne['data'][0]);
+    $listTwo = new ListModel($this->responsePageOne['data'][0]);
     $this->assertEquals($listTwo, $lists[2]);
-    $listThree = new ListModel($this->requestPageOne['data'][1]);
+    $listThree = new ListModel($this->responsePageOne['data'][1]);
     $this->assertEquals($listThree, $lists[3]);
+  }
+
+  public function testGetListById() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->responsePageZero));
   }
 
 }
