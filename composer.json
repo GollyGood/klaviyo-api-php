@@ -1,14 +1,27 @@
 {
     "name": "grndlvl/klaviyo-api-php",
     "type": "library",
-    "require": {
-        "guzzlehttp/guzzle": "6.2.0"
-    },
     "license": "MIT",
     "authors": [
         {
             "name": "GollyGood Software",
             "email": "info@gollygoodsoftware.com"
         }
-    ]
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "6.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload":{
+        "psr-4": {
+            "Klaviyo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Klaviyo\\Tests\\": "tests/"
+        }
+    }
 }
