@@ -7,6 +7,9 @@ use Klaviyo\Exception\ApiException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 
+/**
+ * The main Klaviyo API class for communicating with the Klaviyo API.
+ */
 class KlaviyoApi {
 
   public static $endPoint = 'https://a.klaviyo.com';
@@ -15,7 +18,14 @@ class KlaviyoApi {
   protected $httpClient;
 
   /**
-   * @todo: Document.
+   * The constructor for KlaviyoApi.
+   *
+   * @param ClientInterface $http_client
+   *   The HTTP client used for communication with the API.
+   * @param string $api_key
+   *   The API key to use when communicating with the API.
+   *
+   * @throws ApiException
    */
   public function __construct(ClientInterface $http_client, $api_key = '') {
     if (empty($api_key)) {
@@ -27,7 +37,13 @@ class KlaviyoApi {
   }
 
   /**
-   * @todo: Document.
+   * Helper method for creating a new API object.
+   *
+   * @param string $api_key
+   *   The API key to use when communicating with the API.
+   *
+   * @return KlaviyoApi
+   *   An instance of the KlaviyoApi.
    */
   public static function create($api_key = '') {
     $httpClient = new Client(['base_uri' => self::$endPoint]);
@@ -36,14 +52,30 @@ class KlaviyoApi {
   }
 
   /**
-   * @todo: Document.
+   * Perform a request against the API.
+   *
+   * @param string $method
+   *   The HTTP method to use for the request.
+   * @param string $resource
+   *   The path to the resource to access on the API.
+   * @param array $options
+   *   Additional options to pass on to the HTTP client.
+   *
+   * @return ResponseInterface
+   *    The response of the request as provided by the HTTP client.
    */
   public function request($method, $resource, $options = []) {
     return $this->httpClient->request($method, $resource, $this->prepareRequestOptions($options));
   }
 
   /**
-   * @todo: Document.
+   * Prepare the options array before use in the request.
+   *
+   * @param array $options
+   *   Additional options to pass on to the HTTP client.
+   *
+   * @return array
+   *   The prepared additional options to pass on to the HTTP client.
    */
   public function prepareRequestOptions($options) {
     if (empty($options['query']['api_key'])) {

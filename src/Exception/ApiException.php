@@ -2,4 +2,7 @@
 
 namespace Klaviyo\Exception;
 
-class ApiException extends \Exception implements KlaviyoException {}
+/**
+ * Simple Exception for Klaviyo API.
+ */
+class ApiException extends \Exception implements KlaviyoExceptionInterface {}

@@ -2,6 +2,9 @@
 
 namespace Klaviyo\Model;
 
+/**
+ * Simple model for a Klaviyo "List".
+ */
 class ListModel extends KlaviyoModel {
 
   protected $id;
@@ -12,6 +15,9 @@ class ListModel extends KlaviyoModel {
   protected $personCount;
   protected $dateFormat = 'Y-m-d H:i:s';
 
+  /**
+   * {@inheritdoc}
+   */
   public function __construct($configuration) {
     $this->id = $configuration['id'];
     $this->name = $configuration['name'];
@@ -21,26 +27,50 @@ class ListModel extends KlaviyoModel {
     $this->personCount = $configuration['person_count'];
   }
 
+  /**
+   * Retrieves the created date of the list.
+   *
+   * @return \DateTime
+   *   Returns a DateTime object of the created date of the list.
+   */
   public function getCreated() {
     return $this->created;
   }
 
+  /**
+   * Retrieves the id of the list.
+   */
   public function getId() {
     return $this->id;
   }
 
+  /**
+   * Retrieves the name of the list.
+   */
   public function getName() {
     return $this->name;
   }
 
+  /**
+   * Retrieves the list type of the list.
+   */
   public function getListType() {
     return $this->listType;
   }
 
+  /**
+   * Retrieves the updated date of the list.
+   *
+   * @return \DateTime
+   *   Returns a DateTime object of the updated date of the list.
+   */
   public function getUpdated() {
     return $this->updated;
   }
 
+  /**
+   * Retrieves the number of persons subscribed to the list.
+   */
   public function getPersonCount() {
     return $this->personCount;
   }
@@ -58,4 +88,5 @@ class ListModel extends KlaviyoModel {
       'person_count' => $this->getPersonCount(),
     ];
   }
+
 }

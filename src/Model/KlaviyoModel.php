@@ -2,8 +2,17 @@
 
 namespace Klaviyo\Model;
 
+/**
+ * The base Klaviyo data model.
+ */
 class KlaviyoModel implements \JsonSerializable {
 
+  /**
+   * The constructor of a Klaviyo data model.
+   *
+   * @param array $configuration
+   *   The key, value pair array to use for populating the data model.
+   */
   public function __construct($configuration) {
     foreach ($configuration as $key => $value) {
       $this->$key = $value;
@@ -11,7 +20,40 @@ class KlaviyoModel implements \JsonSerializable {
   }
 
   /**
-   * @todo: Document.
+   * Helper method to create the data model.
+   *
+   * @param array $configuration
+   *   The key, value pair array to use for populating the data model.
+   *
+   * @return KlaviyoModel
+   *   An instance of the Klaviyo data model.
+   */
+  public static function create($configuration) {
+    return new static($configuration);
+  }
+
+  /**
+   * Helper method to create the data model from a JSON array.
+   *
+   * @param array $json
+   *   The configuration json to use for populating the data model.
+   *
+   * @return KlaviyoModel
+   *   An instance of the Klaviyo data model.
+   */
+  public static function createFromJson($json) {
+    $configuration = json_decode($json, TRUE);
+    return new static($configuration);
+  }
+
+  /**
+   * Remove strange $ from the keys if it exists.
+   *
+   * @param array $configuration
+   *   The key, value pair array to for cleaning.
+   *
+   * @return array
+   *   The key, value pair array "cleaned".
    */
   public function cleanKeys($configuration) {
     $new_configuration = [];
@@ -25,15 +67,6 @@ class KlaviyoModel implements \JsonSerializable {
     }
 
     return $new_configuration;
-  }
-
-  public static function create($configuration) {
-    return new static($configuration);
-  }
-
-  public static function createFromJson($json) {
-    $configuration = json_decode($json, TRUE);
-    return new static($configuration);
   }
 
   /**
