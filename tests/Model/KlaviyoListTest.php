@@ -27,14 +27,14 @@ class KlaviyoListTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
-    $this->assertSame($configuration['id'], $list->getId(), 'The id was not not correct.');
-    $this->assertSame($configuration['name'], $list->getName(), 'The name was not correct.');
-    $this->assertSame($configuration['list_type'], $list->getListType(), 'The list_type was not correct.');
+    $this->assertSame($configuration['id'], $list->getId());
+    $this->assertSame($configuration['name'], $list->getName());
+    $this->assertSame($configuration['list_type'], $list->getListType());
 
     $created = new \DateTime($configuration['created']);
-    $this->assertEquals($created, $list->getCreated(), 'The created date was not correct.');
+    $this->assertEquals($created, $list->getCreated());
     $updated = new \DateTime($configuration['updated']);
-    $this->assertEquals($updated, $list->getUpdated(), 'The updated date was not correct.');
+    $this->assertEquals($updated, $list->getUpdated());
 
     $this->assertSame($configuration['person_count'], $list->getPersonCount());
   }
