@@ -26,6 +26,14 @@ class ListManager {
   /**
    * @todo: Document.
    */
+  public function getList($id) {
+    $response = $this->api->request('GET', $this->getResourcePath("list/$id"));
+    return ListModel::createFromJson($response->getBody());
+  }
+
+  /**
+   * @todo: Document.
+   */
   public function getAllLists() {
     $list_page = $this->getListPage();
 

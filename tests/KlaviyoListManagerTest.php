@@ -10,11 +10,38 @@ use Psr\Http\Message\ResponseInterface;
 
 class KlaviyoListManagerTest extends KlaviyoTestCase {
 
+  protected $apiKey = 'asdf';
   protected $listManager;
   protected $responsePageOne;
   protected $responsePageTwo;
 
   public function setUp() {
+    $this->responseListZero = [
+      'id' => 'arY8wg',
+      'name' => 'List 1',
+      'object' => 'list',
+      'list_type' => 'list',
+      'folder' => NULL,
+      'created' => '2016-01-01 18:58:54',
+      'updated' => '2016-01-02 06:00:00',
+      'person_count' => 1,
+    ];
+
+    $this->responseListOne = [
+      'id' => 'arY1wg',
+      'name' => 'List 1',
+      'object' => 'list',
+      'list_type' => 'segment',
+      'folder' => [
+        'object' => 'folder',
+        'id' => 12345,
+        'name' => 'Ideas & Inspiration'
+      ],
+      'created' => '2016-01-01 18:58:54',
+      'updated' => '2016-01-02 06:00:00',
+      'person_count' => 0,
+    ];
+
     $this->responsePageZero = [
       'object' => '$list',
       'start' => 0,
@@ -23,30 +50,8 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
       'total' => 4,
       'page' => 0,
       'data' => [
-        [
-          'id' => 'arY8wg',
-          'name' => 'List 1',
-          'object' => 'list',
-          'list_type' => 'list',
-          'folder' => NULL,
-          'created' => '2016-01-01 18:58:54',
-          'updated' => '2016-01-02 06:00:00',
-          'person_count' => 1,
-        ],
-        [
-          'id' => 'arY1wg',
-          'name' => 'List 1',
-          'object' => 'list',
-          'list_type' => 'segment',
-          'folder' => [
-            'object' => 'folder',
-            'id' => 12345,
-            'name' => 'Ideas & Inspiration'
-          ],
-          'created' => '2016-01-01 18:58:54',
-          'updated' => '2016-01-02 06:00:00',
-          'person_count' => 0,
-        ],
+        $this->responseListZero,
+        $this->responseListOne,
       ]
     ];
     $this->responsePageOne = $this->responsePageZero;
@@ -61,7 +66,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $responses[] = new Response(200, [], json_encode($this->responsePageOne));
 
     $client = $this->getClient($container, $responses);
-    $api = new KlaviyoApi($client, 'asdf');
+    $api = new KlaviyoApi($client, $this->apiKey);
 
     return new ListManager($api);
   }
@@ -100,7 +105,12 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
 
   public function testGetListById() {
     $container = $responses = [];
-    $responses[] = new Response(200, [], json_encode($this->responsePageZero));
+    $responses[] = new Response(200, [], json_encode($this->responseListZero));
+    $client = $this->getClient($container, $responses);
+    $api = new KlaviyoApi($client, $this->apiKey);
+    $list_manager = new ListManager($api);
+    $listZero = new ListModel($this->responseListZero);
+    $this->assertEquals($listZero, $list_manager->getList($this->responseListZero['id']));
   }
 
 }
