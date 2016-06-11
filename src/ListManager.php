@@ -54,12 +54,9 @@ class ListManager {
     $response = $this->api->request('GET', $this->getResourcePath('lists'), $options);
     $body = json_decode($response->getBody(), TRUE);
 
-    if (!empty($body['data'])) {
-      foreach ($body['data'] as $data) {
-        $lists[] = new ListModel($data);
-      }
+    foreach ($body['data'] as $data) {
+      $lists[] = new ListModel($data);
     }
-
     $body['data'] = $lists;
 
     return $body;

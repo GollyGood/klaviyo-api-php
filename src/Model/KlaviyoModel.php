@@ -10,6 +10,23 @@ class KlaviyoModel implements \JsonSerializable {
     }
   }
 
+  /**
+   * @todo: Document.
+   */
+  public function cleanKeys($configuration) {
+    $new_configuration = [];
+
+    foreach ($configuration as $key => $value) {
+      if (strpos($key, '$') === 0) {
+        $key = substr($key, 1);
+      }
+
+      $new_configuration[$key] = $value;
+    }
+
+    return $new_configuration;
+  }
+
   public static function create($configuration) {
     return new static($configuration);
   }
