@@ -1,0 +1,15 @@
+language: php
+
+sudo: false
+
+php:
+  - 5.5
+  - 5.6
+
+before_script:
+  - curl --version
+  - composer self-update
+  - composer install --no-interaction --prefer-source --dev
+  - '[ "$TRAVIS_PHP_VERSION" != "7.0" ] || echo "xdebug.overload_var_dump = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini'
+
+script: vendor/bin/phpunit
