@@ -69,7 +69,7 @@ class KlaviyoApi {
    *    The response of the request as provided by the HTTP client.
    */
   public function request($method, $resource, $options = []) {
-    return $this->httpClient->request($method, $resource, $this->prepareRequestOptions($options));
+    return $this->httpClient->request($method, $resource, $this->prepareRequestOptions($method, $options));
   }
 
   /**
@@ -81,9 +81,16 @@ class KlaviyoApi {
    * @return array
    *   The prepared additional options to pass on to the HTTP client.
    */
-  public function prepareRequestOptions($options) {
-    if (empty($options['query']['api_key'])) {
+  public function prepareRequestOptions($method, $options) {
+    if ($method === 'GET' && empty($options['query']['api_key'])) {
       $options['query']['api_key'] = $this->apiKey;
+    }
+    elseif (empty($options['api_key'])) {
+      $options['api_key'] = $this->apiKey;
+
+      if ($method === 'POST' || $method === 'PUT') {
+        $options = ['form_params' => $options];
+      }
     }
 
     return $options;

@@ -65,9 +65,12 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $responses[] = new Response(200, [], json_encode($this->responsePageZero));
     $responses[] = new Response(200, [], json_encode($this->responsePageOne));
 
+    return $this->getListManager($container, $responses);
+  }
+
+  public function getListManager(&$container, $responses) {
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, $this->apiKey);
-
     return new ListManager($api);
   }
 
@@ -102,11 +105,74 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   public function testGetListById() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseListZero));
-    $client = $this->getClient($container, $responses);
-    $api = new KlaviyoApi($client, $this->apiKey);
-    $list_manager = new ListManager($api);
+    $list_manager = $this->getListManager($container, $responses);
     $listZero = new ListModel($this->responseListZero);
     $this->assertEquals($listZero, $list_manager->getList($this->responseListZero['id']));
+  }
+
+  public function testCreateNewList() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->responseListZero));
+    $list_manager = $this->getListManager($container, $responses);
+    $new_list = $list_manager->createList($this->responseListZero['name']);
+
+    $listZero = new ListModel($this->responseListZero);
+    $this->assertEquals($listZero, $new_list);
+
+    $request = $container[0]['request'];
+    $this->assertSame('POST', $request->getMethod());
+
+    $fields = array();
+    parse_str(urldecode((string) $request->getBody()), $fields);
+    $this->assertSame($this->responseListZero['name'], $fields['name']);
+    $this->assertSame('list', $fields['list_type']);
+    $this->assertSame($this->apiKey, $fields['api_key']);
+  }
+
+  public function testUpdateList() {
+    $container = $responses = [];
+    $updated_response_list = $this->responseListZero;
+    $updated_response_list['name'] = 'Changed name';
+    $responses[] = new Response(200, [], json_encode($updated_response_list));
+    $list_manager = $this->getListManager($container, $responses);
+
+    $list = new ListModel($this->responseListZero);
+    $list->setName('Changed name');
+    $list = $list_manager->updateList($list);
+
+    $listZero = new ListModel($updated_response_list);
+    $this->assertEquals($listZero, $list);
+
+    $request = $container[0]['request'];
+    $fields = array();
+    $this->assertSame($this->endPoint . "/api/v1/list/{$this->responseListZero['id']}", (string) $request->getUri(), 'The request URI should include the resource and api key.');
+    $this->assertSame('PUT', $request->getMethod());
+
+    parse_str(urldecode((string) $request->getBody()), $fields);
+    $this->assertSame('Changed name', $fields['name']);
+    $this->assertSame($this->apiKey, $fields['api_key']);
+  }
+
+  public function testDeleteList() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->responseListZero));
+    $list_manager = $this->getListManager($container, $responses);
+
+    $list = new ListModel($this->responseListZero);
+    $list = $list_manager->deleteList($list);
+
+    $listZero = new ListModel($this->responseListZero);
+    $this->assertEquals($listZero, $list);
+
+    $request = $container[0]['request'];
+    $this->assertSame('DELETE', $request->getMethod());
+
+    /**
+     * @todo: Double check that we were able to delete the right list.
+    $api = KlaviyoApi::create('KEY');
+    $list_manager = new ListManager($api);
+    $list_manager->deleteList($list_manager->getList('id'));
+     */
   }
 
 }

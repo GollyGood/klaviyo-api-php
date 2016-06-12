@@ -20,7 +20,7 @@ class ListModel extends KlaviyoModel {
    */
   public function __construct($configuration) {
     $this->id = $configuration['id'];
-    $this->name = $configuration['name'];
+    $this->setName($configuration['name']);
     $this->listType = $configuration['list_type'];
     $this->created = new \DateTime($configuration['created']);
     $this->updated = new \DateTime($configuration['updated']);
@@ -49,6 +49,16 @@ class ListModel extends KlaviyoModel {
    */
   public function getName() {
     return $this->name;
+  }
+
+  /**
+   * Set the name property.
+   *
+   * @return $this
+   */
+  public function setName($name) {
+    $this->name = $name;
+    return $this;
   }
 
   /**
