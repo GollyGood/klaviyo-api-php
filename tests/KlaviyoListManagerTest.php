@@ -167,12 +167,8 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $request = $container[0]['request'];
     $this->assertSame('DELETE', $request->getMethod());
 
-    /**
-     * @todo: Double check that we were able to delete the right list.
-    $api = KlaviyoApi::create('KEY');
-    $list_manager = new ListManager($api);
-    $list_manager->deleteList($list_manager->getList('id'));
-     */
+    parse_str(urldecode((string) $request->getBody()), $fields);
+    $this->assertSame($this->apiKey, $fields['api_key']);
   }
 
 }

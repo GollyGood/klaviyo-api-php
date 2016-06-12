@@ -88,7 +88,7 @@ class KlaviyoApi {
     elseif (empty($options['api_key'])) {
       $options['api_key'] = $this->apiKey;
 
-      if ($method === 'POST' || $method === 'PUT') {
+      if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
         $options = ['form_params' => $options];
       }
     }
