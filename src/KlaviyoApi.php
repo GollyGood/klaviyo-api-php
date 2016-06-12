@@ -13,6 +13,10 @@ use GuzzleHttp\ClientInterface;
 class KlaviyoApi {
 
   public static $endPoint = 'https://a.klaviyo.com';
+  public static $dataMap = [
+    '$list' => 'list',
+    '$person' => 'person',
+  ];
 
   protected $apiKey;
   protected $httpClient;

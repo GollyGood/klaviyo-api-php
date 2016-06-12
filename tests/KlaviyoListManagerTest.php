@@ -19,7 +19,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $this->responseListZero = [
       'id' => 'arY8wg',
       'name' => 'List 1',
-      'object' => 'list',
+      'object' => '$list',
       'list_type' => 'list',
       'folder' => NULL,
       'created' => '2016-01-01 18:58:54',
@@ -30,7 +30,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $this->responseListOne = [
       'id' => 'arY1wg',
       'name' => 'List 1',
-      'object' => 'list',
+      'object' => '$list',
       'list_type' => 'segment',
       'folder' => [
         'object' => 'folder',
@@ -73,18 +73,14 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
 
   public function testGetListPage() {
     $list_manager = $this->getMultiPageListManager();
-    $list_page_zero = $list_manager->getListPage();
+    $lists = $list_manager->getListsFromPage($list_manager->getResourcePath('list'));
 
-    $this->assertCount(2, $list_page_zero['data'], 'There should be two records.');
-    $this->assertSame(4, $list_page_zero['total'], 'There should be a total of 4 list records available.');
-    $this->assertSame(0, $list_page_zero['start'], 'It should had started at the 1st record.');
-    $this->assertSame(1, $list_page_zero['end'], 'It should had ended at the 2nd record.');
-    $this->assertSame(0, $list_page_zero['page'], 'It should had been on the 1st page.');
+    $this->assertCount(2, $lists, 'There should be two records.');
 
     $list_zero = new ListModel($this->responsePageZero['data'][0]);
-    $this->assertEquals($list_zero, $list_page_zero['data'][0]);
+    $this->assertEquals($list_zero, $lists[0]);
     $list_one = new ListModel($this->responsePageZero['data'][1]);
-    $this->assertEquals($list_one, $list_page_zero['data'][1]);
+    $this->assertEquals($list_one, $lists[1]);
   }
 
   public function testGetAllLists() {

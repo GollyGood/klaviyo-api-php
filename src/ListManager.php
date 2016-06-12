@@ -9,6 +9,8 @@ use Klaviyo\Model\ListModel;
  */
 class ListManager {
 
+  use PagerTrait;
+
   /**
    * The Klaviyo API object to use for communicating with the Klaviyo API.
    *
@@ -59,19 +61,11 @@ class ListManager {
    *   An array of ListModels that represent all lists in Klaviyo.
    */
   public function getAllLists() {
-    $list_page = $this->getListPage();
-
-    $lists = $list_page['data'];
-    while (count($lists) < $list_page['total']) {
-      $list_page = $this->getListPage($list_page['page'] + 1);
-      $lists = array_merge($lists, $list_page['data']);
-    }
-
-    return $lists;
+    return $this->getAllRecords($this->getResourcePath('lists'));
   }
 
   /**
-   * Retrieve a specific page from Klaviyo.
+   * Get lists from a specific page.
    *
    * @param int $page
    *   The page number to retrieve.
@@ -79,19 +73,10 @@ class ListManager {
    *   The number of items per page.
    *
    * @return array
-   *   An array of information that represents a page.
+   *   An array of records from the specified page.
    */
-  public function getListPage($page = 0, $count = 0) {
-    $options = ['query' => ['page' => $page, 'count' => $count]];
-    $response = $this->api->request('GET', $this->getResourcePath('lists'), $options);
-    $body = json_decode($response->getBody(), TRUE);
-
-    foreach ($body['data'] as $data) {
-      $lists[] = new ListModel($data);
-    }
-    $body['data'] = $lists;
-
-    return $body;
+  public function getListsFromPage($page = 0, $count = 0) {
+    return $this->getRecordsFromSpecificPage($this->getResourcePath('lists'), $page, $count);
   }
 
 }

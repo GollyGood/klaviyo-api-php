@@ -13,7 +13,7 @@ class KlaviyoModel implements \JsonSerializable {
    * @param array $configuration
    *   The key, value pair array to use for populating the data model.
    */
-  public function __construct($configuration) {
+  public function __construct($configuration = array()) {
     foreach ($configuration as $key => $value) {
       $this->$key = $value;
     }
