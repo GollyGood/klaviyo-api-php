@@ -2,8 +2,6 @@
 
 namespace Klaviyo;
 
-use Klaviyo\Model\KlaviyoModel;
-use Klaviyo\Model\ListModel;
 use Klaviyo\Model\PageModel;
 
 /**
@@ -23,34 +21,13 @@ trait PagerTrait {
   public function getAllRecords($resource) {
     $page = $this->getPage($resource);
 
-    $records = array_map(array($this, 'createModel'), $page->getData());
+    $records = array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData());
     while (count($records) < $page->getTotal()) {
       $page = $this->getPage($resource, $page->getNextPage());
-      $records = array_merge($records, array_map(array($this, 'createModel'), $page->getData()));
+      $records = array_merge($records, array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData()));
     }
 
     return $records;
-  }
-
-  /**
-   * Retrieve the model for the specified record.
-   *
-   * @param array $configuration
-   *   The configuration to use to populate the model.
-   *
-   * @return KlaviyoModel
-   *   The instance of a model to represent the record.
-   */
-  public function createModel($configuration) {
-    $model = new KlaviyoModel();
-
-    switch (KlaviyoApi::$dataMap[$configuration['object']]) {
-      case 'list':
-        $model = ListModel::Create($configuration);
-        break;
-    }
-
-    return $model;
   }
 
   /**
@@ -64,7 +41,7 @@ trait PagerTrait {
    */
   public function getRecordsFromSpecificPage($resource, $page = 0, $count = 0) {
     $page = $this->getPage($resource, $page, $count);
-    return array_map(array($this, 'createModel'), $page->getData());
+    return array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData());
   }
 
   /**
