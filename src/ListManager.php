@@ -108,8 +108,7 @@ class ListManager {
   public function updateList(ListModel $list) {
     $options = ['name' => $list->getName()];
     $response = $this->api->request('PUT', $this->getResourcePath("list/{$list->getId()}"), $options);
-    $list = ListModel::createFromJson($response->getBody());
-    return $list;
+    return ListModel::createFromJson($response->getBody());
   }
 
   /**
@@ -123,8 +122,7 @@ class ListManager {
    */
   public function deleteList(ListModel $list) {
     $response = $this->api->request('DELETE', $this->getResourcePath("list/{$list->getId()}"));
-    $list = ListModel::createFromJson($response->getBody());
-    return $list;
+    return ListModel::createFromJson($response->getBody());
   }
 
 }
