@@ -117,9 +117,29 @@ class ListManager extends BaseManager {
     return array_map(ModelFactory::class . '::create', $page->getData());
   }
 
+  /**
+   * Add a person to an existing List.
+   *
+   * @param ListModel $list
+   *   The ListModel for which to add the person.
+   * @param PersonModel $person
+   *   The PersonModel of the person to add to a List.
+   * @param bool $confirm_opt_in
+   *   Default to TRUE. Determines if the person should be asked to confirm
+   *   subscribing to list. When TRUE the person will recieve an email with a
+   *   confirmation link before zhe is added to the list. Otherwise, when FALSE
+   *   the person is automatically added to the list.
+   *
+   * @return PersonListModel
+   *   The PersonList wrapper provided by the Klaviyo API.
+   */
   public function addPersonToList(ListModel $list, PersonModel $person, $confirm_opt_in = TRUE) {
-    $tmp_confirm_opt_in = ($confirm_opt_in) ? 'true' : 'false';
-    $options = ['email' => $person->getEmail(), 'properties' => json_encode($person), 'confirm_optin' => $tmp_confirm_opt_in];
+    $options = [
+      'email' => $person->getEmail(),
+      'properties' => json_encode($person),
+      'confirm_optin' => ($confirm_opt_in) ? 'true' : 'false',
+    ];
+
     $response = $this->api->request('POST', $this->getResourcePath("list/{$list->getId()}/members"), $options);
     return PersonListModel::createFromJson($response->getBody());
   }
