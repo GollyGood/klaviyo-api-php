@@ -10,11 +10,11 @@ use Klaviyo\Model\ModelFactory;
 trait PagerTrait {
 
   /**
-   * The Klavioyo api service.
-   *
-   * @var KlaviyoApi
+   * Retrieve the KlaviyoApi service object.
    */
-  protected $api;
+  public function getApi() {
+    return $this->api;
+  }
 
   /**
    * Reteive all records for the specified paginated resource.
@@ -64,7 +64,7 @@ trait PagerTrait {
    */
   public function getPage($resource, $page = 0, $count = 0, $query_parameters = []) {
     $options = ['query' => ['page' => $page, 'count' => $count] + $query_parameters];
-    $response = $this->api->request('GET', $resource, $options);
+    $response = $this->getApi()->request('GET', $resource, $options);
     return ModelFactory::create(json_decode($response->getBody(), TRUE), 'page');
   }
 
