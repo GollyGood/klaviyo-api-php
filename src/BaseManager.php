@@ -2,8 +2,6 @@
 
 namespace Klaviyo;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * The base manager class used handle models transmission to and from the API.
  */
@@ -34,8 +32,8 @@ class BaseManager implements ManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
-    return new static($container->get('klaviyo'));
+  public static function create(KlaviyoApi $api) {
+    return new static($api);
   }
 
   /**

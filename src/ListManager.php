@@ -3,6 +3,7 @@
 namespace Klaviyo;
 
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\ModelFactory;
 
 /**
  * The list manager class used to handle lists.
@@ -97,8 +98,10 @@ class ListManager extends BaseManager {
   }
 
   public function checkMembersAreInList(ListModel $list, $emails) {
-    $options = ['email' => implode(',', $emails)];
-    return $this->getAllRecords($this->getResourcePath("list/{$list->getId()}/members"), $options);
+    $options = ['query' => ['email' => implode(',', $emails) ]];
+    $response = $this->api->request('GET', $this->getResourcePath("list/{$list->getId()}/members"), $options);
+    $page = ModelFactory::create(json_decode($response->getBody(), TRUE), 'page');
+    return array_map(ModelFactory::class . '::create', $page->getData());
   }
 
 }

@@ -16,7 +16,6 @@ class KlaviyoApi {
   public static $dataMap = [
     '$list' => 'list',
     '$person' => 'person',
-    'membership' => 'person',
   ];
 
   protected $apiKey;

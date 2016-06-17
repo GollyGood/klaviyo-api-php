@@ -2,7 +2,7 @@
 
 namespace Klaviyo;
 
-use Klaviyo\Model\PageModel;
+use Klaviyo\Model\ModelFactory;
 
 /**
  * Trait for adding a pager to a class.
@@ -28,10 +28,10 @@ trait PagerTrait {
   public function getAllRecords($resource, $query_parameters = []) {
     $page = $this->getPage($resource, 0, 0, $query_parameters);
 
-    $records = array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData());
+    $records = array_map(ModelFactory::class . '::create', $page->getData());
     while (count($records) < $page->getTotal()) {
       $page = $this->getPage($resource, $page->getNextPage(), 0, $query_parameters);
-      $records = array_merge($records, array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData()));
+      $records = array_merge($records, array_map(ModelFactory::class . '::create', $page->getData()));
     }
 
     return $records;
@@ -48,7 +48,7 @@ trait PagerTrait {
    */
   public function getRecordsFromSpecificPage($resource, $page = 0, $count = 0, $query_parameters = []) {
     $page = $this->getPage($resource, $page, $count, $query_parameters);
-    return array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData());
+    return array_map(ModelFactory::class . '::create', $page->getData());
   }
 
   /**
@@ -65,7 +65,7 @@ trait PagerTrait {
   public function getPage($resource, $page = 0, $count = 0, $query_parameters = []) {
     $options = ['query' => ['page' => $page, 'count' => $count] + $query_parameters];
     $response = $this->api->request('GET', $resource, $options);
-    return new PageModel(json_decode($response->getBody(), TRUE));
+    return ModelFactory::create(json_decode($response->getBody(), TRUE), 'page');
   }
 
 }

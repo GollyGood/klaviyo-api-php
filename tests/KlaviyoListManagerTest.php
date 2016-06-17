@@ -5,10 +5,11 @@ namespace Klaviyo\Tests;
 use Klaviyo\KlaviyoApi;
 use Klaviyo\ListManager;
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\MembershipModel;
 use Klaviyo\Model\PersonModel;
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KlaviyoListManagerTest extends KlaviyoTestCase {
 
@@ -121,16 +122,6 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     return $this->getListManager($container, $responses);
   }
 
-  public function testCreateUsingContainer() {
-    $history_container = $responses = [];
-    $container = new ContainerBuilder();
-    $container->register('klaviyo', KlaviyoApi::class)
-      ->addArgument($this->getClient($history_container, $responses))
-      ->addArgument($this->apiKey);
-
-    $this->assertTrue(ListManager::create($container) instanceof ListManager);
-  }
-
   public function getListManager(&$container, $responses) {
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, $this->apiKey);
@@ -234,19 +225,21 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $this->assertSame($this->apiKey, $fields['api_key']);
   }
 
-  /*
   public function testCheckMembersAreInList() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseListMembers));
     $list_manager = $this->getListManager($container, $responses);
     $list = new ListModel($this->responseListZero);
-    $members = $list_manager->checkMembersAreInList($list, ['george.washington@example.com,thomas.jefferson@example.com']);
+    $members = $list_manager->checkMembersAreInList($list, ['george.washington@example.com','thomas.jefferson@example.com']);
 
     $this->assertCount(2, $members);
     foreach ($members as $member) {
-      $this->assertTrue($member instanceof MembershipModel, 'The returned person objects should be an instance of a PersonModel.');
+      $this->assertTrue($member instanceof MembershipModel, 'The returned person objects should be an instance of a MembershipModel.');
     }
+
+    $request = $container[0]['request'];
+    $this->assertSame('GET', $request->getMethod());
+    $this->assertSame('https://a.klaviyo.com/api/v1/list/arY8wg/members?email=george.washington%40example.com%2Cthomas.jefferson%40example.com&api_key=asdf', (string) $request->getUri());
   }
-  */
 
 }
