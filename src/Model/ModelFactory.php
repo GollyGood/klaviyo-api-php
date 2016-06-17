@@ -3,10 +3,6 @@
 namespace Klaviyo\Model;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\Model\EmptyModel;
-use Klaviyo\Model\ListModel;
-use Klaviyo\Model\MembershipModel;
-use Klaviyo\Model\PersonModel;
 
 /**
  * Model creation factory.
@@ -31,15 +27,19 @@ class ModelFactory {
       case 'list':
         $model = ListModel::create($configuration);
         break;
+
       case 'membership':
         $model = MembershipModel::create($configuration);
         break;
+
       case 'page':
         $model = PageModel::create($configuration);
         break;
+
       case 'person':
         $model = PersonModel::create($configuration);
         break;
+
       default:
         $model = EmptyModel::create();
     }

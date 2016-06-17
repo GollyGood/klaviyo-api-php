@@ -41,10 +41,6 @@ class PersonModel extends BaseModel {
     $this->phoneNumber = $configuration['phone_number'];
   }
 
-  public function getObjectType() {
-    return $this->objectType;
-  }
-
   /**
    * Retrieve the id of the person.
    */

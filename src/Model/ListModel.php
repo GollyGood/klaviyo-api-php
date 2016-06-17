@@ -29,7 +29,6 @@ class ListModel extends BaseModel {
     $this->personCount = $configuration['person_count'];
   }
 
-
   /**
    * Retrieves the created date of the list.
    *

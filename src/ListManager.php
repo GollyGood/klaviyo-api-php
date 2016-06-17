@@ -97,8 +97,19 @@ class ListManager extends BaseManager {
     return ListModel::createFromJson($response->getBody());
   }
 
+  /**
+   * Check if the specified members are in the list by email address.
+   *
+   * @param ListModel $list
+   *   The list for which to retrieve members.
+   * @param array $emails
+   *   The emails to check are associated with the specified list.
+   *
+   * @return array
+   *    An array of MembershipModels associated with the specified list.
+   */
   public function checkMembersAreInList(ListModel $list, $emails) {
-    $options = ['query' => ['email' => implode(',', $emails) ]];
+    $options = ['query' => ['email' => implode(',', $emails)]];
     $response = $this->api->request('GET', $this->getResourcePath("list/{$list->getId()}/members"), $options);
     $page = ModelFactory::create(json_decode($response->getBody(), TRUE), 'page');
     return array_map(ModelFactory::class . '::create', $page->getData());

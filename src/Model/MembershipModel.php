@@ -23,10 +23,6 @@ class MembershipModel extends BaseModel {
     $this->person = PersonModel::create($configuration['person']);
   }
 
-  public function getObjectType() {
-    return $this->objectType;
-  }
-
   /**
    * Retrieves the added date of the membership.
    *
@@ -37,10 +33,19 @@ class MembershipModel extends BaseModel {
     return $this->dateAdded;
   }
 
+  /**
+   * Retrieves the membership email.
+   */
   public function getEmail() {
     return $this->email;
   }
 
+  /**
+   * Retrieves the person model associated with the membership.
+   *
+   * @return PersonModel
+   *   The person model object assocated with the membership.
+   */
   public function getPerson() {
     return $this->person;
   }

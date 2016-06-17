@@ -19,6 +19,9 @@ abstract class BaseModel implements ModelInterface {
     $this->objectType = !empty($configuration['object']) ? $configuration['object'] : '';
   }
 
+  /**
+   * Retrieve the Klaviyo object type for a model.
+   */
   public function getObjectType() {
     return $this->objectType;
   }
