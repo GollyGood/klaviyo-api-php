@@ -7,6 +7,7 @@ use Klaviyo\ListManager;
 use Klaviyo\Model\ListModel;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KlaviyoListManagerTest extends KlaviyoTestCase {
 
@@ -66,6 +67,16 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $responses[] = new Response(200, [], json_encode($this->responsePageOne));
 
     return $this->getListManager($container, $responses);
+  }
+
+  public function testCreateUsingContainer() {
+    $history_container = $responses = [];
+    $container = new ContainerBuilder();
+    $container->register('klaviyo', KlaviyoApi::class)
+      ->addArgument($this->getClient($history_container, $responses))
+      ->addArgument($this->apiKey);
+
+    $this->assertTrue(ListManager::create($container) instanceof ListManager);
   }
 
   public function getListManager(&$container, $responses) {

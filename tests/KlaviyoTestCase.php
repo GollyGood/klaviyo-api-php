@@ -10,6 +10,7 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 
 class KlaviyoTestCase extends \PHPUnit_Framework_TestCase {
+
   public $endPoint = 'https://a.klaviyo.com';
 
   protected function getClient(&$container, $responses = array()) {
@@ -23,4 +24,5 @@ class KlaviyoTestCase extends \PHPUnit_Framework_TestCase {
     $handlerStack->push($history);
     return new Client(['handler' => $handlerStack, 'base_uri' => KlaviyoApi::$endPoint]);
   }
+
 }

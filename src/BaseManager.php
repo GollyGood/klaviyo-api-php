@@ -2,17 +2,23 @@
 
 namespace Klaviyo;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * The base manager class used handle models transmission to and from the API.
  */
 class BaseManager implements ManagerInterface {
 
   /**
-   * The Klaviyo API object to use for communicating with the Klaviyo API.
+   * The Klavioyo api service.
    *
-   * @var Klaviyo\KlaviyoAPI
+   * @var KlaviyoApi
    */
   protected $api;
+
+  /**
+   * The resource prefix to apply to the resource path.
+   */
   protected $resourcePrefix = '/api/v1/';
 
   /**
@@ -23,6 +29,13 @@ class BaseManager implements ManagerInterface {
    */
   public function __construct(KlaviyoApi $api) {
     $this->api = $api;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static($container->get('klaviyo'));
   }
 
   /**

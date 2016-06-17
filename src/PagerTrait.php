@@ -10,6 +10,13 @@ use Klaviyo\Model\PageModel;
 trait PagerTrait {
 
   /**
+   * The Klavioyo api service.
+   *
+   * @var KlaviyoApi
+   */
+  protected $api;
+
+  /**
    * Reteive all records for the specified paginated resource.
    *
    * @param string $resource
