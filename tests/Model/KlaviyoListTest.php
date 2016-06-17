@@ -3,24 +3,37 @@
 namespace Klaviyo\Tests\Model;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\Model\ListModel;
+use Klaviyo\Model\MembershipModel;
+use Klaviyo\Model\PersonModel;
 use Klaviyo\Model\ModelInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class KlaviyoListTest extends KlaviyoBaseTest {
+class KlaviyoMembershipTest extends KlaviyoBaseTest {
 
-  protected $class = 'Klaviyo\Model\ListModel';
+  protected $class = 'Klaviyo\Model\MembershipModel';
   protected $configuration;
 
   public function setUp() {
-    $this->configuration = array(
-      'id' => 'dqQnNW',
-      'name' => 'Newsletter Subscribers',
-      'list_type' => 'standard',
-      'created' => '2013-06-10 13:00:00',
-      'updated' => '2013-06-17 14:00:00',
-      'person_count' => 1000
-    );
+    $this->configuration = [
+      'object' => 'membership',
+      'email' => 'george.washington@example.com',
+      'date_added' => '2013-06-10 13:00:00',
+      'person' => [
+        'object' => 'person',
+        'id' => '0mzwQ7',
+        '$email' => 'george.washington@example.com',
+        '$first_name' => 'George',
+        '$last_name' => 'Washington',
+        '$organization' => 'U.S. Government',
+        '$title' => 'President',
+        '$city' => 'Mount Vernon',
+        '$region' => 'Virginia',
+        '$zip' => '22121',
+        '$country' => 'United States',
+        '$timezone' => 'US/Eastern',
+        '$phone_number' => '',
+      ]
+    ];
   }
 
   public function assertModelMatchesConfiguration(ModelInterface $list, $configuration = array()) {
@@ -28,16 +41,14 @@ class KlaviyoListTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
-    $this->assertSame($configuration['id'], $list->getId());
-    $this->assertSame($configuration['name'], $list->getName());
-    $this->assertSame($configuration['list_type'], $list->getListType());
+    $this->assertSame($configuration['object'], $list->getObjectType());
+    $this->assertSame($configuration['email'], $list->getEmail());
+    $date_added = new \DateTime($configuration['date_added']);
+    $this->assertEquals($date_added, $list->getDateAdded());
 
-    $created = new \DateTime($configuration['created']);
-    $this->assertEquals($created, $list->getCreated());
-    $updated = new \DateTime($configuration['updated']);
-    $this->assertEquals($updated, $list->getUpdated());
 
-    $this->assertSame($configuration['person_count'], $list->getPersonCount());
+    $person = PersonModel::create($configuration['person']);
+    $this->assertEquals($person, $list->getPerson());
   }
 
 }

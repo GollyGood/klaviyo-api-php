@@ -25,12 +25,12 @@ trait PagerTrait {
    * @return array
    *    An array of all records retrieved from the API.
    */
-  public function getAllRecords($resource) {
-    $page = $this->getPage($resource);
+  public function getAllRecords($resource, $query_parameters = []) {
+    $page = $this->getPage($resource, 0, 0, $query_parameters);
 
     $records = array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData());
     while (count($records) < $page->getTotal()) {
-      $page = $this->getPage($resource, $page->getNextPage());
+      $page = $this->getPage($resource, $page->getNextPage(), 0, $query_parameters);
       $records = array_merge($records, array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData()));
     }
 
@@ -46,8 +46,8 @@ trait PagerTrait {
    * @return array
    *    An array of all records retrieved from the API for the specified page.
    */
-  public function getRecordsFromSpecificPage($resource, $page = 0, $count = 0) {
-    $page = $this->getPage($resource, $page, $count);
+  public function getRecordsFromSpecificPage($resource, $page = 0, $count = 0, $query_parameters = []) {
+    $page = $this->getPage($resource, $page, $count, $query_parameters);
     return array_map(__NAMESPACE__ . '\ModelFactory::create', $page->getData());
   }
 
@@ -62,8 +62,8 @@ trait PagerTrait {
    * @return array
    *   An array of information that represents a page.
    */
-  public function getPage($resource, $page = 0, $count = 0) {
-    $options = ['query' => ['page' => $page, 'count' => $count]];
+  public function getPage($resource, $page = 0, $count = 0, $query_parameters = []) {
+    $options = ['query' => ['page' => $page, 'count' => $count] + $query_parameters];
     $response = $this->api->request('GET', $resource, $options);
     return new PageModel(json_decode($response->getBody(), TRUE));
   }

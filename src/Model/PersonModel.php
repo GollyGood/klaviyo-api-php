@@ -25,6 +25,7 @@ class PersonModel extends BaseModel {
    */
   public function __construct($configuration) {
     $configuration = $this->cleanKeys($configuration);
+    parent::__construct($configuration);
 
     $this->id = $configuration['id'];
     $this->email = $configuration['email'];
@@ -38,6 +39,10 @@ class PersonModel extends BaseModel {
     $this->country = $configuration['country'];
     $this->timezone = $configuration['timezone'];
     $this->phoneNumber = $configuration['phone_number'];
+  }
+
+  public function getObjectType() {
+    return $this->objectType;
   }
 
   /**
@@ -128,7 +133,7 @@ class PersonModel extends BaseModel {
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    return [
+    return parent::jsonSerialize() + [
       'id' => $this->getId(),
       '$email' => $this->getEmail(),
       '$first_name' => $this->getFirstName(),

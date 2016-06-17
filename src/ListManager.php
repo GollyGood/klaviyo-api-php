@@ -96,4 +96,9 @@ class ListManager extends BaseManager {
     return ListModel::createFromJson($response->getBody());
   }
 
+  public function checkMembersAreInList(ListModel $list, $emails) {
+    $options = ['email' => implode(',', $emails)];
+    return $this->getAllRecords($this->getResourcePath("list/{$list->getId()}/members"), $options);
+  }
+
 }

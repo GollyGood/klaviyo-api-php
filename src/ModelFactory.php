@@ -2,8 +2,9 @@
 
 namespace Klaviyo;
 
-use Klaviyo\Model\KlaviyoModel;
+use Klaviyo\Model\EmptyModel;
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\PersonModel;
 
 /**
  * Model creation factory.
@@ -26,11 +27,13 @@ class ModelFactory {
 
     switch ($type) {
       case 'list':
-        $model = ListModel::Create($configuration);
+        $model = ListModel::create($configuration);
         break;
-
+      case 'person':
+        $model = PersonModel::create($configuration);
+        break;
       default:
-        $model = new KlaviyoModel();
+        $model = EmptyModel::create();
     }
 
     return $model;
@@ -51,7 +54,7 @@ class ModelFactory {
     if (empty($type) && !empty($configuration)) {
       $type = $configuration['object'];
     }
-    if (strpos($type, '$') === 0) {
+    if (!empty(KlaviyoApi::$dataMap[$type])) {
       $type = KlaviyoApi::$dataMap[$type];
     }
 

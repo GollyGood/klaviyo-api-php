@@ -5,6 +5,7 @@ namespace Klaviyo\Tests;
 use Klaviyo\KlaviyoApi;
 use Klaviyo\ListManager;
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\PersonModel;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,9 +19,9 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
 
   public function setUp() {
     $this->responseListZero = [
+      'object' => 'list',
       'id' => 'arY8wg',
       'name' => 'List 1',
-      'object' => '$list',
       'list_type' => 'list',
       'folder' => NULL,
       'created' => '2016-01-01 18:58:54',
@@ -29,9 +30,9 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     ];
 
     $this->responseListOne = [
+      'object' => 'list',
       'id' => 'arY1wg',
       'name' => 'List 1',
-      'object' => '$list',
       'list_type' => 'segment',
       'folder' => [
         'object' => 'folder',
@@ -59,6 +60,57 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $this->responsePageOne['start'] = 2;
     $this->responsePageOne['end'] = 3;
     $this->responsePageOne['page'] = 1;
+
+    $this->responseListMembers = [
+      'object' => '$list',
+      'start'  => 0,
+      'end' => 1,
+      'page'  => 0,
+      'page_size' => 2,
+      'total' => 2,
+      'data' => [
+        [
+          'object' => 'membership',
+          'email' => 'george.washington@example.com',
+          'date_added' => '2013-06-10 13:00:00',
+          'person' => [
+            'object' => 'person',
+            'id' => '0mzwQ7',
+            '$email' => 'george.washington@example.com',
+            '$first_name' => 'George',
+            '$last_name' => 'Washington',
+            '$organization' => 'U.S. Government',
+            '$title' => 'President',
+            '$city' => 'Mount Vernon',
+            '$region' => 'Virginia',
+            '$zip' => '22121',
+            '$country' => 'United States',
+            '$timezone' => 'US/Eastern',
+            '$phone_number' => '',
+          ]
+        ],
+        [
+          'object' => 'membership',
+          'email' => 'thomas.jefferson@example.com',
+          'date_added' => '2013-06-10 13:00:00',
+          'person' => [
+            'object' => 'person',
+            'id' => '4UaYpQ',
+            '$email' => 'thomas.jefferson@example.com',
+            '$first_name' => 'Thomas',
+            '$last_name' => 'Jefferson',
+            '$organization' => 'U.S. Government',
+            '$title' => 'President',
+            '$city' => 'Charlottesville',
+            '$region' => 'Virginia',
+            '$zip' => '22902',
+            '$country' => 'United States',
+            '$timezone' => 'US/Eastern',
+            '$phone_number' => '',
+          ]
+        ]
+      ]
+    ];
   }
 
   public function getMultiPageListManager() {
@@ -181,5 +233,20 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     parse_str(urldecode((string) $request->getBody()), $fields);
     $this->assertSame($this->apiKey, $fields['api_key']);
   }
+
+  /*
+  public function testCheckMembersAreInList() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->responseListMembers));
+    $list_manager = $this->getListManager($container, $responses);
+    $list = new ListModel($this->responseListZero);
+    $members = $list_manager->checkMembersAreInList($list, ['george.washington@example.com,thomas.jefferson@example.com']);
+
+    $this->assertCount(2, $members);
+    foreach ($members as $member) {
+      $this->assertTrue($member instanceof MembershipModel, 'The returned person objects should be an instance of a PersonModel.');
+    }
+  }
+  */
 
 }

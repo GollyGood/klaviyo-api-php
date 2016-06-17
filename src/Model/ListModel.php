@@ -19,6 +19,8 @@ class ListModel extends BaseModel {
    * {@inheritdoc}
    */
   public function __construct($configuration) {
+    parent::__construct($configuration);
+
     $this->id = $configuration['id'];
     $this->setName($configuration['name']);
     $this->listType = $configuration['list_type'];
@@ -26,6 +28,7 @@ class ListModel extends BaseModel {
     $this->updated = new \DateTime($configuration['updated']);
     $this->personCount = $configuration['person_count'];
   }
+
 
   /**
    * Retrieves the created date of the list.
@@ -89,7 +92,7 @@ class ListModel extends BaseModel {
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    return [
+    return parent::jsonSerialize() + [
       'id' => $this->getId(),
       'name' => $this->getName(),
       'list_type' => $this->getListType(),

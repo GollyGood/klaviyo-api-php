@@ -7,9 +7,8 @@ use Klaviyo\KlaviyoApi;
 /**
  * Simple model that represents a page.
  */
-class PageModel {
+class PageModel extends BaseModel {
 
-  protected $objectType;
   protected $start;
   protected $end;
   protected $page;
@@ -28,13 +27,6 @@ class PageModel {
     $this->pageSize = $configuration['page_size'];
     $this->total = $configuration['total'];
     $this->data = $configuration['data'];
-  }
-
-  /**
-   * Retrieve the model object type of the items we are paginating.
-   */
-  public function getObjectType() {
-    return $this->objectType;
   }
 
   /**
@@ -84,6 +76,24 @@ class PageModel {
    */
   public function getNextPage() {
     return $this->page + 1;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function jsonSerialize() {
+    $data_map = array_flip(KlaviyoApi::$dataMap);
+    $object_type = $this->getObjectType();
+
+    return [
+      'object' => !empty($data_map[$object_type]) ? $data_map[$object_type] : $object_type,
+      'start' => $this->getStart(),
+      'end' => $this->getEnd(),
+      'page_size' => $this->getPageSize(),
+      'total' => $this->getTotal(),
+      'page' => $this->getPage(),
+      'data' => $this->getData(),
+    ];
   }
 
 }

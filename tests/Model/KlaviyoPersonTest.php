@@ -14,6 +14,7 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
 
   public function setUp() {
     $this->configuration = array(
+      'object' => 'person',
       'id' => 'dqQnNW',
       '$email' => 'george.washington@example.com',
       '$first_name' => 'George',
@@ -34,6 +35,7 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
+    $this->assertSame($configuration['object'], $person->getObjectType());
     $this->assertSame($configuration['id'], $person->getId());
     $this->assertSame($configuration['$email'], $person->getEmail());
     $this->assertSame($configuration['$first_name'], $person->getFirstName());
