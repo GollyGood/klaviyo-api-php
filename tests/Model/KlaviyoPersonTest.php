@@ -27,6 +27,8 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
       '$country' => 'United States',
       '$timezone' => 'US/Eastern',
       '$phone_number' => '',
+      'foo' => 'bar',
+      'baz' => 'bat',
     );
   }
 
@@ -48,6 +50,14 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
     $this->assertSame($configuration['$country'], $person->getCountry());
     $this->assertSame($configuration['$timezone'], $person->getTimezone());
     $this->assertSame($configuration['$phone_number'], $person->getPhoneNumber());
+    $this->assertSame($configuration['foo'], $person->getCustomAttribute('foo'));
+  }
+
+  public function testGetCustomAttributes() {
+    $model = call_user_func("{$this->class}::create", $this->configuration);
+    $this->assertSame($this->configuration['foo'], $model->getCustomAttribute('foo'));
+    $this->assertSame($this->configuration['baz'], $model->getCustomAttribute('baz'));
+    $this->assertCount(2, $model->getAllCustomAttributes());
   }
 
 }

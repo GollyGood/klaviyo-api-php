@@ -29,15 +29,4 @@ interface ModelInterface extends \JsonSerializable {
    */
   public static function createFromJson($json);
 
-  /**
-   * Remove strange $ from the keys if it exists.
-   *
-   * @param array $configuration
-   *   The key, value pair array to for cleaning.
-   *
-   * @return array
-   *   The key, value pair array "cleaned".
-   */
-  public function cleanKeys($configuration);
-
 }

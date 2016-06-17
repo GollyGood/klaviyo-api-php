@@ -19,26 +19,28 @@ class PersonModel extends BaseModel {
   protected $country;
   protected $timezone;
   protected $phoneNumber;
+  protected $customAttributes;
 
   /**
    * {@inheritdoc}
    */
   public function __construct($configuration) {
-    $configuration = $this->cleanKeys($configuration);
     parent::__construct($configuration);
 
     $this->id = $configuration['id'];
-    $this->email = $configuration['email'];
-    $this->firstName = $configuration['first_name'];
-    $this->lastName = $configuration['last_name'];
-    $this->organization = $configuration['organization'];
-    $this->title = $configuration['title'];
-    $this->city = $configuration['city'];
-    $this->region = $configuration['region'];
-    $this->zip = $configuration['zip'];
-    $this->country = $configuration['country'];
-    $this->timezone = $configuration['timezone'];
-    $this->phoneNumber = $configuration['phone_number'];
+    $this->email = $configuration['$email'];
+    $this->firstName = $configuration['$first_name'];
+    $this->lastName = $configuration['$last_name'];
+    $this->organization = $configuration['$organization'];
+    $this->title = $configuration['$title'];
+    $this->city = $configuration['$city'];
+    $this->region = $configuration['$region'];
+    $this->zip = $configuration['$zip'];
+    $this->country = $configuration['$country'];
+    $this->timezone = $configuration['$timezone'];
+    $this->phoneNumber = $configuration['$phone_number'];
+
+    $this->setCustomAttributes($configuration);
   }
 
   /**
@@ -126,6 +128,49 @@ class PersonModel extends BaseModel {
   }
 
   /**
+   * Set the custom attributes for the person.
+   */
+  private function setCustomAttributes($configuration) {
+    $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [$this, 'isCustomAttribute']));
+    $this->customAttributes = array_intersect_key($configuration, $custom_attribute_keys);
+  }
+
+  /**
+   * Determine if the attribute is a custom attribute.
+   *
+   * @return bool
+   *   Returns TRUE if the attribute is considered to be a custom attribute.
+   */
+  public function isCustomAttribute($attribute_key) {
+    return !$this->isSpecialAttribute($attribute_key);
+  }
+
+  /**
+   * Determine if the attribute is a special attribute.
+   *
+   * @return bool
+   *   Returns TRUE if the attribute is considered to be a "special" Klaviyo
+   *   attribute.
+   */
+  public function isSpecialAttribute($attribute_key) {
+    return ((strpos($attribute_key, '$') === 0) || $attribute_key == 'id' || $attribute_key == 'object');
+  }
+
+  /**
+   * Retrieve a custom attribute by its attribute key.
+   */
+  public function getCustomAttribute($attribute_key) {
+    return !empty($this->customAttributes[$attribute_key]) ? $this->customAttributes[$attribute_key] : '';
+  }
+
+  /**
+   * Retrieve all custom attributes for the person.
+   */
+  public function getAllCustomAttributes() {
+    return $this->customAttributes;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
@@ -142,7 +187,7 @@ class PersonModel extends BaseModel {
       '$country' => $this->getCountry(),
       '$timezone' => $this->getTimeZone(),
       '$phone_number' => $this->getPhoneNumber(),
-    ];
+    ] + $this->getAllCustomAttributes();
   }
 
 }
