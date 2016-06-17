@@ -3,6 +3,8 @@
 namespace Klaviyo;
 
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\PersonModel;
+use Klaviyo\Model\PersonListModel;
 use Klaviyo\Model\ModelFactory;
 
 /**
@@ -113,6 +115,13 @@ class ListManager extends BaseManager {
     $response = $this->api->request('GET', $this->getResourcePath("list/{$list->getId()}/members"), $options);
     $page = ModelFactory::create(json_decode($response->getBody(), TRUE), 'page');
     return array_map(ModelFactory::class . '::create', $page->getData());
+  }
+
+  public function addPersonToList(ListModel $list, PersonModel $person, $confirm_opt_in = TRUE) {
+    $tmp_confirm_opt_in = ($confirm_opt_in) ? 'true' : 'false';
+    $options = ['email' => $person->getEmail(), 'properties' => json_encode($person), 'confirm_optin' => $tmp_confirm_opt_in];
+    $response = $this->api->request('POST', $this->getResourcePath("list/{$list->getId()}/members"), $options);
+    return PersonListModel::createFromJson($response->getBody());
   }
 
 }

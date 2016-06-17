@@ -5,8 +5,11 @@ namespace Klaviyo\Tests;
 use Klaviyo\KlaviyoApi;
 use Klaviyo\ListManager;
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\ListReferenceModel;
 use Klaviyo\Model\MembershipModel;
 use Klaviyo\Model\PersonModel;
+use Klaviyo\Model\PersonListModel;
+use Klaviyo\Model\PersonReferenceModel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -111,6 +114,20 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
           ]
         ]
       ]
+    ];
+
+    $this->responseAddListPerson = [
+      'person' => [
+        'object' => 'person',
+        'id' => 'erRoOX',
+        'email' => 'george.washington.@example.com'
+      ],
+      'list' => [
+        'object' => 'list',
+        'id' => 'arY8wg',
+        'name' => 'List 1'
+      ],
+      'already_member' => true,
     ];
   }
 
@@ -240,6 +257,30 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $request = $container[0]['request'];
     $this->assertSame('GET', $request->getMethod());
     $this->assertSame('https://a.klaviyo.com/api/v1/list/arY8wg/members?email=george.washington%40example.com%2Cthomas.jefferson%40example.com&api_key=asdf', (string) $request->getUri());
+  }
+
+  public function testAddPersonToList() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->responseAddListPerson));
+    $list_manager = $this->getListManager($container, $responses);
+    $list = new ListModel($this->responseListZero);
+    $person = PersonModel::create(['$first_name' => 'George', 'Birthday' => '02/22/1732', '$email' => 'george.washington@example.com']);
+    $person_list = $list_manager->addPersonToList($list, $person);
+
+    $this->assertTrue($person_list instanceof PersonListModel, 'The returned object should be an instance of PersonListModel.');
+    $person_reference = PersonReferenceModel::create($this->responseAddListPerson['person']);
+    $this->assertEquals($person_reference, $person_list->getPerson());
+    $list_reference = ListReferenceModel::create($this->responseAddListPerson['list']);
+    $this->assertEquals($list_reference, $person_list->getList());
+    $this->assertTrue($person_list->isAlreadyMember());
+
+    $request = $container[0]['request'];
+    $this->assertSame('POST', $request->getMethod());
+    $fields = [];
+    parse_str(urldecode((string) $request->getBody()), $fields);
+    $this->assertSame('george.washington@example.com', $fields['email']);
+    $this->assertEquals($person, PersonModel::createFromJson($fields['properties']));
+    $this->assertTrue((bool) $fields['confirm_optin']);
   }
 
 }

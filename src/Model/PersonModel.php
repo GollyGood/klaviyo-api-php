@@ -20,12 +20,25 @@ class PersonModel extends BaseModel {
   protected $timezone;
   protected $phoneNumber;
   protected $customAttributes;
+  protected $optionalDefaults = [
+    'id' => '',
+    '$last_name' => '',
+    '$organization' => '',
+    '$title' => '',
+    '$city' => '',
+    '$region' => '',
+    '$zip' => '',
+    '$country' => '',
+    '$timezone' => '',
+    '$phone_number' => '',
+  ];
 
   /**
    * {@inheritdoc}
    */
   public function __construct($configuration) {
     parent::__construct($configuration);
+    $configuration += $this->optionalDefaults;
 
     $this->id = $configuration['id'];
     $this->email = $configuration['$email'];
