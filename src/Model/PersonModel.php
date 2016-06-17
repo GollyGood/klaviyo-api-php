@@ -5,7 +5,7 @@ namespace Klaviyo\Model;
 /**
  * Simple model for a Klaviyo "Person".
  */
-class PersonModel extends KlaviyoModel {
+class PersonModel extends BaseModel {
 
   protected $id;
   protected $email;

@@ -3,11 +3,12 @@
 namespace Klaviyo\Tests\Model;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\Model\KlaviyoModel;
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\ModelInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class KlaviyoListTest extends KlaviyoBaseTest {
+
   protected $class = 'Klaviyo\Model\ListModel';
   protected $configuration;
 
@@ -22,7 +23,7 @@ class KlaviyoListTest extends KlaviyoBaseTest {
     );
   }
 
-  public function assertModelMatchesConfiguration(KlaviyoModel $list, $configuration = array()) {
+  public function assertModelMatchesConfiguration(ModelInterface $list, $configuration = array()) {
     if (empty($configuration)) {
       $configuration = $this->configuration;
     }

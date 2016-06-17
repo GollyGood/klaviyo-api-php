@@ -5,7 +5,7 @@ namespace Klaviyo\Model;
 /**
  * Simple model for a Klaviyo "List".
  */
-class ListModel extends KlaviyoModel {
+class ListModel extends BaseModel {
 
   protected $id;
   protected $name;

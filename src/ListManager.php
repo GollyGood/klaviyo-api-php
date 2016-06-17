@@ -7,38 +7,9 @@ use Klaviyo\Model\ListModel;
 /**
  * The list manager class used to handle lists.
  */
-class ListManager {
+class ListManager extends BaseManager {
 
   use PagerTrait;
-
-  /**
-   * The Klaviyo API object to use for communicating with the Klaviyo API.
-   *
-   * @var Klaviyo\KlaviyoAPI
-   */
-  protected $api;
-  protected $resourcePrefix = '/api/v1/';
-
-  /**
-   * The constructor for the list manager class.
-   *
-   * @param KlaviyoApi $api
-   *   The Klaviyo API object to use for communicating with the Klaviyo API.
-   */
-  public function __construct(KlaviyoApi $api) {
-    $this->api = $api;
-  }
-
-  /**
-   * Retrieve the full resource path.
-   *
-   * @return string
-   *   The full resource path incuding the resource prefix and resource path.
-   *   Example: /api/v1/lists
-   */
-  public function getResourcePath($resource) {
-    return $this->resourcePrefix . $resource;
-  }
 
   /**
    * Retrieve a specific list from Klaviyo.

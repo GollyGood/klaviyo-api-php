@@ -5,7 +5,7 @@ namespace Klaviyo\Model;
 /**
  * The base Klaviyo data model.
  */
-class KlaviyoModel implements \JsonSerializable {
+abstract class BaseModel implements ModelInterface {
 
   /**
    * The constructor of a Klaviyo data model.

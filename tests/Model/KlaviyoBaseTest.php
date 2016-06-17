@@ -3,16 +3,16 @@
 namespace Klaviyo\Tests\Model;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\Model\KlaviyoModel;
+use Klaviyo\Model\ModelInterface;
 use Klaviyo\Tests\KlaviyoTestCase;
 use Psr\Http\Message\ResponseInterface;
 
 abstract class KlaviyoBaseTest extends KlaviyoTestCase {
 
-  protected $class = 'Klaviyo\Model\KlaviyoModel';
+  protected $class = 'Klaviyo\Model\BaseModel';
   protected $configuration = [];
 
-  abstract public function assertModelMatchesConfiguration(KlaviyoModel $model, $configuration = array());
+  abstract public function assertModelMatchesConfiguration(ModelInterface $model, $configuration = array());
 
   public function testConstructor() {
     $model = new $this->class($this->configuration);
