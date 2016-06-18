@@ -53,6 +53,15 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
     $this->assertSame($configuration['foo'], $person->getCustomAttribute('foo'));
   }
 
+  public function testToJson() {
+    $model = call_user_func("{$this->class}::create", $this->configuration);
+
+    // No object type when converting to Json b/c the API treats it as a custom
+    // field...
+    unset($this->configuration['object']);
+    $this->assertEquals(json_encode($this->configuration), json_encode($model));
+  }
+
   public function testGetCustomAttributes() {
     $model = call_user_func("{$this->class}::create", $this->configuration);
     $this->assertSame($this->configuration['foo'], $model->getCustomAttribute('foo'));

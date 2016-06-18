@@ -8,6 +8,7 @@ namespace Klaviyo\Model;
 class PersonModel extends BaseModel {
 
   protected $id;
+  protected $objectType = 'person';
   protected $email;
   protected $firstName;
   protected $lastName;
@@ -32,6 +33,21 @@ class PersonModel extends BaseModel {
     '$timezone' => '',
     '$phone_number' => '',
   ];
+  protected static $attributeKeys = [
+    'object',
+    'id',
+    '$email',
+    '$first_name',
+    '$last_name',
+    '$organization',
+    '$title',
+    '$city',
+    '$region',
+    '$zip',
+    '$country',
+    '$timezone',
+    '$phone_number',
+  ];
 
   /**
    * {@inheritdoc}
@@ -54,6 +70,10 @@ class PersonModel extends BaseModel {
     $this->phoneNumber = $configuration['$phone_number'];
 
     $this->setCustomAttributes($configuration);
+  }
+
+  public static function getAttributeKeys() {
+    return self::$attributeKeys;
   }
 
   /**
@@ -144,7 +164,7 @@ class PersonModel extends BaseModel {
    * Set the custom attributes for the person.
    */
   private function setCustomAttributes($configuration) {
-    $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [$this, 'isCustomAttribute']));
+    $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [__CLASS__, 'isCustomAttributeKey']));
     $this->customAttributes = array_intersect_key($configuration, $custom_attribute_keys);
   }
 
@@ -154,8 +174,8 @@ class PersonModel extends BaseModel {
    * @return bool
    *   Returns TRUE if the attribute is considered to be a custom attribute.
    */
-  public function isCustomAttribute($attribute_key) {
-    return !$this->isSpecialAttribute($attribute_key);
+  public static function isCustomAttributeKey($attribute_key) {
+    return !self::isSpecialAttributeKey($attribute_key);
   }
 
   /**
@@ -165,7 +185,7 @@ class PersonModel extends BaseModel {
    *   Returns TRUE if the attribute is considered to be a "special" Klaviyo
    *   attribute.
    */
-  public function isSpecialAttribute($attribute_key) {
+  public static function isSpecialAttributeKey($attribute_key) {
     return ((strpos($attribute_key, '$') === 0) || $attribute_key == 'id' || $attribute_key == 'object');
   }
 
@@ -187,7 +207,7 @@ class PersonModel extends BaseModel {
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    return parent::jsonSerialize() + [
+    return [
       'id' => $this->getId(),
       '$email' => $this->getEmail(),
       '$first_name' => $this->getFirstName(),

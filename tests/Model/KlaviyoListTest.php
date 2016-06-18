@@ -51,4 +51,13 @@ class KlaviyoMembershipTest extends KlaviyoBaseTest {
     $this->assertEquals($person, $list->getPerson());
   }
 
+  public function testToJson() {
+    $model = call_user_func("{$this->class}::create", $this->configuration);
+
+    // No object type when converting to Person to Json b/c the API treats it
+    // as a custom field...
+    unset($this->configuration['person']['object']);
+    $this->assertEquals(json_encode($this->configuration), json_encode($model));
+  }
+
 }

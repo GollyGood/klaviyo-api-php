@@ -7,7 +7,7 @@ namespace Klaviyo\Model;
  */
 abstract class BaseModel implements ModelInterface {
 
-  protected $objectType;
+  protected $objectType = '';
 
   /**
    * The constructor of a Klaviyo data model.
@@ -16,7 +16,9 @@ abstract class BaseModel implements ModelInterface {
    *   The key, value pair array to use for populating the data model.
    */
   public function __construct($configuration = []) {
-    $this->objectType = !empty($configuration['object']) ? $configuration['object'] : '';
+    if (!empty($configuration['object'])) {
+      $this->objectType = $configuration['object'];
+    }
   }
 
   /**
