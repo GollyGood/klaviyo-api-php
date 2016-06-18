@@ -37,7 +37,7 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
-    $this->assertSame($configuration['object'], $person->getObjectType());
+    $this->assertSame($configuration['object'], $person->objectType);
     $this->assertSame($configuration['id'], $person->getId());
     $this->assertSame($configuration['$email'], $person->getEmail());
     $this->assertSame($configuration['$first_name'], $person->getFirstName());
@@ -51,6 +51,16 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
     $this->assertSame($configuration['$timezone'], $person->getTimezone());
     $this->assertSame($configuration['$phone_number'], $person->getPhoneNumber());
     $this->assertSame($configuration['foo'], $person->getCustomAttribute('foo'));
+    $this->assertSame($configuration['baz'], $person->getCustomAttribute('baz'));
+  }
+
+  public function testToJson() {
+    $model = call_user_func("{$this->class}::create", $this->configuration);
+
+    // No object type when converting to Json b/c the API treats it as a custom
+    // field...
+    unset($this->configuration['object']);
+    $this->assertEquals(json_encode($this->configuration), json_encode($model));
   }
 
   public function testGetCustomAttributes() {
@@ -58,6 +68,39 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
     $this->assertSame($this->configuration['foo'], $model->getCustomAttribute('foo'));
     $this->assertSame($this->configuration['baz'], $model->getCustomAttribute('baz'));
     $this->assertCount(2, $model->getAllCustomAttributes());
+  }
+
+  public function testCreationFromJson() {
+    $configuration = $this->configuration;
+    // The API is returning these values as custom attributes when it really
+    // probably should not.
+    $configuration += [
+      'email' => 'nothing@example.com',
+      'first_name' => 'George',
+      'last_name' => 'Washington'
+    ];
+
+    $model = call_user_func("{$this->class}::createFromJson", json_encode($configuration));
+    $this->assertModelMatchesConfiguration($model);
+
+    $this->assertArrayNotHasKey('email', $model->getAllCustomAttributes());
+    $this->assertArrayNotHasKey('first_name', $model->getAllCustomAttributes());
+    $this->assertArrayNotHasKey('last_name', $model->getAllCustomAttributes());
+  }
+
+  public function testUpdateFromArray() {
+    $model = call_user_func("{$this->class}::create", $this->configuration);
+    $updated_values = [
+      '$first_name' => 'Thomas',
+      '$last_name' => 'Jefferson',
+      '$email' => 'thomas.jefferson@example.com',
+      'foo' => 'bat',
+      'yet' => 'another'
+    ];
+    $model->updateFromArray($updated_values);
+
+    $updated_values += $this->configuration;
+    $this->assertModelMatchesConfiguration($model, $updated_values);
   }
 
 }

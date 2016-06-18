@@ -7,7 +7,7 @@ namespace Klaviyo\Model;
  */
 abstract class BaseModel implements ModelInterface {
 
-  protected $objectType;
+  protected $objectType = '';
 
   /**
    * The constructor of a Klaviyo data model.
@@ -16,14 +16,18 @@ abstract class BaseModel implements ModelInterface {
    *   The key, value pair array to use for populating the data model.
    */
   public function __construct($configuration = []) {
-    $this->objectType = !empty($configuration['object']) ? $configuration['object'] : '';
+    if (!empty($configuration['object'])) {
+      $this->objectType = $configuration['object'];
+    }
   }
 
   /**
-   * Retrieve the Klaviyo object type for a model.
+   * PHPs magic get method to provide access to our protected attributes.
    */
-  public function getObjectType() {
-    return $this->objectType;
+  public function __get($property) {
+    if (property_exists($this, $property)) {
+      return $this->{$property};
+    }
   }
 
   /**
@@ -58,8 +62,15 @@ abstract class BaseModel implements ModelInterface {
    */
   public function jsonSerialize() {
     return [
-      'object' => $this->getObjectType(),
+      'object' => $this->objectType,
     ];
+  }
+
+  /**
+   * Convert the model to an array.
+   */
+  public function toArray() {
+    return json_decode(json_encode($this), TRUE);
   }
 
 }

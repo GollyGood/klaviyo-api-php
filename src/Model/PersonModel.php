@@ -8,6 +8,7 @@ namespace Klaviyo\Model;
 class PersonModel extends BaseModel {
 
   protected $id;
+  protected $objectType = 'person';
   protected $email;
   protected $firstName;
   protected $lastName;
@@ -32,12 +33,50 @@ class PersonModel extends BaseModel {
     '$timezone' => '',
     '$phone_number' => '',
   ];
+  protected static $attributeKeys = [
+    'object',
+    'id',
+    '$email',
+    '$first_name',
+    '$last_name',
+    '$organization',
+    '$title',
+    '$city',
+    '$region',
+    '$zip',
+    '$country',
+    '$timezone',
+    '$phone_number',
+  ];
 
   /**
    * {@inheritdoc}
    */
   public function __construct($configuration) {
     parent::__construct($configuration);
+    $this->setAttributes($configuration);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function createFromJson($json) {
+    $configuration = json_decode($json, TRUE);
+
+    $allowed_attributes = array_flip(array_filter(array_keys($configuration), function($attribute_key) {
+      // The API is returning these values as custom attributes when it really
+      // probably should not.
+      return !($attribute_key === 'email' || $attribute_key === 'first_name' || $attribute_key === 'last_name');
+    }));
+    $configuration = array_intersect_key($configuration, $allowed_attributes);
+
+    return new static($configuration);
+  }
+
+  /**
+   * Set the attributes for the person model.
+   */
+  protected function setAttributes($configuration) {
     $configuration += $this->optionalDefaults;
 
     $this->id = $configuration['id'];
@@ -57,10 +96,38 @@ class PersonModel extends BaseModel {
   }
 
   /**
+   * Update the person model from an array.
+   *
+   * @return $this
+   */
+  public function updateFromArray($configuration) {
+    $configuration += $this->toArray();
+    $this->setAttributes($configuration);
+
+    return $this;
+  }
+
+  /**
+   * Retrieve an array of all attribute keys.
+   */
+  public static function getAttributeKeys() {
+    return self::$attributeKeys;
+  }
+
+  /**
    * Retrieve the id of the person.
    */
   public function getId() {
     return $this->id;
+  }
+
+  /**
+   * Set the id of the person.
+   */
+  public function setId($id) {
+    $this->id = $id;
+
+    return $this;
   }
 
   /**
@@ -144,7 +211,7 @@ class PersonModel extends BaseModel {
    * Set the custom attributes for the person.
    */
   private function setCustomAttributes($configuration) {
-    $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [$this, 'isCustomAttribute']));
+    $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [__CLASS__, 'isCustomAttributeKey']));
     $this->customAttributes = array_intersect_key($configuration, $custom_attribute_keys);
   }
 
@@ -154,8 +221,8 @@ class PersonModel extends BaseModel {
    * @return bool
    *   Returns TRUE if the attribute is considered to be a custom attribute.
    */
-  public function isCustomAttribute($attribute_key) {
-    return !$this->isSpecialAttribute($attribute_key);
+  public static function isCustomAttributeKey($attribute_key) {
+    return !self::isSpecialAttributeKey($attribute_key);
   }
 
   /**
@@ -165,7 +232,7 @@ class PersonModel extends BaseModel {
    *   Returns TRUE if the attribute is considered to be a "special" Klaviyo
    *   attribute.
    */
-  public function isSpecialAttribute($attribute_key) {
+  public static function isSpecialAttributeKey($attribute_key) {
     return ((strpos($attribute_key, '$') === 0) || $attribute_key == 'id' || $attribute_key == 'object');
   }
 
@@ -187,7 +254,9 @@ class PersonModel extends BaseModel {
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    return parent::jsonSerialize() + [
+    return [
+      // Object type intentionally left out because the Klaviyo API treats it as
+      // a custom field.
       'id' => $this->getId(),
       '$email' => $this->getEmail(),
       '$first_name' => $this->getFirstName(),
@@ -201,6 +270,15 @@ class PersonModel extends BaseModel {
       '$timezone' => $this->getTimeZone(),
       '$phone_number' => $this->getPhoneNumber(),
     ] + $this->getAllCustomAttributes();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function toArray() {
+    // Add object type back when converting to an array since we removed it due
+    // to an oddity in the Klaviyo API.
+    return ['object' => $this->objectType] + json_decode(json_encode($this), TRUE);
   }
 
 }

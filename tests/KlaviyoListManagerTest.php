@@ -16,8 +16,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class KlaviyoListManagerTest extends KlaviyoTestCase {
 
-  protected $apiKey = 'asdf';
-  protected $listManager;
   protected $responsePageOne;
   protected $responsePageTwo;
 
