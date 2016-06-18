@@ -23,7 +23,7 @@ class KlaviyoListReferenceTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
-    $this->assertSame($configuration['object'], $list->getObjectType());
+    $this->assertSame($configuration['object'], $list->objectType);
     $this->assertSame($configuration['id'], $list->getId());
     $this->assertSame($configuration['name'], $list->getName());
   }

@@ -41,7 +41,7 @@ class KlaviyoMembershipTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
-    $this->assertSame($configuration['object'], $list->getObjectType());
+    $this->assertSame($configuration['object'], $list->objectType);
     $this->assertSame($configuration['email'], $list->getEmail());
     $date_added = new \DateTime($configuration['date_added']);
     $this->assertEquals($date_added, $list->getDateAdded());

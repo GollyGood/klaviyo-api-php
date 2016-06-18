@@ -83,7 +83,7 @@ class PageModel extends BaseModel {
    */
   public function jsonSerialize() {
     $data_map = array_flip(KlaviyoApi::$dataMap);
-    $object_type = $this->getObjectType();
+    $object_type = $this->objectType;
 
     return [
       'object' => !empty($data_map[$object_type]) ? $data_map[$object_type] : $object_type,

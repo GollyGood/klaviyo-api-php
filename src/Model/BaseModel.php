@@ -22,10 +22,12 @@ abstract class BaseModel implements ModelInterface {
   }
 
   /**
-   * Retrieve the Klaviyo object type for a model.
+   * PHPs magic get method to provide access to our protected attributes.
    */
-  public function getObjectType() {
-    return $this->objectType;
+  public function __get($property) {
+    if (property_exists($this, $property)) {
+      return $this->{$property};
+    }
   }
 
   /**
@@ -60,7 +62,7 @@ abstract class BaseModel implements ModelInterface {
    */
   public function jsonSerialize() {
     return [
-      'object' => $this->getObjectType(),
+      'object' => $this->objectType,
     ];
   }
 

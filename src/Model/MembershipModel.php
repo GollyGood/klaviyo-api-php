@@ -66,7 +66,7 @@ class MembershipModel extends BaseModel {
    */
   public function toArray() {
     return [
-      'object' => $this->getObjectType(),
+      'object' => $this->objectType,
       'email' => $this->getEmail(),
       'date_added' => $this->getDateAdded()->format($this->dateFormat),
       'person' => $this->getPerson()->toArray(),

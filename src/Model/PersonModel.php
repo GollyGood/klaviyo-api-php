@@ -66,7 +66,6 @@ class PersonModel extends BaseModel {
     $allowed_attributes = array_flip(array_filter(array_keys($configuration), function($attribute_key) {
       // The API is returning these values as custom attributes when it really
       // probably should not.
-      // @todo: Test!
       return !($attribute_key === 'email' || $attribute_key === 'first_name' || $attribute_key === 'last_name');
     }));
     $configuration = array_intersect_key($configuration, $allowed_attributes);
@@ -76,10 +75,8 @@ class PersonModel extends BaseModel {
 
   /**
    * Set the attributes for the person model.
-   *
-   * @todo: Test!
    */
-  public function setAttributes($configuration) {
+  protected function setAttributes($configuration) {
     $configuration += $this->optionalDefaults;
 
     $this->id = $configuration['id'];
@@ -100,8 +97,6 @@ class PersonModel extends BaseModel {
 
   /**
    * Update the person model from an array.
-   *
-   * @todo: Test.
    *
    * @return $this
    */
@@ -283,7 +278,7 @@ class PersonModel extends BaseModel {
   public function toArray() {
     // Add object type back when converting to an array since we removed it due
     // to an oddity in the Klaviyo API.
-    return ['object' => $this->getObjectType()] + json_decode(json_encode($this), TRUE);
+    return ['object' => $this->objectType] + json_decode(json_encode($this), TRUE);
   }
 
 }
