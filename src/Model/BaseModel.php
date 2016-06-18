@@ -64,4 +64,11 @@ abstract class BaseModel implements ModelInterface {
     ];
   }
 
+  /**
+   * Convert the model to an array.
+   */
+  public function toArray() {
+    return json_decode(json_encode($this), TRUE);
+  }
+
 }

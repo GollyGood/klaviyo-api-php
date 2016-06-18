@@ -2,8 +2,13 @@
 
 namespace Klaviyo;
 
-use Klaviyo\Exception as KlaviyoException;
+use Klaviyo\Exception\ApiException;
+use Klaviyo\Exception\BadRequestApiException;
+use Klaviyo\Exception\NotAuthorizedApiException;
+use Klaviyo\Exception\NotFoundApiException;
+use Klaviyo\Exception\ServerErrorApiException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 
@@ -33,7 +38,7 @@ class KlaviyoApi {
    */
   public function __construct(ClientInterface $http_client, $api_key = '') {
     if (empty($api_key)) {
-      throw new KlaviyoException\ApiException('You must supply a Klaviyo API key.');
+      throw new ApiException('You must supply a Klaviyo API key.');
     }
 
     $this->apiKey = $api_key;
@@ -68,26 +73,26 @@ class KlaviyoApi {
    * @return ResponseInterface
    *    The response of the request as provided by the HTTP client.
    */
-  public function request($method, $resource, $options = []) {
+  public function request($method, $resource, $options = [], $public = FALSE) {
     $response = NULL;
 
     try {
-      $response = $this->httpClient->request($method, $resource, $this->prepareRequestOptions($method, $options));
+      $response = $this->httpClient->request($method, $resource, $this->prepareRequestOptions($method, $options, $public));
     }
-    catch(ClientException $e)  {
+    catch (ClientException $e) {
       switch ($e->getResponse()->getStatusCode()) {
         case '400':
-          throw new KlaviyoException\BadRequestApiException($e->getMessage());
-          break;
+          throw new BadRequestApiException($e->getMessage());
+
         case '401':
-          throw new KlaviyoException\NotAuthorizedApiException($e->getMessage());
-          break;
+          throw new NotAuthorizedApiException($e->getMessage());
+
         case '404':
-          throw new KlaviyoException\NotFoundApiException($e->getMessage());
-          break;
+          throw new NotFoundApiException($e->getMessage());
+
         case '500':
-          throw new KlaviyoException\ServerErrorApiException($e->getMessage());
-          break;
+          throw new ServerErrorApiException($e->getMessage());
+
         default:
           throw $e;
       }
@@ -105,9 +110,17 @@ class KlaviyoApi {
    * @return array
    *   The prepared additional options to pass on to the HTTP client.
    */
-  public function prepareRequestOptions($method, $options) {
-    if ($method === 'GET' && empty($options['query']['api_key'])) {
-      $options['query']['api_key'] = $this->apiKey;
+  public function prepareRequestOptions($method, $options, $public = FALSE) {
+    if ($method === 'GET') {
+      if (empty($options['query']['api_key'])) {
+        $options['query']['api_key'] = $this->apiKey;
+      }
+
+      if ($public) {
+        $api_key = $options['query']['api_key'];
+        unset($options['query']['api_key']);
+        $options = ['query' => ['data' => base64_encode(json_encode(['token' => $api_key] + $options['query']))]];
+      }
     }
     elseif (empty($options['api_key'])) {
       $options['api_key'] = $this->apiKey;

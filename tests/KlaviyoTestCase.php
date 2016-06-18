@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Response;
 
 class KlaviyoTestCase extends \PHPUnit_Framework_TestCase {
 
+  protected $apiKey = 'asdf';
   public $endPoint = 'https://a.klaviyo.com';
 
   protected function getClient(&$container, $responses = array()) {

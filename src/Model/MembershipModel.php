@@ -54,10 +54,22 @@ class MembershipModel extends BaseModel {
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    return parent::jsonSerialize() + [
+    return [
       'email' => $this->getEmail(),
       'date_added' => $this->getDateAdded()->format($this->dateFormat),
       'person' => $this->getPerson(),
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function toArray() {
+    return [
+      'object' => $this->getObjectType(),
+      'email' => $this->getEmail(),
+      'date_added' => $this->getDateAdded()->format($this->dateFormat),
+      'person' => $this->getPerson()->toArray(),
     ];
   }
 

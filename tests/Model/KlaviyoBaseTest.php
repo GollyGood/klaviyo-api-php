@@ -34,4 +34,9 @@ abstract class KlaviyoBaseTest extends KlaviyoTestCase {
     $this->assertEquals(json_encode($this->configuration), json_encode($model));
   }
 
+  public function testToArray() {
+    $model = call_user_func("{$this->class}::create", $this->configuration);
+    $this->assertEquals($this->configuration, $model->toArray());
+  }
+
 }
