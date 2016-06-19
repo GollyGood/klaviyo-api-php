@@ -35,13 +35,19 @@ class KlaviyoFacadeTest extends KlaviyoTestCase {
    * @expectedException Klaviyo\Exception\IsNotAServiceException
    */
   public function testIsNotAService() {
-    $this->klaviyo->service('model_factory');
+    $this->klaviyo->service('model.factory');
   }
 
   public function testServiceCreationModelFactory() {
     $this->assertInstanceOf(EmptyModel::class, $this->klaviyo->model());
-    $this->assertInstanceOf(PersonModel::class, $this->klaviyo->model(['object' => 'person', '$email' => 'nothing@example.com', '$first_name' => 'John']));
+    $this->assertInstanceOf(EmptyModel::class, $this->klaviyo->modelFromJson());
+    $person_configuration = ['object' => 'person', '$email' => 'nothing@example.com', '$first_name' => 'John'];
+    $this->assertInstanceOf(PersonModel::class, $this->klaviyo->model($person_configuration));
+    $this->assertInstanceOf(PersonModel::class, $this->klaviyo->modelFromJson(json_encode($person_configuration), 'person'));
     $this->assertInstanceOf(ListModel::class, $this->klaviyo->model(['id' => 'abc', 'name' => 'Abc', 'list_type' => 'list', 'created' => '03/14/1592', 'updated' => '03/14/1592', 'person_count' => 0], 'list'));
+  }
+
+  public function testModelMapping() {
   }
 
 }

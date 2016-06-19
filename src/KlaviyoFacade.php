@@ -43,6 +43,13 @@ class KlaviyoFacade {
   }
 
   /**
+   * Retrieve the container.
+   */
+  public function getContainer() {
+    return $this->container;
+  }
+
+  /**
    * Retrieve a service from the service container.
    *
    * @param string $service_name
@@ -74,11 +81,31 @@ class KlaviyoFacade {
    *   A data model representing the specified data type.
    */
   public function model($configuration = [], $type = '') {
-    $this->container['modelFactoryParams'] = [
+    $this->container['model.factory.params'] = [
       'type' => $type,
       'configuration' => $configuration,
     ];
-    return $this->container['model_factory'];
+    return $this->container['model.factory'];
+  }
+
+  /**
+   * The create from json model factory wrapper method.
+   *
+   * @param string $json
+   *   The JSON encoded key, value pair array to use for populating the data
+   *   model.
+   * @param string $type
+   *   The type of the data model to create.
+   *
+   * @return Klaviyo\Model\ModelInterface
+   *   A data model representing the specified data type.
+   */
+  public function modelFromJson($json = '', $type = '') {
+    $this->container['model.factory.json.params'] = [
+      'type' => $type,
+      'json' => $json,
+    ];
+    return $this->container['model.factory.json'];
   }
 
 }
