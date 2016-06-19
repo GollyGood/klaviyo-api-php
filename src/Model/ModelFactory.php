@@ -2,6 +2,7 @@
 
 namespace Klaviyo\Model;
 
+use Klaviyo\Exception\MissingModelTypeException;
 use Klaviyo\KlaviyoApi;
 
 /**
@@ -17,6 +18,13 @@ class ModelFactory {
     'person_list' => PersonListModel::class,
     'empty' => EmptyModel::class,
   ];
+
+  /**
+   * Retrieve the model map.
+   */
+  public static function getModelMap() {
+    return self::$modelMap;
+  }
 
   /**
    * Create a new model.
@@ -62,7 +70,7 @@ class ModelFactory {
    *   A data model representing the specified data type.
    */
   public static function callModelCreationMethod($method, $configuration, $type = '') {
-    $type = self::getModelType($type, $configuration);
+    $type = self::getModelType($configuration, $type);
 
     $model = NULL;
     if (isset(self::$modelMap[$type])) {
@@ -78,18 +86,23 @@ class ModelFactory {
   /**
    * Get the model type.
    *
-   * @param string $type
-   *   If set then we will check out data map and retrieve the model type.
    * @param array $configuration
    *   The key, value pair array to use for populating the data model.
+   * @param string $type
+   *   If set then we will check out data map and retrieve the model type.
    *
    * @return string
    *   The model data type.
    */
-  public static function getModelType($type = '', $configuration = []) {
-    if (empty($type) && !empty($configuration)) {
+  public static function getModelType($configuration = [], $type = '') {
+    if (empty($type) && !empty($configuration['object'])) {
       $type = $configuration['object'];
     }
+
+    if (empty($type) && !empty($configuration)) {
+      throw new MissingModelTypeException('Unable to determine the model type.');
+    }
+
     if (!empty(KlaviyoApi::$dataMap[$type])) {
       $type = KlaviyoApi::$dataMap[$type];
     }
