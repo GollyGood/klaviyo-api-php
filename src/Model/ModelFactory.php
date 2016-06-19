@@ -26,7 +26,7 @@ class ModelFactory {
    * @param string $type
    *   The type of the data model to create.
    *
-   * @return KlavioModel
+   * @return ModelInterface
    *   A data model representing the specified data type.
    */
   public static function create($configuration, $type = '') {
@@ -41,7 +41,7 @@ class ModelFactory {
    * @param string $type
    *   The type of the data model to create.
    *
-   * @return KlavioModel
+   * @return ModelInterface
    *   A data model representing the specified data type.
    */
   public static function createFromJson($configuration, $type = '') {
@@ -58,7 +58,7 @@ class ModelFactory {
    * @param string $type
    *   The type of the data model to create.
    *
-   * @return KlavioModel
+   * @return ModelInterface
    *   A data model representing the specified data type.
    */
   public static function callModelCreationMethod($method, $configuration, $type = '') {
@@ -86,7 +86,7 @@ class ModelFactory {
    * @return string
    *   The model data type.
    */
-  public static function getModelType($type = '', $configuration = array()) {
+  public static function getModelType($type = '', $configuration = []) {
     if (empty($type) && !empty($configuration)) {
       $type = $configuration['object'];
     }
