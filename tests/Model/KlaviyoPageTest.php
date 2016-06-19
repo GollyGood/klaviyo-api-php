@@ -24,12 +24,18 @@ class KlaviyoPageTest extends KlaviyoBaseTest {
     ];
   }
 
-  public function assertModelMatchesConfiguration(ModelInterface $list, $configuration = array()) {
+  public function assertModelMatchesConfiguration(ModelInterface $model, $configuration = array()) {
     if (empty($configuration)) {
       $configuration = $this->configuration;
     }
 
-    // @todo: Actaully write this test.
+    $this->assertSame(KlaviyoApi::$dataMap[$this->configuration['object']], $model->objectType);
+    $this->assertSame($this->configuration['start'], $model->start);
+    $this->assertSame($this->configuration['end'], $model->end);
+    $this->assertSame($this->configuration['page_size'], $model->pageSize);
+    $this->assertSame($this->configuration['total'], $model->total);
+    $this->assertSame($this->configuration['page'], $model->page);
+    $this->assertSame($this->configuration['data'], $model->data);
   }
 
 }
