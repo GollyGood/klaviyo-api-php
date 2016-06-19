@@ -206,7 +206,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $list_manager = $this->getListManager($container, $responses);
 
     $list = new ListModel($this->responseListZero);
-    $list->setName('Changed name');
+    $list->name = 'Changed name';
     $list = $list_manager->updateList($list);
 
     $listZero = new ListModel($updated_response_list);
@@ -267,10 +267,10 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
 
     $this->assertTrue($person_list instanceof PersonListModel, 'The returned object should be an instance of PersonListModel.');
     $person_reference = PersonReferenceModel::create($this->responseAddListPerson['person']);
-    $this->assertEquals($person_reference, $person_list->getPerson());
+    $this->assertEquals($person_reference, $person_list->person);
     $list_reference = ListReferenceModel::create($this->responseAddListPerson['list']);
-    $this->assertEquals($list_reference, $person_list->getList());
-    $this->assertTrue($person_list->isAlreadyMember());
+    $this->assertEquals($list_reference, $person_list->list);
+    $this->assertTrue($person_list->alreadyMember);
 
     $request = $container[0]['request'];
     $this->assertSame('POST', $request->getMethod());

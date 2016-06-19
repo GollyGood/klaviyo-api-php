@@ -4,7 +4,6 @@ namespace Klaviyo;
 
 use Klaviyo\Model\ListModel;
 use Klaviyo\Model\PersonModel;
-use Klaviyo\Model\PersonListModel;
 use Klaviyo\Model\ModelFactory;
 
 /**
@@ -25,7 +24,7 @@ class ListManager extends BaseManager {
    */
   public function getList($id) {
     $response = $this->api->request('GET', $this->getResourcePath("list/$id"));
-    return ListModel::createFromJson($response->getBody());
+    return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
   }
 
   /**
@@ -67,7 +66,7 @@ class ListManager extends BaseManager {
   public function createList($name, $type = 'list') {
     $options = ['name' => $name, 'list_type' => $type];
     $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
-    return ListModel::createFromJson($response->getBody());
+    return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
   }
 
   /**
@@ -80,9 +79,9 @@ class ListManager extends BaseManager {
    *   The updated list object.
    */
   public function updateList(ListModel $list) {
-    $options = ['name' => $list->getName()];
-    $response = $this->api->request('PUT', $this->getResourcePath("list/{$list->getId()}"), $options);
-    return ListModel::createFromJson($response->getBody());
+    $options = ['name' => $list->name];
+    $response = $this->api->request('PUT', $this->getResourcePath("list/{$list->id}"), $options);
+    return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
   }
 
   /**
@@ -95,8 +94,8 @@ class ListManager extends BaseManager {
    *   The deleted list object.
    */
   public function deleteList(ListModel $list) {
-    $response = $this->api->request('DELETE', $this->getResourcePath("list/{$list->getId()}"));
-    return ListModel::createFromJson($response->getBody());
+    $response = $this->api->request('DELETE', $this->getResourcePath("list/{$list->id}"));
+    return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
   }
 
   /**
@@ -112,9 +111,9 @@ class ListManager extends BaseManager {
    */
   public function checkMembersAreInList(ListModel $list, $emails) {
     $options = ['query' => ['email' => implode(',', $emails)]];
-    $response = $this->api->request('GET', $this->getResourcePath("list/{$list->getId()}/members"), $options);
-    $page = ModelFactory::create(json_decode($response->getBody(), TRUE), 'page');
-    return array_map(ModelFactory::class . '::create', $page->getData());
+    $response = $this->api->request('GET', $this->getResourcePath("list/{$list->id}/members"), $options);
+    $page = ModelFactory::create(json_decode($response->getBody()->getContents(), TRUE), 'page');
+    return array_map(ModelFactory::class . '::create', $page->data);
   }
 
   /**
@@ -135,13 +134,13 @@ class ListManager extends BaseManager {
    */
   public function addPersonToList(ListModel $list, PersonModel $person, $confirm_opt_in = TRUE) {
     $options = [
-      'email' => $person->getEmail(),
+      'email' => $person->email,
       'properties' => json_encode($person),
       'confirm_optin' => ($confirm_opt_in) ? 'true' : 'false',
     ];
 
-    $response = $this->api->request('POST', $this->getResourcePath("list/{$list->getId()}/members"), $options);
-    return PersonListModel::createFromJson($response->getBody());
+    $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members"), $options);
+    return ModelFactory::createFromJson($response->getBody()->getContents(), 'person_list');
   }
 
 }

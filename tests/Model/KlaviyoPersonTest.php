@@ -38,18 +38,18 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
     }
 
     $this->assertSame($configuration['object'], $person->objectType);
-    $this->assertSame($configuration['id'], $person->getId());
-    $this->assertSame($configuration['$email'], $person->getEmail());
-    $this->assertSame($configuration['$first_name'], $person->getFirstName());
-    $this->assertSame($configuration['$last_name'], $person->getLastName());
-    $this->assertSame($configuration['$organization'], $person->getOrganization());
-    $this->assertSame($configuration['$title'], $person->getTitle());
-    $this->assertSame($configuration['$city'], $person->getCity());
-    $this->assertSame($configuration['$region'], $person->getRegion());
-    $this->assertSame($configuration['$zip'], $person->getZip());
-    $this->assertSame($configuration['$country'], $person->getCountry());
-    $this->assertSame($configuration['$timezone'], $person->getTimezone());
-    $this->assertSame($configuration['$phone_number'], $person->getPhoneNumber());
+    $this->assertSame($configuration['id'], $person->id);
+    $this->assertSame($configuration['$email'], $person->email);
+    $this->assertSame($configuration['$first_name'], $person->firstName);
+    $this->assertSame($configuration['$last_name'], $person->lastName);
+    $this->assertSame($configuration['$organization'], $person->organization);
+    $this->assertSame($configuration['$title'], $person->title);
+    $this->assertSame($configuration['$city'], $person->city);
+    $this->assertSame($configuration['$region'], $person->region);
+    $this->assertSame($configuration['$zip'], $person->zip);
+    $this->assertSame($configuration['$country'], $person->country);
+    $this->assertSame($configuration['$timezone'], $person->timezone);
+    $this->assertSame($configuration['$phone_number'], $person->phoneNumber);
     $this->assertSame($configuration['foo'], $person->getCustomAttribute('foo'));
     $this->assertSame($configuration['baz'], $person->getCustomAttribute('baz'));
   }

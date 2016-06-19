@@ -42,12 +42,12 @@ class KlaviyoMembershipTest extends KlaviyoBaseTest {
     }
 
     $this->assertSame($configuration['object'], $list->objectType);
-    $this->assertSame($configuration['email'], $list->getEmail());
+    $this->assertSame($configuration['email'], $list->email);
     $date_added = new \DateTime($configuration['date_added']);
-    $this->assertEquals($date_added, $list->getDateAdded());
+    $this->assertEquals($date_added, $list->dateAdded);
 
     $person = PersonModel::create($configuration['person']);
-    $this->assertEquals($person, $list->getPerson());
+    $this->assertEquals($person, $list->person);
   }
 
   public function testToJson() {
