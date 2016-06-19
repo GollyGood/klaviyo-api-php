@@ -7,7 +7,7 @@ use Klaviyo\Model\PersonModel;
 /**
  * The track manager class used to handle lists.
  */
-class TrackManager extends BaseManager {
+class TrackService extends BaseService {
 
   protected $resourcePrefix = '/api/';
 

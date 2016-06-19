@@ -3,12 +3,12 @@
 namespace Klaviyo\Tests;
 
 use Klaviyo\KlaviyoServiceContainer;
-use Klaviyo\ListManager;
+use Klaviyo\ListService;
 use Klaviyo\Model\EmptyModel;
 use Klaviyo\Model\PersonModel;
 use Klaviyo\Model\ListModel;
-use Klaviyo\PersonManager;
-use Klaviyo\TrackManager;
+use Klaviyo\PersonService;
+use Klaviyo\TrackService;
 
 class KlaviyoApiServiceContainerTest extends KlaviyoTestCase {
 
@@ -19,9 +19,9 @@ class KlaviyoApiServiceContainerTest extends KlaviyoTestCase {
   }
 
   public function testServiceCreation() {
-    $this->assertInstanceOf(ListManager::class, $this->klaviyo->service('lists'));
-    $this->assertInstanceOf(PersonManager::class, $this->klaviyo->service('person'));
-    $this->assertInstanceOf(TrackManager::class, $this->klaviyo->service('track'));
+    $this->assertInstanceOf(ListService::class, $this->klaviyo->service('lists'));
+    $this->assertInstanceOf(PersonService::class, $this->klaviyo->service('person'));
+    $this->assertInstanceOf(TrackService::class, $this->klaviyo->service('track'));
   }
 
   /**

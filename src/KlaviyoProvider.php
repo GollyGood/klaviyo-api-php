@@ -33,13 +33,13 @@ class KlaviyoProvider implements ServiceProviderInterface {
       return KlaviyoApi::create($c['api_key']);
     };
     $container['lists'] = function ($c) {
-      return ListManager::create($c['api']);
+      return ListService::create($c['api']);
     };
     $container['person'] = function ($c) {
-      return PersonManager::create($c['api']);
+      return PersonService::create($c['api']);
     };
     $container['track'] = function ($c) {
-      return TrackManager::create($c['api']);
+      return TrackService::create($c['api']);
     };
 
     $container['modelFactoryParams'] = [

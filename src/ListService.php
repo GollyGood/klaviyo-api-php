@@ -9,7 +9,7 @@ use Klaviyo\Model\ModelFactory;
 /**
  * The list manager class used to handle lists.
  */
-class ListManager extends BaseManager {
+class ListService extends BaseService {
 
   use PagerTrait;
 

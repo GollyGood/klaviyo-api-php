@@ -3,13 +3,13 @@
 namespace Klaviyo\Tests;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\PersonManager;
+use Klaviyo\PersonService;
 use Klaviyo\Model\PersonModel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class KlaviyoPersonManagerTest extends KlaviyoTestCase {
+class PersonServiceTest extends KlaviyoTestCase {
 
   protected $responsePerson = [
     'object' => 'person',
@@ -27,16 +27,16 @@ class KlaviyoPersonManagerTest extends KlaviyoTestCase {
     '$phone_number' => '',
   ];
 
-  public function getPersonManager(&$container, $responses) {
+  public function getPersonService(&$container, $responses) {
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, $this->apiKey);
-    return new PersonManager($api);
+    return new PersonService($api);
   }
 
   public function testGetPerson() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responsePerson));
-    $person_manager = $this->getPersonManager($container, $responses);
+    $person_manager = $this->getPersonService($container, $responses);
     $person = $person_manager->getPerson('abc');
 
     $this->assertTrue($person instanceof PersonModel, 'The person manager should had returned an instance of a PersonModel.');

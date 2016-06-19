@@ -7,7 +7,7 @@ use Klaviyo\Model\PersonModel;
 /**
  * The list manager class used to handle lists.
  */
-class PersonManager extends BaseManager {
+class PersonService extends BaseService {
 
   /**
    * Retrieve a person from the Klaviyo API.

@@ -3,13 +3,13 @@
 namespace Klaviyo\Tests;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\TrackManager;
+use Klaviyo\TrackService;
 use Klaviyo\Model\PersonModel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class KlaviyoTrackManagerTest extends KlaviyoTestCase {
+class TrackServiceTest extends KlaviyoTestCase {
 
   protected $personConfiguration = [
     '$email' => 'john.smith@example.com',
@@ -20,16 +20,16 @@ class KlaviyoTrackManagerTest extends KlaviyoTestCase {
     '$organization' => 'Big Box Compan',
   ];
 
-  public function getTrackManager(&$container, $responses) {
+  public function getTrackService(&$container, $responses) {
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, $this->apiKey);
-    return new TrackManager($api);
+    return new TrackService($api);
   }
 
   public function testGetPerson() {
     $container = $responses = [];
     $responses[] = new Response(200, [], '1');
-    $track_manager = $this->getTrackManager($container, $responses);
+    $track_manager = $this->getTrackService($container, $responses);
     $person = PersonModel::create($this->personConfiguration);
     $this->assertTrue($track_manager->identify($person));
 

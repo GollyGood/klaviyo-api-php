@@ -3,7 +3,7 @@
 namespace Klaviyo\Tests;
 
 use Klaviyo\KlaviyoApi;
-use Klaviyo\ListManager;
+use Klaviyo\ListService;
 use Klaviyo\Model\ListModel;
 use Klaviyo\Model\ListReferenceModel;
 use Klaviyo\Model\MembershipModel;
@@ -14,7 +14,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class KlaviyoListManagerTest extends KlaviyoTestCase {
+class ListServiceTest extends KlaviyoTestCase {
 
   protected $responsePageOne;
   protected $responsePageTwo;
@@ -129,22 +129,22 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     ];
   }
 
-  public function getMultiPageListManager() {
+  public function getMultiPageListService() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responsePageZero));
     $responses[] = new Response(200, [], json_encode($this->responsePageOne));
 
-    return $this->getListManager($container, $responses);
+    return $this->getListService($container, $responses);
   }
 
-  public function getListManager(&$container, $responses) {
+  public function getListService(&$container, $responses) {
     $client = $this->getClient($container, $responses);
     $api = new KlaviyoApi($client, $this->apiKey);
-    return new ListManager($api);
+    return new ListService($api);
   }
 
   public function testGetListPage() {
-    $list_manager = $this->getMultiPageListManager();
+    $list_manager = $this->getMultiPageListService();
     $lists = $list_manager->getListsFromPage($list_manager->getResourcePath('list'));
 
     $this->assertCount(2, $lists, 'There should be two records.');
@@ -156,7 +156,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   }
 
   public function testGetAllLists() {
-    $list_manager = $this->getMultiPageListManager();
+    $list_manager = $this->getMultiPageListService();
     $lists = $list_manager->getAllLists();
 
     $this->assertCount(4, $lists);
@@ -174,7 +174,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   public function testGetListById() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseListZero));
-    $list_manager = $this->getListManager($container, $responses);
+    $list_manager = $this->getListService($container, $responses);
     $listZero = new ListModel($this->responseListZero);
     $this->assertEquals($listZero, $list_manager->getList($this->responseListZero['id']));
   }
@@ -182,7 +182,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   public function testCreateNewList() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseListZero));
-    $list_manager = $this->getListManager($container, $responses);
+    $list_manager = $this->getListService($container, $responses);
     $new_list = $list_manager->createList($this->responseListZero['name']);
 
     $listZero = new ListModel($this->responseListZero);
@@ -203,7 +203,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
     $updated_response_list = $this->responseListZero;
     $updated_response_list['name'] = 'Changed name';
     $responses[] = new Response(200, [], json_encode($updated_response_list));
-    $list_manager = $this->getListManager($container, $responses);
+    $list_manager = $this->getListService($container, $responses);
 
     $list = new ListModel($this->responseListZero);
     $list->name = 'Changed name';
@@ -225,7 +225,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   public function testDeleteList() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseListZero));
-    $list_manager = $this->getListManager($container, $responses);
+    $list_manager = $this->getListService($container, $responses);
 
     $list = new ListModel($this->responseListZero);
     $list = $list_manager->deleteList($list);
@@ -243,7 +243,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   public function testCheckMembersAreInList() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseListMembers));
-    $list_manager = $this->getListManager($container, $responses);
+    $list_manager = $this->getListService($container, $responses);
     $list = new ListModel($this->responseListZero);
     $members = $list_manager->checkMembersAreInList($list, ['george.washington@example.com','thomas.jefferson@example.com']);
 
@@ -260,7 +260,7 @@ class KlaviyoListManagerTest extends KlaviyoTestCase {
   public function testAddPersonToList() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->responseAddListPerson));
-    $list_manager = $this->getListManager($container, $responses);
+    $list_manager = $this->getListService($container, $responses);
     $list = new ListModel($this->responseListZero);
     $person = PersonModel::create(['$first_name' => 'George', 'Birthday' => '02/22/1732', '$email' => 'george.washington@example.com']);
     $person_list = $list_manager->addPersonToList($list, $person);

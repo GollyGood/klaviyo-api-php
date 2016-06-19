@@ -48,14 +48,14 @@ class KlaviyoServiceContainer {
    * @param string $service_name
    *   The name of the service to retrieve.
    *
-   * @return ManagerInterface
+   * @return ServiceInterface
    *   The service.
    */
   public function service($service_name) {
     if (!isset($this->container[$service_name])) {
       throw new ServiceNotFoundException(sprintf('The service %s could not be found.', $service_name));
     }
-    if (!($this->container[$service_name] instanceof ManagerInterface)) {
+    if (!($this->container[$service_name] instanceof ServiceInterface)) {
       throw new IsNotAServiceException(sprintf('%s is not a service, please use the correct wrapper method.', $service_name));
     }
 
