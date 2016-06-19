@@ -2,7 +2,7 @@
 
 namespace Klaviyo\Tests;
 
-use Klaviyo\KlaviyoServiceContainer;
+use Klaviyo\KlaviyoFacade;
 use Klaviyo\ListService;
 use Klaviyo\Model\EmptyModel;
 use Klaviyo\Model\PersonModel;
@@ -10,12 +10,12 @@ use Klaviyo\Model\ListModel;
 use Klaviyo\PersonService;
 use Klaviyo\TrackService;
 
-class KlaviyoApiServiceContainerTest extends KlaviyoTestCase {
+class KlaviyoFacadeTest extends KlaviyoTestCase {
 
   protected $klaviyo;
 
   public function setup() {
-    $this->klaviyo = KlaviyoServiceContainer::create($this->apiKey);
+    $this->klaviyo = KlaviyoFacade::create($this->apiKey);
   }
 
   public function testServiceCreation() {

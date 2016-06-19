@@ -7,9 +7,9 @@ use Klaviyo\Exception\ServiceNotFoundException;
 use Pimple\Container;
 
 /**
- * The Klaviyo service container wrapper.
+ * The Klaviyo API service container, model, and api wrapper.
  */
-class KlaviyoServiceContainer {
+class KlaviyoFacade {
 
   protected $container;
 
