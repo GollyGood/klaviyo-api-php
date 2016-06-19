@@ -108,4 +108,12 @@ class KlaviyoFacade {
     return $this->container['model.factory.json'];
   }
 
+  /**
+   * Retrieve the model class of the specified model.
+   */
+  public function getModelClass($type) {
+    $mapper = $this->container['model.factory.modelMap'];
+    return !empty($mapper[$type]) ? $mapper[$type] : $mapper['empty'];
+  }
+
 }

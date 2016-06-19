@@ -63,7 +63,7 @@ class ListService extends BaseService {
    * @return ListModel
    *   The list object created.
    */
-  public function createList($name, $type = 'list') {
+  public function createList($name, $type = 'standard') {
     $options = ['name' => $name, 'list_type' => $type];
     $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
     return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');

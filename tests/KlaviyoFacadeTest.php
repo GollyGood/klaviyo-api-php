@@ -47,7 +47,9 @@ class KlaviyoFacadeTest extends KlaviyoTestCase {
     $this->assertInstanceOf(ListModel::class, $this->klaviyo->model(['id' => 'abc', 'name' => 'Abc', 'list_type' => 'list', 'created' => '03/14/1592', 'updated' => '03/14/1592', 'person_count' => 0], 'list'));
   }
 
-  public function testModelMapping() {
+  public function testGetModelClass() {
+    $this->assertSame(PersonModel::class, $this->klaviyo->getModelClass('person'));
+    $this->assertSame(EmptyModel::class, $this->klaviyo->getModelClass('abc'));
   }
 
 }

@@ -23,7 +23,7 @@ class ListModel extends BaseModel {
 
     $this->id = $configuration['id'];
     $this->name = $configuration['name'];
-    $this->listType = $configuration['list_type'];
+    $this->listType = !empty($configuration['list_type']) ? $configuration['list_type'] : 'standard';
     $this->created = new \DateTime($configuration['created']);
     $this->updated = new \DateTime($configuration['updated']);
     $this->personCount = $configuration['person_count'];

@@ -24,7 +24,7 @@ class ListServiceTest extends KlaviyoTestCase {
       'object' => 'list',
       'id' => 'arY8wg',
       'name' => 'List 1',
-      'list_type' => 'list',
+      'list_type' => 'standard',
       'folder' => NULL,
       'created' => '2016-01-01 18:58:54',
       'updated' => '2016-01-02 06:00:00',
@@ -35,7 +35,7 @@ class ListServiceTest extends KlaviyoTestCase {
       'object' => 'list',
       'id' => 'arY1wg',
       'name' => 'List 1',
-      'list_type' => 'segment',
+      'list_type' => 'standard',
       'folder' => [
         'object' => 'folder',
         'id' => 12345,
@@ -194,7 +194,7 @@ class ListServiceTest extends KlaviyoTestCase {
     $fields = array();
     parse_str(urldecode((string) $request->getBody()), $fields);
     $this->assertSame($this->responseListZero['name'], $fields['name']);
-    $this->assertSame('list', $fields['list_type']);
+    $this->assertSame('standard', $fields['list_type']);
     $this->assertSame($this->apiKey, $fields['api_key']);
   }
 
