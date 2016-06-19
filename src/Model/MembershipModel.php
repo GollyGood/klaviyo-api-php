@@ -9,7 +9,6 @@ class MembershipModel extends BaseModel {
 
   protected $email;
   protected $dateAdded;
-  protected $dateFormat = 'Y-m-d H:i:s';
   protected $person;
 
   /**
@@ -24,40 +23,13 @@ class MembershipModel extends BaseModel {
   }
 
   /**
-   * Retrieves the added date of the membership.
-   *
-   * @return \DateTime
-   *   Returns a DateTime object of the created date of the list.
-   */
-  public function getDateAdded() {
-    return $this->dateAdded;
-  }
-
-  /**
-   * Retrieves the membership email.
-   */
-  public function getEmail() {
-    return $this->email;
-  }
-
-  /**
-   * Retrieves the person model associated with the membership.
-   *
-   * @return PersonModel
-   *   The person model object assocated with the membership.
-   */
-  public function getPerson() {
-    return $this->person;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
     return [
-      'email' => $this->getEmail(),
-      'date_added' => $this->getDateAdded()->format($this->dateFormat),
-      'person' => $this->getPerson(),
+      'email' => $this->email,
+      'date_added' => $this->dateAdded->format($this->dateFormat),
+      'person' => $this->person,
     ];
   }
 
@@ -67,9 +39,9 @@ class MembershipModel extends BaseModel {
   public function toArray() {
     return [
       'object' => $this->objectType,
-      'email' => $this->getEmail(),
-      'date_added' => $this->getDateAdded()->format($this->dateFormat),
-      'person' => $this->getPerson()->toArray(),
+      'email' => $this->email,
+      'date_added' => $this->dateAdded->format($this->dateFormat),
+      'person' => $this->person->toArray(),
     ];
   }
 

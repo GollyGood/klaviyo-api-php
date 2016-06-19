@@ -22,26 +22,12 @@ class ListReferenceModel extends BaseModel {
   }
 
   /**
-   * Retrieves the id of the list.
-   */
-  public function getId() {
-    return $this->id;
-  }
-
-  /**
-   * Retrieves the name of the list.
-   */
-  public function getName() {
-    return $this->name;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
     return parent::jsonSerialize() + [
-      'id' => $this->getId(),
-      'name' => $this->getName(),
+      'id' => $this->id,
+      'name' => $this->name,
     ];
   }
 

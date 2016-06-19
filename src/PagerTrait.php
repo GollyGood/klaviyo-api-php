@@ -28,10 +28,10 @@ trait PagerTrait {
   public function getAllRecords($resource, $query_parameters = []) {
     $page = $this->getPage($resource, 0, 0, $query_parameters);
 
-    $records = array_map(ModelFactory::class . '::create', $page->getData());
-    while (count($records) < $page->getTotal()) {
-      $page = $this->getPage($resource, $page->getNextPage(), 0, $query_parameters);
-      $records = array_merge($records, array_map(ModelFactory::class . '::create', $page->getData()));
+    $records = array_map(ModelFactory::class . '::create', $page->data);
+    while (count($records) < $page->total) {
+      $page = $this->getPage($resource, $page->netPage, 0, $query_parameters);
+      $records = array_merge($records, array_map(ModelFactory::class . '::create', $page->data));
     }
 
     return $records;
@@ -48,7 +48,7 @@ trait PagerTrait {
    */
   public function getRecordsFromSpecificPage($resource, $page = 0, $count = 0, $query_parameters = []) {
     $page = $this->getPage($resource, $page, $count, $query_parameters);
-    return array_map(ModelFactory::class . '::create', $page->getData());
+    return array_map(ModelFactory::class . '::create', $page->data);
   }
 
   /**

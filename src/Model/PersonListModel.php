@@ -23,44 +23,13 @@ class PersonListModel extends BaseModel {
   }
 
   /**
-   * Retrieve the person reference object.
-   *
-   * @return \Klaviyo\Model\PersonReferenceModel.
-   *   The PersonReferenceModel retrieved from the Klaviyo API.
-   */
-  public function getPerson() {
-    return $this->person;
-  }
-
-  /**
-   * Retrieve the list reference object.
-   *
-   * @return \Klaviyo\Model\ListReferenceModel.
-   *   The ListReferenceModel retrieved from the Klaviyo API.
-   */
-  public function getList() {
-    return $this->list;
-  }
-
-  /**
-   * Determine if the person is already a member of the list.
-   *
-   * @return bool
-   *   Returns TRUE if the person is already a member of the list and FALSE
-   *   otherwise.
-   */
-  public function isAlreadyMember() {
-    return $this->alreadyMember;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
     return [
-      'person' => $this->getPerson(),
-      'list' => $this->getList(),
-      'already_member' => $this->isAlreadyMember(),
+      'person' => $this->person,
+      'list' => $this->list,
+      'already_member' => $this->alreadyMember,
     ];
   }
 

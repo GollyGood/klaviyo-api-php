@@ -35,10 +35,10 @@ class KlaviyoPersonListTest extends KlaviyoBaseTest {
     }
 
     $person = PersonReferenceModel::create($configuration['person']);
-    $this->assertEquals($person, $person_list->getPerson());
+    $this->assertEquals($person, $person_list->person);
     $list = ListReferenceModel::create($configuration['list']);
-    $this->assertEquals($list, $person_list->getList());
-    $this->assertFalse($person_list->isAlreadyMember());
+    $this->assertEquals($list, $person_list->list);
+    $this->assertFalse($person_list->alreadyMember);
   }
 
 }

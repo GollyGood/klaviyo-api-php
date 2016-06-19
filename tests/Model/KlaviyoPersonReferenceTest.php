@@ -25,8 +25,8 @@ class KlaviyoPersonReferenceTest extends KlaviyoBaseTest {
     }
 
     $this->assertSame($configuration['object'], $person->objectType);
-    $this->assertSame($configuration['id'], $person->getId());
-    $this->assertSame($configuration['email'], $person->getEmail());
+    $this->assertSame($configuration['id'], $person->id);
+    $this->assertSame($configuration['email'], $person->email);
   }
 
 }

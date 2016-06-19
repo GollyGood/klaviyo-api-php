@@ -29,16 +29,16 @@ class KlaviyoListTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
-    $this->assertSame($configuration['id'], $list->getId());
-    $this->assertSame($configuration['name'], $list->getName());
-    $this->assertSame($configuration['list_type'], $list->getListType());
+    $this->assertSame($configuration['id'], $list->id);
+    $this->assertSame($configuration['name'], $list->name);
+    $this->assertSame($configuration['list_type'], $list->listType);
 
     $created = new \DateTime($configuration['created']);
-    $this->assertEquals($created, $list->getCreated());
+    $this->assertEquals($created, $list->created);
     $updated = new \DateTime($configuration['updated']);
-    $this->assertEquals($updated, $list->getUpdated());
+    $this->assertEquals($updated, $list->updated);
 
-    $this->assertSame($configuration['person_count'], $list->getPersonCount());
+    $this->assertSame($configuration['person_count'], $list->personCount);
   }
 
 }

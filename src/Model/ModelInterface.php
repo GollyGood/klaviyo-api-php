@@ -29,4 +29,9 @@ interface ModelInterface extends \JsonSerializable {
    */
   public static function createFromJson($json);
 
+  /**
+   * Convert the model to an array.
+   */
+  public function toArray();
+
 }

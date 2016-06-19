@@ -13,7 +13,7 @@ class ListModel extends BaseModel {
   protected $created;
   protected $updated;
   protected $personCount;
-  protected $dateFormat = 'Y-m-d H:i:s';
+  protected static $mutableAttributes = ['name'];
 
   /**
    * {@inheritdoc}
@@ -22,7 +22,7 @@ class ListModel extends BaseModel {
     parent::__construct($configuration);
 
     $this->id = $configuration['id'];
-    $this->setName($configuration['name']);
+    $this->name = $configuration['name'];
     $this->listType = $configuration['list_type'];
     $this->created = new \DateTime($configuration['created']);
     $this->updated = new \DateTime($configuration['updated']);
@@ -30,74 +30,16 @@ class ListModel extends BaseModel {
   }
 
   /**
-   * Retrieves the created date of the list.
-   *
-   * @return \DateTime
-   *   Returns a DateTime object of the created date of the list.
-   */
-  public function getCreated() {
-    return $this->created;
-  }
-
-  /**
-   * Retrieves the id of the list.
-   */
-  public function getId() {
-    return $this->id;
-  }
-
-  /**
-   * Retrieves the name of the list.
-   */
-  public function getName() {
-    return $this->name;
-  }
-
-  /**
-   * Set the name property.
-   *
-   * @return $this
-   */
-  public function setName($name) {
-    $this->name = $name;
-    return $this;
-  }
-
-  /**
-   * Retrieves the list type of the list.
-   */
-  public function getListType() {
-    return $this->listType;
-  }
-
-  /**
-   * Retrieves the updated date of the list.
-   *
-   * @return \DateTime
-   *   Returns a DateTime object of the updated date of the list.
-   */
-  public function getUpdated() {
-    return $this->updated;
-  }
-
-  /**
-   * Retrieves the number of persons subscribed to the list.
-   */
-  public function getPersonCount() {
-    return $this->personCount;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
     return parent::jsonSerialize() + [
-      'id' => $this->getId(),
-      'name' => $this->getName(),
-      'list_type' => $this->getListType(),
-      'created' => $this->getCreated()->format($this->dateFormat),
-      'updated' => $this->getUpdated()->format($this->dateFormat),
-      'person_count' => $this->getPersonCount(),
+      'id' => $this->id,
+      'name' => $this->name,
+      'list_type' => $this->listType,
+      'created' => $this->created->format($this->dateFormat),
+      'updated' => $this->updated->format($this->dateFormat),
+      'person_count' => $this->personCount,
     ];
   }
 

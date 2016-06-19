@@ -5,7 +5,7 @@ namespace Klaviyo;
 /**
  * The base manager class used handle models transmission to and from the API.
  */
-class BaseManager implements ManagerInterface {
+class BaseService implements ServiceInterface {
 
   /**
    * The Klavioyo api service.

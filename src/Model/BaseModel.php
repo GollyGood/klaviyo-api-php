@@ -8,6 +8,12 @@ namespace Klaviyo\Model;
 abstract class BaseModel implements ModelInterface {
 
   protected $objectType = '';
+  protected $dateFormat = 'Y-m-d H:i:s';
+
+  /**
+   * An array of attributes/properties that may be altered.
+   */
+  protected static $mutableAttributes = [];
 
   /**
    * The constructor of a Klaviyo data model.
@@ -28,6 +34,19 @@ abstract class BaseModel implements ModelInterface {
     if (property_exists($this, $property)) {
       return $this->{$property};
     }
+  }
+
+  /**
+   * PHPs magic set method to provide access to our mutable attributes.
+   *
+   * @return $this
+   */
+  public function __set($property, $value) {
+    if (in_array($property, static::$mutableAttributes)) {
+      $this->{$property} = $value;
+    }
+
+    return $this;
   }
 
   /**

@@ -115,99 +115,6 @@ class PersonModel extends BaseModel {
   }
 
   /**
-   * Retrieve the id of the person.
-   */
-  public function getId() {
-    return $this->id;
-  }
-
-  /**
-   * Set the id of the person.
-   */
-  public function setId($id) {
-    $this->id = $id;
-
-    return $this;
-  }
-
-  /**
-   * Retrieve the email of the person.
-   */
-  public function getEmail() {
-    return $this->email;
-  }
-
-  /**
-   * Retrieve the first name of the person.
-   */
-  public function getFirstName() {
-    return $this->firstName;
-  }
-
-  /**
-   * Retrieve the last name of the person.
-   */
-  public function getLastName() {
-    return $this->lastName;
-  }
-
-  /**
-   * Retrieve the organization of the person.
-   */
-  public function getOrganization() {
-    return $this->organization;
-  }
-
-  /**
-   * Retrieve the title of the person.
-   */
-  public function getTitle() {
-    return $this->title;
-  }
-
-  /**
-   * Retrieve the city of the person.
-   */
-  public function getCity() {
-    return $this->city;
-  }
-
-  /**
-   * Retrieve the region of the person.
-   */
-  public function getRegion() {
-    return $this->region;
-  }
-
-  /**
-   * Retrieve the zip code of the person.
-   */
-  public function getZip() {
-    return $this->zip;
-  }
-
-  /**
-   * Retrieve the country of the person.
-   */
-  public function getCountry() {
-    return $this->country;
-  }
-
-  /**
-   * Retrieve the time zone of the person.
-   */
-  public function getTimeZone() {
-    return $this->timezone;
-  }
-
-  /**
-   * Retrieve the phone number of the person.
-   */
-  public function getPhoneNumber() {
-    return $this->phoneNumber;
-  }
-
-  /**
    * Set the custom attributes for the person.
    */
   private function setCustomAttributes($configuration) {
@@ -257,18 +164,18 @@ class PersonModel extends BaseModel {
     return [
       // Object type intentionally left out because the Klaviyo API treats it as
       // a custom field.
-      'id' => $this->getId(),
-      '$email' => $this->getEmail(),
-      '$first_name' => $this->getFirstName(),
-      '$last_name' => $this->getLastName(),
-      '$organization' => $this->getOrganization(),
-      '$title' => $this->getTitle(),
-      '$city' => $this->getCity(),
-      '$region' => $this->getRegion(),
-      '$zip' => $this->getZip(),
-      '$country' => $this->getCountry(),
-      '$timezone' => $this->getTimeZone(),
-      '$phone_number' => $this->getPhoneNumber(),
+      'id' => $this->id,
+      '$email' => $this->email,
+      '$first_name' => $this->firstName,
+      '$last_name' => $this->lastName,
+      '$organization' => $this->organization,
+      '$title' => $this->title,
+      '$city' => $this->city,
+      '$region' => $this->region,
+      '$zip' => $this->zip,
+      '$country' => $this->country,
+      '$timezone' => $this->timezone,
+      '$phone_number' => $this->phoneNumber,
     ] + $this->getAllCustomAttributes();
   }
 

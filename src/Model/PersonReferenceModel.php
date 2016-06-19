@@ -21,26 +21,12 @@ class PersonReferenceModel extends BaseModel {
   }
 
   /**
-   * Retrieve the id of the person.
-   */
-  public function getId() {
-    return $this->id;
-  }
-
-  /**
-   * Retrieve the email of the person.
-   */
-  public function getEmail() {
-    return $this->email;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
     return parent::jsonSerialize() + [
-      'id' => $this->getId(),
-      'email' => $this->getEmail(),
+      'id' => $this->id,
+      'email' => $this->email,
     ];
   }
 
