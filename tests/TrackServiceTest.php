@@ -17,7 +17,8 @@ class TrackServiceTest extends KlaviyoTestCase {
     '$last_name' => 'Smith',
     '$phone_number' => '1-617-555-1234',
     '$title' => 'Owner',
-    '$organization' => 'Big Box Compan',
+    '$organization' => 'Big Box Company',
+    'Custom' => NULL,
   ];
 
   public function getTrackService(&$container, $responses) {
@@ -36,7 +37,7 @@ class TrackServiceTest extends KlaviyoTestCase {
     $request = $container[0]['request'];
     $this->assertEquals('GET', $request->getMethod());
 
-    $options = http_build_query(['data' => urlencode(base64_encode(json_encode(['token' => $this->apiKey, 'properties' => $person])))]);
+    $options = http_build_query(['data' => base64_encode(json_encode(['token' => $this->apiKey, 'properties' => $person]))]);
     $this->assertSame($options, $request->getUri()->getQuery());
   }
 
