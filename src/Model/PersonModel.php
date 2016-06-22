@@ -121,7 +121,7 @@ class PersonModel extends BaseModel {
     $custom_attributes = array_intersect_key($configuration, $custom_attribute_keys);
 
     // @todo: This is really janky. Currently the Klaviyo API does not allow me
-    //        to delete custom property values.
+    // to delete custom property values.
     foreach ($custom_attributes as &$custom_attribute) {
       if ($custom_attribute === ' ') {
         $custom_attribute = NULL;
@@ -165,7 +165,7 @@ class PersonModel extends BaseModel {
     $custom_attributes = $this->customAttributes;
     if ($json) {
       // @todo: This is really janky. Currently the Klaviyo API does not allow me
-      //        to delete custom property values.
+      // to delete custom property values.
       foreach ($custom_attributes as &$custom_attribute) {
         if (is_null($custom_attribute)) {
           $custom_attribute = ' ';
