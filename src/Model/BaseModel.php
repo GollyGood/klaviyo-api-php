@@ -15,13 +15,17 @@ abstract class BaseModel implements ModelInterface {
    */
   protected static $mutableAttributes = [];
 
+  protected static $optionalDefaults = [];
+
   /**
    * The constructor of a Klaviyo data model.
    *
    * @param array $configuration
    *   The key, value pair array to use for populating the data model.
    */
-  public function __construct($configuration = []) {
+  public function __construct(&$configuration = []) {
+    $configuration += static::$optionalDefaults;
+
     if (!empty($configuration['object'])) {
       $this->objectType = $configuration['object'];
     }
@@ -71,8 +75,11 @@ abstract class BaseModel implements ModelInterface {
    * @return KlaviyoModel
    *   An instance of the Klaviyo data model.
    */
-  public static function createFromJson($json) {
+  public static function createFromJson($json = '') {
     $configuration = json_decode($json, TRUE);
+    if (is_null($configuration)) {
+      $configuration = [];
+    }
     return new static($configuration);
   }
 

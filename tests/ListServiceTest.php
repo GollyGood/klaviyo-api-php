@@ -24,7 +24,7 @@ class ListServiceTest extends KlaviyoTestCase {
       'object' => 'list',
       'id' => 'arY8wg',
       'name' => 'List 1',
-      'list_type' => 'standard',
+      'list_type' => 'list',
       'folder' => NULL,
       'created' => '2016-01-01 18:58:54',
       'updated' => '2016-01-02 06:00:00',
@@ -35,7 +35,7 @@ class ListServiceTest extends KlaviyoTestCase {
       'object' => 'list',
       'id' => 'arY1wg',
       'name' => 'List 1',
-      'list_type' => 'standard',
+      'list_type' => 'segment',
       'folder' => [
         'object' => 'folder',
         'id' => 12345,
@@ -194,7 +194,7 @@ class ListServiceTest extends KlaviyoTestCase {
     $fields = array();
     parse_str(urldecode((string) $request->getBody()), $fields);
     $this->assertSame($this->responseListZero['name'], $fields['name']);
-    $this->assertSame('standard', $fields['list_type']);
+    $this->assertSame('list', $fields['list_type']);
     $this->assertSame($this->apiKey, $fields['api_key']);
   }
 
@@ -255,6 +255,23 @@ class ListServiceTest extends KlaviyoTestCase {
     $request = $container[0]['request'];
     $this->assertSame('GET', $request->getMethod());
     $this->assertSame('https://a.klaviyo.com/api/v1/list/arY8wg/members?email=george.washington%40example.com%2Cthomas.jefferson%40example.com&api_key=asdf', (string) $request->getUri());
+  }
+
+  public function testCheckMembersAreInSegment() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->responseListMembers));
+    $list_manager = $this->getListService($container, $responses);
+    $list = new ListModel($this->responseListOne);
+    $members = $list_manager->checkMembersAreInSegment($list, ['george.washington@example.com','thomas.jefferson@example.com']);
+
+    $this->assertCount(2, $members);
+    foreach ($members as $member) {
+      $this->assertTrue($member instanceof MembershipModel, 'The returned person objects should be an instance of a MembershipModel.');
+    }
+
+    $request = $container[0]['request'];
+    $this->assertSame('GET', $request->getMethod());
+    $this->assertSame('https://a.klaviyo.com/api/v1/segment/arY1wg/members?email=george.washington%40example.com%2Cthomas.jefferson%40example.com&api_key=asdf', (string) $request->getUri());
   }
 
   public function testAddPersonToList() {

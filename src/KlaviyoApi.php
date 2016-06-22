@@ -25,6 +25,7 @@ class KlaviyoApi {
 
   protected $apiKey;
   protected $httpClient;
+  protected $options;
 
   /**
    * The constructor for KlaviyoApi.
@@ -36,13 +37,17 @@ class KlaviyoApi {
    *
    * @throws ApiException
    */
-  public function __construct(ClientInterface $http_client, $api_key = '') {
+  public function __construct(ClientInterface $http_client, $api_key = '', $options = []) {
     if (empty($api_key)) {
       throw new ApiException('You must supply a Klaviyo API key.');
     }
 
     $this->apiKey = $api_key;
     $this->httpClient = $http_client;
+
+    $this->options = $options + [
+      'records_per_page' => 50,
+    ];
   }
 
   /**
@@ -54,10 +59,52 @@ class KlaviyoApi {
    * @return KlaviyoApi
    *   An instance of the KlaviyoApi.
    */
-  public static function create($api_key = '') {
+  public static function create($api_key = '', $options = []) {
     $httpClient = new Client(['base_uri' => self::$endPoint]);
 
-    return new KlaviyoApi($httpClient, $api_key);
+    return new KlaviyoApi($httpClient, $api_key, $options);
+  }
+
+  /**
+   * Retrieve a specific option.
+   *
+   * @param string $option
+   *   The option name to retrieve.
+   *
+   * @return mixed
+   *   The value of the option requested.
+   */
+  public function getOption($option) {
+    $value = NULL;
+
+    if (!empty($this->options[$option])) {
+      $value = $this->options[$option];
+    }
+
+    return $value;
+  }
+
+  /**
+   * Set a specific option.
+   *
+   * @param string $option
+   *   The option name to set.
+   * @param mixed $value
+   *   The value of the option to set.
+   *
+   * @return $this
+   */
+  public function setOption($option, $value) {
+    $this->options[$option] = $value;
+
+    return $this;
+  }
+
+  /**
+   * Retrieve an an array of all available options.
+   */
+  public function getAllOptions() {
+    return $this->options;
   }
 
   /**

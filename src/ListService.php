@@ -63,7 +63,7 @@ class ListService extends BaseService {
    * @return ListModel
    *   The list object created.
    */
-  public function createList($name, $type = 'standard') {
+  public function createList($name, $type = 'list') {
     $options = ['name' => $name, 'list_type' => $type];
     $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
     return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
@@ -111,9 +111,18 @@ class ListService extends BaseService {
    */
   public function checkMembersAreInList(ListModel $list, $emails) {
     $options = ['query' => ['email' => implode(',', $emails)]];
-    $response = $this->api->request('GET', $this->getResourcePath("list/{$list->id}/members"), $options);
+    $response = $this->api->request('GET', $this->getResourcePath("$list->listType/{$list->id}/members"), $options);
     $page = ModelFactory::create(json_decode($response->getBody()->getContents(), TRUE), 'page');
     return array_map(ModelFactory::class . '::create', $page->data);
+  }
+
+  /**
+   * Check if the specified members are in the segment by email address.
+   *
+   * @see ListService::checkMembersAreInList()
+   */
+  public function checkMembersAreInSegment(ListModel $segment, $emails) {
+    return $this->checkMembersAreInList($segment, $emails);
   }
 
   /**

@@ -31,4 +31,18 @@ class KlaviyoApiTest extends KlaviyoTestCase {
     $this->assertInstanceOf(ResponseInterface::Class, $response, 'The response should had been a Response object.');
   }
 
+  public function testOptions() {
+    $options = ['records_per_page' => 20];
+    $api = KlaviyoApi::create('thisisakey', $options);
+    $this->assertSame(20, $api->getOption('records_per_page'));
+    $this->assertSame($options, $api->getAllOptions());
+    $api->setOption('records_per_page', 1)->setOption('records_per_page', 5);
+    $this->assertSame(5, $api->getOption('records_per_page'));
+  }
+
+  public function testDefaultOptions() {
+    $api = KlaviyoApi::create('thisisakey');
+    $this->assertSame(50, $api->getOption('records_per_page'));
+  }
+
 }

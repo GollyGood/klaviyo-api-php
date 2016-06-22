@@ -21,7 +21,7 @@ class PersonModel extends BaseModel {
   protected $timezone;
   protected $phoneNumber;
   protected $customAttributes;
-  protected $optionalDefaults = [
+  protected static $optionalDefaults = [
     'id' => '',
     '$last_name' => '',
     '$organization' => '',
@@ -54,6 +54,7 @@ class PersonModel extends BaseModel {
    */
   public function __construct($configuration) {
     parent::__construct($configuration);
+
     $this->setAttributes($configuration);
   }
 
@@ -77,8 +78,6 @@ class PersonModel extends BaseModel {
    * Set the attributes for the person model.
    */
   protected function setAttributes($configuration) {
-    $configuration += $this->optionalDefaults;
-
     $this->id = $configuration['id'];
     $this->email = $configuration['$email'];
     $this->firstName = $configuration['$first_name'];

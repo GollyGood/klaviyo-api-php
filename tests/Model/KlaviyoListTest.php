@@ -14,7 +14,7 @@ class KlaviyoListTest extends KlaviyoBaseTest {
 
   public function setUp() {
     $this->configuration = array(
-      'object' => 'list',
+      'object' => 'segment',
       'id' => 'dqQnNW',
       'name' => 'Newsletter Subscribers',
       'list_type' => 'standard',
@@ -29,6 +29,7 @@ class KlaviyoListTest extends KlaviyoBaseTest {
       $configuration = $this->configuration;
     }
 
+    $this->assertSame($configuration['object'], $list->objectType);
     $this->assertSame($configuration['id'], $list->id);
     $this->assertSame($configuration['name'], $list->name);
     $this->assertSame($configuration['list_type'], $list->listType);

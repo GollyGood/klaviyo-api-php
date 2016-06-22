@@ -37,7 +37,7 @@ class ModelFactory {
    * @return ModelInterface
    *   A data model representing the specified data type.
    */
-  public static function create($configuration, $type = '') {
+  public static function create($configuration = [], $type = '') {
     return self::callModelCreationMethod('create', $configuration, $type);
   }
 
@@ -52,7 +52,7 @@ class ModelFactory {
    * @return ModelInterface
    *   A data model representing the specified data type.
    */
-  public static function createFromJson($configuration, $type = '') {
+  public static function createFromJson($configuration = '', $type = '') {
     return self::callModelCreationMethod('createFromJson', $configuration, $type);
   }
 

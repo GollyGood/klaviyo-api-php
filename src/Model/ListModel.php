@@ -14,6 +14,15 @@ class ListModel extends BaseModel {
   protected $updated;
   protected $personCount;
   protected static $mutableAttributes = ['name'];
+  protected static $optionalDefaults = [
+    'object' => 'list',
+    'id' => '',
+    'name' => '',
+    'list_type' => 'list',
+    'created' => NULL,
+    'updated' => NULL,
+    'person_count' => 0,
+  ];
 
   /**
    * {@inheritdoc}
@@ -23,7 +32,7 @@ class ListModel extends BaseModel {
 
     $this->id = $configuration['id'];
     $this->name = $configuration['name'];
-    $this->listType = !empty($configuration['list_type']) ? $configuration['list_type'] : 'standard';
+    $this->listType = $configuration['list_type'];
     $this->created = new \DateTime($configuration['created']);
     $this->updated = new \DateTime($configuration['updated']);
     $this->personCount = $configuration['person_count'];
