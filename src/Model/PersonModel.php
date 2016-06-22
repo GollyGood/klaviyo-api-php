@@ -118,7 +118,16 @@ class PersonModel extends BaseModel {
    */
   private function setCustomAttributes($configuration) {
     $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [__CLASS__, 'isCustomAttributeKey']));
-    $this->customAttributes = array_intersect_key($configuration, $custom_attribute_keys);
+    $custom_attributes = array_intersect_key($configuration, $custom_attribute_keys);
+
+    // @todo: This is really janky. Currently the Klaviyo API does not allow me
+    //        to delete custom property values.
+    foreach ($custom_attributes as &$custom_attribute) {
+      if ($custom_attribute === ' ') {
+        $custom_attribute = NULL;
+      }
+    }
+    $this->customAttributes = $custom_attributes;
   }
 
   /**
@@ -152,8 +161,18 @@ class PersonModel extends BaseModel {
   /**
    * Retrieve all custom attributes for the person.
    */
-  public function getAllCustomAttributes() {
-    return $this->customAttributes;
+  public function getAllCustomAttributes($json = FALSE) {
+    $custom_attributes = $this->customAttributes;
+    if ($json) {
+      // @todo: This is really janky. Currently the Klaviyo API does not allow me
+      //        to delete custom property values.
+      foreach ($custom_attributes as &$custom_attribute) {
+        if (is_null($custom_attribute)) {
+          $custom_attribute = ' ';
+        }
+      }
+    }
+    return $custom_attributes;
   }
 
   /**
@@ -175,7 +194,7 @@ class PersonModel extends BaseModel {
       '$country' => $this->country,
       '$timezone' => $this->timezone,
       '$phone_number' => $this->phoneNumber,
-    ] + $this->getAllCustomAttributes();
+    ] + $this->getAllCustomAttributes(TRUE);
   }
 
   /**
