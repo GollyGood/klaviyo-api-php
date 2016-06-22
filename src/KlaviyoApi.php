@@ -141,7 +141,7 @@ class KlaviyoApi {
           throw new ServerErrorApiException($e->getMessage());
 
         default:
-          throw $e;
+          throw new ApiConnectionException($e->getMessage());
       }
     }
 

@@ -5,4 +5,4 @@ namespace Klaviyo\Exception;
 /**
  * Simple Exception for Klaviyo API.
  */
-class ServiceNotFoundException extends \Exception implements KlaviyoExceptionInterface {}
+class ServiceNotFoundException extends ApiConnectionException {}
