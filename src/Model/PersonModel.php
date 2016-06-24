@@ -194,7 +194,7 @@ class PersonModel extends BaseModel {
    * @return string
    *   The string representing the model property.
    */
-  public function getModelPropertyFromSpecialAttributeKey($attribute_key) {
+  public static function getModelPropertyFromSpecialAttributeKey($attribute_key) {
     if (!self::isSpecialAttributeKey($attribute_key)) {
       throw new InvalidSpecialAttributeKeyException(sprintf('%s is not a valid special Klaivyo attribute.', $attribute_key));
     }
