@@ -2,6 +2,9 @@
 
 namespace Klaviyo\Model;
 
+use Klaviyo\Exception\CannotDeleteRequiredSpecialAttributeKeyException;
+use Klaviyo\Exception\InvalidSpecialAttributeKeyException;
+
 /**
  * Simple model for a Klaviyo "Person".
  */
@@ -21,6 +24,7 @@ class PersonModel extends BaseModel {
   protected $timezone;
   protected $phoneNumber;
   protected $customAttributes;
+  protected $unsetAttributes;
   protected static $optionalDefaults = [
     'id' => '',
     '$last_name' => '',
@@ -119,14 +123,6 @@ class PersonModel extends BaseModel {
   private function setCustomAttributes($configuration) {
     $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [__CLASS__, 'isCustomAttributeKey']));
     $custom_attributes = array_intersect_key($configuration, $custom_attribute_keys);
-
-    // @todo: This is really janky. Currently the Klaviyo API does not allow me
-    // to delete custom property values.
-    foreach ($custom_attributes as &$custom_attribute) {
-      if ($custom_attribute === ' ') {
-        $custom_attribute = NULL;
-      }
-    }
     $this->customAttributes = $custom_attributes;
   }
 
@@ -148,7 +144,7 @@ class PersonModel extends BaseModel {
    *   attribute.
    */
   public static function isSpecialAttributeKey($attribute_key) {
-    return ((strpos($attribute_key, '$') === 0) || $attribute_key == 'id' || $attribute_key == 'object');
+    return in_array($attribute_key, self::$attributeKeys);
   }
 
   /**
@@ -161,25 +157,46 @@ class PersonModel extends BaseModel {
   /**
    * Retrieve all custom attributes for the person.
    */
-  public function getAllCustomAttributes($json = FALSE) {
-    $custom_attributes = $this->customAttributes;
-    if ($json) {
-      // @todo: This is really janky. Currently the Klaviyo API does not allow me
-      // to delete custom property values.
-      foreach ($custom_attributes as &$custom_attribute) {
-        if (is_null($custom_attribute)) {
-          $custom_attribute = ' ';
-        }
-      }
+  public function getAllCustomAttributes() {
+    return $this->customAttributes;
+  }
+
+  public function deleteAttribute($attribute_key) {
+    if (self::isSpecialAttributeKey($attribute_key) && isset(self::$optionalDefaults[$attribute_key])) {
+      $property = self::getModelPropertyFromSpecialAttributeKey($attribute_key);
+      $this->{$property} = self::$optionalDefaults[$attribute_key];
     }
-    return $custom_attributes;
+    elseif ($this->getCustomAttribute($attribute_key)) {
+      unset($this->customAttributes[$attribute_key]);
+    }
+    elseif (isset(self::$attributeKeys)) {
+      throw new CannotDeleteRequiredSpecialAttributeKeyException(sprintf('%s is a required special attribute and cannot be deleted.', $attribute_key));
+    }
+
+    $this->unsetAttributes[] = $attribute_key;
+  }
+
+  public function getModelPropertyFromSpecialAttributeKey($attribute_key) {
+    if (!self::isSpecialAttributeKey($attribute_key)) {
+      throw new InvalidSpecialAttributeKeyException(sprintf('%s is not a valid special Klaivyo attribute.', $attribute_key));
+    }
+
+    if (strpos($attribute_key, '$') !== FALSE) {
+      $attribute_key_segements = explode('_', substr($attribute_key, 1));
+      $attribute_key = $attribute_key_segements[0] . implode('', array_map('ucfirst', array_slice($attribute_key_segements, 1)));
+    }
+    elseif ($attribute_key === 'object') {
+      $attribute_key = 'objectType';
+    }
+
+    return $attribute_key;
   }
 
   /**
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    return [
+    $serializable_options = [
       // Object type intentionally left out because the Klaviyo API treats it as
       // a custom field.
       'id' => $this->id,
@@ -194,7 +211,13 @@ class PersonModel extends BaseModel {
       '$country' => $this->country,
       '$timezone' => $this->timezone,
       '$phone_number' => $this->phoneNumber,
-    ] + $this->getAllCustomAttributes(TRUE);
+    ] + $this->getAllCustomAttributes();
+
+    if (!empty($this->unsetAttributes)) {
+      $serializable_options['$unset'] = $this->unsetAttributes;
+    }
+
+    return $serializable_options;
   }
 
   /**

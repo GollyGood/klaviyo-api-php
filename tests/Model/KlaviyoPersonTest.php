@@ -103,4 +103,42 @@ class KlaviyoPersonTest extends KlaviyoBaseTest {
     $this->assertModelMatchesConfiguration($model, $updated_values);
   }
 
+  public function testGetModelPropertyFromSpecialAttributeKey() {
+    $this->assertSame('objectType', PersonModel::getModelPropertyFromSpecialAttributeKey('object'));
+    $this->assertSame('id', PersonModel::getModelPropertyFromSpecialAttributeKey('id'));
+    $this->assertSame('lastName', PersonModel::getModelPropertyFromSpecialAttributeKey('$last_name'));
+    $this->assertSame('firstName', PersonModel::getModelPropertyFromSpecialAttributeKey('$first_name'));
+  }
+
+  /**
+   * @expectedException Klaviyo\Exception\InvalidSpecialAttributeKeyException
+   */
+  public function testInvalidGetModelPropertyFromSpecialAttributeKey() {
+    PersonModel::getModelPropertyFromSpecialAttributeKey('$someAwesomeAttribute');
+  }
+
+  public function testDeleteAttribute() {
+    $person_configuration = $this->configuration;
+    $model = call_user_func("{$this->class}::create", $person_configuration);
+    $model->deleteAttribute('foo');
+
+    unset($person_configuration['foo']);
+    $person_configuration['$unset'] = ['foo'];
+    $this->assertSame($person_configuration, $model->toArray());
+
+    $person_configuration['$last_name'] = '';
+    $person_configuration['$unset'] = ['foo', '$last_name'];
+    $model->deleteAttribute('$last_name');
+    $this->assertSame($person_configuration, $model->toArray());
+  }
+
+  /**
+   * @expectedException Klaviyo\Exception\CannotDeleteRequiredSpecialAttributeKeyException
+   */
+  public function testInvalidDeleteRequiredModelProperty() {
+    $person_configuration = $this->configuration;
+    $model = call_user_func("{$this->class}::create", $person_configuration);
+    $model->deleteAttribute('$email');
+  }
+
 }
