@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Klaviyo\ListService | Klaviyo PHP API Library</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Klaviyo_ListService" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Klaviyo PHP API Library</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../Klaviyo.html">Klaviyo</a></li>
+    
+                <li>ListService</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ListService
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ListService</strong>        extends <a href="../Klaviyo/BaseService.html"><abbr title="Klaviyo\BaseService">BaseService</abbr></a>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The list manager class used to handle lists.</p>                    </div>
+    
+            <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../Klaviyo/PagerTrait.html"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Trait for adding a pager to a class.
+                </div>
+            </div>
+            </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        
+                                            <p>The constructor for the list manager class.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/BaseService.html#method___construct"><abbr title="Klaviyo\BaseService">BaseService</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create">create</a>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        
+                                            <p>Instantiates a new instance of this class.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/BaseService.html#method_create"><abbr title="Klaviyo\BaseService">BaseService</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResourcePath">getResourcePath</a>($resource)
+        
+                                            <p>Retrieve the full resource path.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/BaseService.html#method_getResourcePath"><abbr title="Klaviyo\BaseService">BaseService</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getApi">getApi</a>()
+        
+                                            <p>Retrieve the KlaviyoApi service object.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/PagerTrait.html#method_getApi"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAllRecords">getAllRecords</a>($resource, $query_parameters = array())
+        
+                                            <p>Reteive all records for the specified paginated resource.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/PagerTrait.html#method_getAllRecords"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRecordsFromSpecificPage">getRecordsFromSpecificPage</a>($resource, $page, $count, $query_parameters = array())
+        
+                                            <p>Retrieve the records from a specific page.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/PagerTrait.html#method_getRecordsFromSpecificPage"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPage">getPage</a>($resource, $page, $count = 50, $query_parameters = array())
+        
+                                            <p>Retrieve a specific page from Klaviyo.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/PagerTrait.html#method_getPage"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getList">getList</a>(string $id)
+        
+                                            <p>Retrieve a specific list from Klaviyo.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAllLists">getAllLists</a>()
+        
+                                            <p>Retrieve all lists from Klaviyo.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getListsFromPage">getListsFromPage</a>(int $page, int $count)
+        
+                                            <p>Get lists from a specific page.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createList">createList</a>(string $name, string $type = &#039;list&#039;)
+        
+                                            <p>Create a new list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_updateList">updateList</a>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list)
+        
+                                            <p>Update/Modify an existing list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_deleteList">deleteList</a>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list)
+        
+                                            <p>Delete an existing list.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkMembersAreInList">checkMembersAreInList</a>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list, array $emails)
+        
+                                            <p>Check if the specified members are in the list by email address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkMembersAreInSegment">checkMembersAreInSegment</a>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $segment, $emails)
+        
+                                            <p>Check if the specified members are in the segment by email address.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Klaviyo\PersonListModel">PersonListModel</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_addPersonToList">addPersonToList</a>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list, <a href="../Klaviyo/Model/PersonModel.html"><abbr title="Klaviyo\Model\PersonModel">PersonModel</abbr></a> $person, bool $confirm_opt_in = TRUE)
+        
+                                            <p>Add a person to an existing List.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../Klaviyo/BaseService.html#method___construct"><abbr title="Klaviyo\BaseService">BaseService</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/BaseService.php#L28">line 28</a></div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The constructor for the list manager class.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a></td>
+                <td>$api</td>
+                <td>The Klaviyo API object to use for communicating with the Klaviyo API.</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create">
+        <div class="location">in <a href="../Klaviyo/BaseService.html#method_create"><abbr title="Klaviyo\BaseService">BaseService</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/BaseService.php#L35">line 35</a></div>
+        <code>        static            
+    <strong>create</strong>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Instantiates a new instance of this class.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a></td>
+                <td>$api</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResourcePath">
+        <div class="location">in <a href="../Klaviyo/BaseService.html#method_getResourcePath"><abbr title="Klaviyo\BaseService">BaseService</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/BaseService.php#L46">line 46</a></div>
+        <code>                    string
+    <strong>getResourcePath</strong>($resource)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the full resource path.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$resource</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>The full resource path incuding the resource prefix and resource path.
+  Example: /api/v1/lists</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getApi">
+        <div class="location">in <a href="../Klaviyo/PagerTrait.html#method_getApi"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/PagerTrait.php#L15">line 15</a></div>
+        <code>                    
+    <strong>getApi</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the KlaviyoApi service object.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAllRecords">
+        <div class="location">in <a href="../Klaviyo/PagerTrait.html#method_getAllRecords"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/PagerTrait.php#L28">line 28</a></div>
+        <code>                    array
+    <strong>getAllRecords</strong>($resource, $query_parameters = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reteive all records for the specified paginated resource.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$resource</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$query_parameters</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of all records retrieved from the API.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRecordsFromSpecificPage">
+        <div class="location">in <a href="../Klaviyo/PagerTrait.html#method_getRecordsFromSpecificPage"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/PagerTrait.php#L50">line 50</a></div>
+        <code>                    array
+    <strong>getRecordsFromSpecificPage</strong>($resource, $page, $count, $query_parameters = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the records from a specific page.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$resource</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$page</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$count</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$query_parameters</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of all records retrieved from the API for the specified page.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPage">
+        <div class="location">in <a href="../Klaviyo/PagerTrait.html#method_getPage"><abbr title="Klaviyo\PagerTrait">PagerTrait</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/PagerTrait.php#L66">line 66</a></div>
+        <code>                    array
+    <strong>getPage</strong>($resource, $page, $count = 50, $query_parameters = array())
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve a specific page from Klaviyo.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$resource</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$page</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$count</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$query_parameters</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of information that represents a page.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getList">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L25">line 25</a></div>
+        <code>                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+    <strong>getList</strong>(string $id)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve a specific list from Klaviyo.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$id</td>
+                <td>The id for which to retrieve a list.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+            <td>The list object retrieved by the specified id.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAllLists">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L36">line 36</a></div>
+        <code>                    array
+    <strong>getAllLists</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve all lists from Klaviyo.</p>                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of ListModels that represent all lists in Klaviyo.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getListsFromPage">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L51">line 51</a></div>
+        <code>                    array
+    <strong>getListsFromPage</strong>(int $page, int $count)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Get lists from a specific page.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$page</td>
+                <td>The page number to retrieve.</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$count</td>
+                <td>The number of items per page.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of records from the specified page.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createList">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L66">line 66</a></div>
+        <code>                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+    <strong>createList</strong>(string $name, string $type = &#039;list&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create a new list.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td>The name of the list to be created.</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>The type of list to be created.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+            <td>The list object created.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_updateList">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L81">line 81</a></div>
+        <code>                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+    <strong>updateList</strong>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Update/Modify an existing list.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+                <td>$list</td>
+                <td>The altered list object to update on Klaviyo.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+            <td>The updated list object.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_deleteList">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L96">line 96</a></div>
+        <code>                    <a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a>
+    <strong>deleteList</strong>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Delete an existing list.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+                <td>$list</td>
+                <td>The list object to be deleted.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+            <td>The deleted list object.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkMembersAreInList">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L112">line 112</a></div>
+        <code>                    array
+    <strong>checkMembersAreInList</strong>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list, array $emails)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check if the specified members are in the list by email address.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+                <td>$list</td>
+                <td>The list for which to retrieve members.</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$emails</td>
+                <td>The emails to check are associated with the specified list.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>An array of MembershipModels associated with the specified list.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkMembersAreInSegment">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L124">line 124</a></div>
+        <code>                    
+    <strong>checkMembersAreInSegment</strong>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $segment, $emails)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check if the specified members are in the segment by email address.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+                <td>$segment</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$emails</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                            <h4>See also</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>ListService::checkMembersAreInList()</td>
+                <td></td>
+            </tr>
+            </table>
+
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_addPersonToList">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/ListService.php#L144">line 144</a></div>
+        <code>                    <abbr title="Klaviyo\PersonListModel">PersonListModel</abbr>
+    <strong>addPersonToList</strong>(<a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a> $list, <a href="../Klaviyo/Model/PersonModel.html"><abbr title="Klaviyo\Model\PersonModel">PersonModel</abbr></a> $person, bool $confirm_opt_in = TRUE)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Add a person to an existing List.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/Model/ListModel.html"><abbr title="Klaviyo\Model\ListModel">ListModel</abbr></a></td>
+                <td>$list</td>
+                <td>The ListModel for which to add the person.</td>
+            </tr>
+                    <tr>
+                <td><a href="../Klaviyo/Model/PersonModel.html"><abbr title="Klaviyo\Model\PersonModel">PersonModel</abbr></a></td>
+                <td>$person</td>
+                <td>The PersonModel of the person to add to a List.</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$confirm_opt_in</td>
+                <td>Default to TRUE. Determines if the person should be asked to confirm
+  subscribing to list. When TRUE the person will recieve an email with a
+  confirmation link before zhe is added to the list. Otherwise, when FALSE
+  the person is automatically added to the list.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\PersonListModel">PersonListModel</abbr></td>
+            <td>The PersonList wrapper provided by the Klaviyo API.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

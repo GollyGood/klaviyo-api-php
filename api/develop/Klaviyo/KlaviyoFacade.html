@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Klaviyo\KlaviyoFacade | Klaviyo PHP API Library</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Klaviyo_KlaviyoFacade" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Klaviyo PHP API Library</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../Klaviyo.html">Klaviyo</a></li>
+    
+                <li>KlaviyoFacade</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            KlaviyoFacade
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>KlaviyoFacade</strong>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The Klaviyo API service container, model, and api wrapper.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<abbr title="Pimple\Container">Container</abbr> $container, string $api_key)
+        
+                                            <p>The service container constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<abbr title="Klaviyo\KlaviyoServiceContainer">KlaviyoServiceContainer</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create">create</a>(string $api_key)
+        
+                                            <p>Factory method to create a new service continer.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getContainer">getContainer</a>()
+        
+                                            <p>Retrieve the container.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../Klaviyo/ServiceInterface.html"><abbr title="Klaviyo\ServiceInterface">ServiceInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_service">service</a>(string $service_name)
+        
+                                            <p>Retrieve a service from the service container.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Klaviyo\Klaviyo\Model\ModelInterface">ModelInterface</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_model">model</a>(array $configuration = array(), string $type = &#039;&#039;)
+        
+                                            <p>The model factory wrapper method.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Klaviyo\Klaviyo\Model\ModelInterface">ModelInterface</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_modelFromJson">modelFromJson</a>(string $json = &#039;&#039;, string $type = &#039;&#039;)
+        
+                                            <p>The create from json model factory wrapper method.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModelClass">getModelClass</a>($type)
+        
+                                            <p>Retrieve the model class of the specified model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L24">line 24</a></div>
+        <code>                    
+    <strong>__construct</strong>(<abbr title="Pimple\Container">Container</abbr> $container, string $api_key)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The service container constructor.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="Pimple\Container">Container</abbr></td>
+                <td>$container</td>
+                <td>A the service continer to attach the Klaviyo service provider.</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$api_key</td>
+                <td>The Klaviyo API key to use when creating the Klaviyo api service.</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L38">line 38</a></div>
+        <code>        static            <abbr title="Klaviyo\KlaviyoServiceContainer">KlaviyoServiceContainer</abbr>
+    <strong>create</strong>(string $api_key)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Factory method to create a new service continer.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$api_key</td>
+                <td>The Klaviyo API key to use when creating the Klaviyo api service.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\KlaviyoServiceContainer">KlaviyoServiceContainer</abbr></td>
+            <td>An instance of the a new service container.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getContainer">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L48">line 48</a></div>
+        <code>                    
+    <strong>getContainer</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the container.</p>                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_service">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L61">line 61</a></div>
+        <code>                    <a href="../Klaviyo/ServiceInterface.html"><abbr title="Klaviyo\ServiceInterface">ServiceInterface</abbr></a>
+    <strong>service</strong>(string $service_name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve a service from the service container.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$service_name</td>
+                <td>The name of the service to retrieve.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../Klaviyo/ServiceInterface.html"><abbr title="Klaviyo\ServiceInterface">ServiceInterface</abbr></a></td>
+            <td>The service.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_model">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L83">line 83</a></div>
+        <code>                    <abbr title="Klaviyo\Klaviyo\Model\ModelInterface">ModelInterface</abbr>
+    <strong>model</strong>(array $configuration = array(), string $type = &#039;&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The model factory wrapper method.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$configuration</td>
+                <td>The key, value pair array to use for populating the data model.</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>The type of the data model to create.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\Klaviyo\Model\ModelInterface">ModelInterface</abbr></td>
+            <td>A data model representing the specified data type.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_modelFromJson">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L103">line 103</a></div>
+        <code>                    <abbr title="Klaviyo\Klaviyo\Model\ModelInterface">ModelInterface</abbr>
+    <strong>modelFromJson</strong>(string $json = &#039;&#039;, string $type = &#039;&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The create from json model factory wrapper method.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$json</td>
+                <td>The JSON encoded key, value pair array to use for populating the data
+  model.</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>The type of the data model to create.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\Klaviyo\Model\ModelInterface">ModelInterface</abbr></td>
+            <td>A data model representing the specified data type.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getModelClass">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/KlaviyoFacade.php#L114">line 114</a></div>
+        <code>                    
+    <strong>getModelClass</strong>($type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the model class of the specified model.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
