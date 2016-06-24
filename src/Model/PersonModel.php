@@ -161,6 +161,14 @@ class PersonModel extends BaseModel {
     return $this->customAttributes;
   }
 
+  /**
+   * Delete an attribute from the person model.
+   *
+   * @param string $attribute_key
+   *   The attribute key of the attribute to delete.
+   *
+   * @return $this
+   */
   public function deleteAttribute($attribute_key) {
     if (self::isSpecialAttributeKey($attribute_key) && isset(self::$optionalDefaults[$attribute_key])) {
       $property = self::getModelPropertyFromSpecialAttributeKey($attribute_key);
@@ -174,8 +182,18 @@ class PersonModel extends BaseModel {
     }
 
     $this->unsetAttributes[] = $attribute_key;
+    return $this;
   }
 
+  /**
+   * Retrieve the model property from the special attribute key.
+   *
+   * @param string $attribute_key
+   *   The special attribute key for which to retrieve the model property.
+   *
+   * @return string
+   *   The string representing the model property.
+   */
   public function getModelPropertyFromSpecialAttributeKey($attribute_key) {
     if (!self::isSpecialAttributeKey($attribute_key)) {
       throw new InvalidSpecialAttributeKeyException(sprintf('%s is not a valid special Klaivyo attribute.', $attribute_key));
