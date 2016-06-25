@@ -7,6 +7,10 @@
 
 * [API Documentation](http://gollygood.github.io/klaviyo-api-php/api/develop/)
 
+## In action
+
+* [Drupal Klaviyo API Integration](https://www.drupal.org/sandbox/grndlvl/2752805)
+
 ## Supporting Organizations
 
 * [Illinois Legal Aid Online](http://www.illinoislegalaidonline.org)
