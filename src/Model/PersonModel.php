@@ -94,6 +94,9 @@ class PersonModel extends BaseModel {
     $this->country = $configuration['$country'];
     $this->timezone = $configuration['$timezone'];
     $this->phoneNumber = $configuration['$phone_number'];
+    if (!empty($configuration['$unset'])) {
+      $this->unsetAttributes = $configuration['$unset'];
+    }
 
     $this->setCustomAttributes($configuration);
   }
