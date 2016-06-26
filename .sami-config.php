@@ -7,6 +7,7 @@ use Sami\Version\GitVersionCollection;
 $directory = __DIR__ . '/src';
 
 $versions = GitVersionCollection::create($directory)
+  ->add('master', 'master branch')
   ->add('develop', 'develop branch');
 
 $sami = new Sami($directory, [
