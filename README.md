@@ -5,8 +5,8 @@
 
 ## Documentation
 
-* [Documentation](http://gollygood.github.io/klaviyo-api-php/docs/develop)
-* [API Documentation](http://gollygood.github.io/klaviyo-api-php/api/develop/)
+* [Documentation](http://gollygood.github.io/klaviyo-api-php/docs/master)
+* [API Documentation](http://gollygood.github.io/klaviyo-api-php/api/master/)
 
 ## In action
 
