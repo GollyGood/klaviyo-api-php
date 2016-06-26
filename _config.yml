@@ -1,4 +1,0 @@
-gems:
-  - jekyll-redirect-from
-
-site.baseurl: http://gollygood.github.io/klaviyo-api-php
