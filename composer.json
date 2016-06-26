@@ -1,5 +1,6 @@
 {
     "name": "grndlvl/klaviyo-api-php",
+    "description": "Klaviyo email marketing service API wrapper.",
     "type": "library",
     "license": "MIT",
     "authors": [
