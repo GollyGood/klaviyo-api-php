@@ -50,6 +50,24 @@ class KlaviyoApi {
     ];
   }
 
+  /**
+   * Retrieve the model type based on the percieved model type.
+   *
+   * Sometimes Klaviyo changinges the model type by placing "$" in front of them
+   * also I am not sure if there are other mutations that might happen on this
+   * or if they might change. In order to attempt to prevent this we will use a
+   * getter for the Klaviyo model type.
+   *
+   * @param string $model_type
+   *   The percieved model type.
+   * @param bool $reverse
+   *   Should we try looking of the model type in the reverse direction?
+   *   e.x. The way Klaviyo might hand us a transformed model type.
+   *
+   * @return string
+   *   The model type or the percieved model type depending on the specified
+   *   direction.
+   */
   public static function getModelType($model_type, $reverse = FALSE) {
     $data_map = static::$dataMap;
 

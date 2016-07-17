@@ -2,8 +2,6 @@
 
 namespace Klaviyo\Model;
 
-use Klaviyo\KlaviyoApi;
-
 /**
  * Simple model that represents a page.
  */
