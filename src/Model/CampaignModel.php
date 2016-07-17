@@ -30,7 +30,7 @@ class CampaignModel extends BaseModel {
     $this->fromEmail = $configuration['from_email'];
     $this->fromName = $configuration['from_name'];
     $this->listId = $configuration['list_id'];
-    $this->template = ModelFactory::create($configuration['template']);
+    $this->template = TemplateModel::create($configuration['template']);
     $this->status = $configuration['status'];
     $this->sentAt = $configuration['sent_at'];
     $this->created = new \DateTime($configuration['created']);
