@@ -27,9 +27,12 @@ class TemplateModel extends BaseModel {
 
     $this->id = $configuration['id'];
     $this->name = $configuration['name'];
-    $this->html = \DOMDocument::loadHTML($configuration['html'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : NULL;
     $this->updated = !empty($configuration['created']) ? new \DateTime($configuration['updated']) : NULL;
+
+    $dom = new \DOMDocument();
+    $dom->loadHTML($configuration['html'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $this->html = $dom;
   }
 
   /**

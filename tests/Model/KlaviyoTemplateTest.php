@@ -31,12 +31,13 @@ class KlaviyoTemplateTest extends KlaviyoBaseTest {
     $this->assertSame($this->configuration['object'], $model->objectType);
     $this->assertSame($this->configuration['id'], $model->id);
     $this->assertSame($this->configuration['name'], $model->name);
-    $dom = \DOMDocument::loadHTML($this->configuration['html']);
-    $this->assertEquals($dom, $model->html);
     $created = new \DateTime($configuration['created']);
     $this->assertEquals($created, $model->created);
     $updated = new \DateTime($configuration['updated']);
     $this->assertEquals($updated, $model->updated);
+    $dom = new \DOMDocument();
+    $dom->loadHTML($this->configuration['html']);
+    $this->assertEquals($dom, $model->html);
   }
 
 }
