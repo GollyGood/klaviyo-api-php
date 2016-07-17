@@ -10,7 +10,7 @@ use Klaviyo\Tests\KlaviyoTestCase;
 class KlaviyoFactoryTest extends KlaviyoTestCase {
 
   public function testGetModelMap() {
-    $this->assertCount(6, ModelFactory::getModelMap());
+    $this->assertCount(8, ModelFactory::getModelMap());
 
     foreach (ModelFactory::getModelMap() as $model_name => $model_class) {
       $this->assertTrue(strpos($model_class, 'Klaviyo\Model') !== FALSE);

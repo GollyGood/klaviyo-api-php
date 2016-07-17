@@ -12,21 +12,6 @@ use Psr\Http\Message\ResponseInterface;
 class CampaignServiceTest extends KlaviyoTestCase {
 
   protected $campaignResponse = [
-    'object' => 'campaign',
-    'id'=> 'dqQnNW',
-    'name' => 'Campaign Name',
-    'subject' => 'Company Monthly Newsletter',
-    'from_email' => 'george.washington@example.com',
-    'from_name' => 'George Washington',
-    'list_id' => 'erRoOX',
-    'template' => [
-      'object' => 'email-template',
-      'id' => 'fsSpPY',
-      'html' => '<html><body><p>This is the email content</p></body></html>',
-    ],
-    'status' => 'draft',
-    'sent_at' => null,
-    'created' => '2103-06-14 12:00:00'
   ];
 
   public function testGetPerson() {

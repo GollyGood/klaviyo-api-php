@@ -11,6 +11,8 @@ use Klaviyo\KlaviyoApi;
 class ModelFactory {
 
   protected static $modelMap = [
+    'campaign' => CampaignModel::class,
+    'email-template' => TemplateModel::class,
     'list' => ListModel::class,
     'membership' => MembershipModel::class,
     'page' => PageModel::class,
