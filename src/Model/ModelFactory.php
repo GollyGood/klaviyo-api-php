@@ -103,11 +103,7 @@ class ModelFactory {
       throw new MissingModelTypeException('Unable to determine the model type.');
     }
 
-    if (!empty(KlaviyoApi::$dataMap[$type])) {
-      $type = KlaviyoApi::$dataMap[$type];
-    }
-
-    return $type;
+    return KlaviyoApi::getModelType($type);
   }
 
 }

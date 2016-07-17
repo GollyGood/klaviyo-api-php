@@ -50,6 +50,20 @@ class KlaviyoApi {
     ];
   }
 
+  public static function getModelType($model_type, $reverse = FALSE) {
+    $data_map = static::$dataMap;
+
+    if ($reverse) {
+      $data_map = array_flip($data_map);
+    }
+
+    if (isset($data_map[$model_type])) {
+      $model_type = $data_map[$model_type];
+    }
+
+    return $model_type;
+  }
+
   /**
    * Helper method for creating a new API object.
    *
