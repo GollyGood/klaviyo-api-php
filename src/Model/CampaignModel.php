@@ -3,7 +3,7 @@
 namespace Klaviyo\Model;
 
 /**
- * Simple model that represents a page.
+ * Simple model that represents a campaign.
  */
 class CampaignModel extends BaseModel {
 
