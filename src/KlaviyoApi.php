@@ -156,6 +156,7 @@ class KlaviyoApi {
     $response = NULL;
 
     try {
+      dump($resource);
       $response = $this->httpClient->request($method, $resource, $this->prepareRequestOptions($method, $options, $public));
     }
     catch (ClientException $e) {

@@ -29,6 +29,8 @@ class CampaignModel extends BaseModel {
     $this->subject = $configuration['subject'];
     $this->fromEmail = $configuration['from_email'];
     $this->fromName = $configuration['from_name'];
+    // @todo: This needs to be transformed into an array of lists as the
+    // property lists. The documented API is incorrect.
     $this->listId = $configuration['list_id'];
     $this->template = TemplateModel::create($configuration['template']);
     $this->status = $configuration['status'];
