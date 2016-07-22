@@ -20,7 +20,8 @@ class KlaviyoListTest extends KlaviyoBaseTest {
       'list_type' => 'standard',
       'created' => '2013-06-10 13:00:00',
       'updated' => '2013-06-17 14:00:00',
-      'person_count' => 1000
+      'person_count' => 1000,
+      'folder' => NULL,
     );
   }
 
