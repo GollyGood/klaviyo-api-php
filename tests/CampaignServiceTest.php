@@ -6,6 +6,8 @@ use Klaviyo\KlaviyoApi;
 use Klaviyo\KlaviyoFacade;
 use Klaviyo\CampaignService;
 use Klaviyo\Model\CampaignModel;
+use Klaviyo\Model\ListModel;
+use Klaviyo\Model\TemplateModel;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -48,6 +50,17 @@ class CampaignServiceTest extends KlaviyoTestCase {
     'campaign_type' => 'Regular',
   ];
 
+  protected $campaignConfiguration = [
+    'list_id' => 'dqQnNW',
+    'template_id' => 'fsSpPY',
+    'from_email' => 'george.washington@example.com',
+    'from_name' => 'George Washington',
+    'subject' => 'Company Monthly Newsletter',
+    'name' => 'Campaign Name',
+    'use_smart_sending' => TRUE,
+    'add_google_analytics' => FALSE,
+  ];
+
   public function testGetCampaign() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->campaignResponse));
@@ -58,6 +71,21 @@ class CampaignServiceTest extends KlaviyoTestCase {
     $campaign = $campaign_service->getCampaign('dqQnNW');
     $campaign_response = CampaignModel::create($this->campaignResponse);
     $this->assertEquals($campaign_response, $campaign);
+  }
+
+  public function testCreateCampaign() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->campaignResponse));
+    $client = $this->getClient($container, $responses);
+
+    $campaign_response = $this->campaignResponse;
+    $campaign_response['template'] = TemplateModel::create($campaign_response['template']);
+    $campaign_response['lists'][0] = ListModel::create($campaign_response['lists'][0]);
+    $campaign_response = CampaignModel::create($campaign_response);
+
+    $api = new KlaviyoApi($client, $this->apiKey);
+    $campaign_service = new CampaignService($api);
+    $this->assertEquals($campaign_response, $campaign_service->createCampaign($this->campaignConfiguration));
   }
 
 }

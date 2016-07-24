@@ -47,7 +47,6 @@ class CampaignModel extends BaseModel {
     $this->subject = $configuration['subject'];
     $this->fromEmail = $configuration['from_email'];
     $this->fromName = $configuration['from_name'];
-    $this->template = TemplateModel::create($configuration['template']);
     $this->status = $configuration['status'];
     $this->statusId = $configuration['status_id'];
     $this->statusLabel = $configuration['status_label'];
@@ -59,6 +58,7 @@ class CampaignModel extends BaseModel {
     $this->isSegmented = $configuration['is_segmented'];
     $this->campaignType = $configuration['campaign_type'];
 
+    $this->template = is_subclass_of($configuration['template'], BaseModel::class) ? $configuration['template'] : TemplateModel::create($configuration['template']);
     $this->loadLists($configuration['lists']);
   }
 
@@ -74,7 +74,7 @@ class CampaignModel extends BaseModel {
     $this->lists = [];
 
     foreach ($lists as $list) {
-      $this->lists[] = ListModel::create($list);
+      $this->lists[] = is_subclass_of($list, BaseModel::class) ? $list : ListModel::create($list);
     }
 
     return $this;
