@@ -56,8 +56,40 @@ class CampaignService extends BaseService {
    *   The newly created campaign object.
    */
   public function createCampaign($configuration) {
-    $response = $this->api->request('POST', $this->getResourcePath("campaigns"), $configuration);
+    $response = $this->api->request('POST', $this->getResourcePath('campaigns'), $configuration);
     return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
+  }
+
+  /**
+   * Send a campaign immediately.
+   *
+   * @param string $id
+   *   The id of the campaign to send immediately.
+   *
+   * @return array
+   *   The response from the api.
+   */
+  public function sendCampaignImmediately($id) {
+    $response = $this->api->request('POST', $this->getResourcePath("campaign/$id/send"));
+    return json_decode($response->getBody()->getContents(), TRUE);
+  }
+
+  /**
+   * Schedule a campaign for a time in the future.
+   *
+   * @param string $id
+   *   The id of the campaign to send immediately.
+   * @param \DateTime $send_time
+   *   A future date and time to send the campaign.
+   *
+   * @return array
+   *   The response from the api.
+   */
+  public function scheduleCampaign($id, \DateTime $send_time) {
+    $send_time->setTimezone(new \DateTimeZone('UTC'));
+    $options = ['send_time' => $send_time->format('Y-m-d H:i:s')];
+    $response = $this->api->request('POST', $this->getResourcePath("campaign/$id/schedule"), $options);
+    return json_decode($response->getBody()->getContents(), TRUE);
   }
 
 }

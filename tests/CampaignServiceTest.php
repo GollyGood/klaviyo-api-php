@@ -61,13 +61,18 @@ class CampaignServiceTest extends KlaviyoTestCase {
     'add_google_analytics' => FALSE,
   ];
 
-  public function testGetCampaign() {
-    $container = $responses = [];
-    $responses[] = new Response(200, [], json_encode($this->campaignResponse));
+  public function getCampaignService(&$container, $responses) {
     $client = $this->getClient($container, $responses);
 
     $api = new KlaviyoApi($client, $this->apiKey);
-    $campaign_service = new CampaignService($api);
+    return new CampaignService($api);
+  }
+
+  public function testGetCampaign() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode($this->campaignResponse));
+    $campaign_service = $this->getCampaignService($container, $responses);
+
     $campaign = $campaign_service->getCampaign('dqQnNW');
     $campaign_response = CampaignModel::create($this->campaignResponse);
     $this->assertEquals($campaign_response, $campaign);
@@ -76,16 +81,30 @@ class CampaignServiceTest extends KlaviyoTestCase {
   public function testCreateCampaign() {
     $container = $responses = [];
     $responses[] = new Response(200, [], json_encode($this->campaignResponse));
-    $client = $this->getClient($container, $responses);
 
     $campaign_response = $this->campaignResponse;
     $campaign_response['template'] = TemplateModel::create($campaign_response['template']);
     $campaign_response['lists'][0] = ListModel::create($campaign_response['lists'][0]);
     $campaign_response = CampaignModel::create($campaign_response);
 
-    $api = new KlaviyoApi($client, $this->apiKey);
-    $campaign_service = new CampaignService($api);
+    $campaign_service = $this->getCampaignService($container, $responses);
     $this->assertEquals($campaign_response, $campaign_service->createCampaign($this->campaignConfiguration));
+  }
+
+  public function testSendCampaignImmediately() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode(['status' => 'queued']));
+    $campaign_service = $this->getCampaignService($container, $responses);
+    $this->assertSame(['status' => 'queued'], $campaign_service->sendCampaignImmediately('dqQnNW'));
+  }
+
+  public function testScheduleCampaign() {
+    $container = $responses = [];
+    $responses[] = new Response(200, [], json_encode(['status' => 'queued']));
+    $campaign_service = $this->getCampaignService($container, $responses);
+
+    $send_time = new \DateTime();
+    $this->assertSame(['status' => 'queued'], $campaign_service->scheduleCampaign('dqQnNW', $send_time));
   }
 
 }
