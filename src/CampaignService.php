@@ -86,7 +86,10 @@ class CampaignService extends BaseService {
    *   The response from the api.
    */
   public function scheduleCampaign($id, \DateTime $send_time) {
-    $send_time->setTimezone(new \DateTimeZone('UTC'));
+    // @todo: So the API is wrong about this one we should file a bug as it
+    // it currently does not treat the send time as UTC, but instead it treats
+    // it as the default time specified by the account.
+    //$send_time->setTimezone(new \DateTimeZone('UTC'));
     $options = ['send_time' => $send_time->format('Y-m-d H:i:s')];
     $response = $this->api->request('POST', $this->getResourcePath("campaign/$id/schedule"), $options);
     return json_decode($response->getBody()->getContents(), TRUE);
