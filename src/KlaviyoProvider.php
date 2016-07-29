@@ -49,6 +49,9 @@ class KlaviyoProvider implements ServiceProviderInterface {
     $container['track'] = function ($c) {
       return TrackService::create($c['api']);
     };
+    $container['campaign'] = function ($c) {
+      return CampaignService::create($c['api']);
+    };
 
     return $container;
   }
