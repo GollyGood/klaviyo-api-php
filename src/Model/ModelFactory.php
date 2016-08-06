@@ -11,6 +11,8 @@ use Klaviyo\KlaviyoApi;
 class ModelFactory {
 
   protected static $modelMap = [
+    'campaign' => CampaignModel::class,
+    'email-template' => TemplateModel::class,
     'list' => ListModel::class,
     'membership' => MembershipModel::class,
     'page' => PageModel::class,
@@ -103,11 +105,7 @@ class ModelFactory {
       throw new MissingModelTypeException('Unable to determine the model type.');
     }
 
-    if (!empty(KlaviyoApi::$dataMap[$type])) {
-      $type = KlaviyoApi::$dataMap[$type];
-    }
-
-    return $type;
+    return KlaviyoApi::getModelType($type);
   }
 
 }

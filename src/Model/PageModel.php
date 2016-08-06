@@ -20,7 +20,7 @@ class PageModel extends BaseModel {
    * The configuration to use to populate the Page model.
    */
   public function __construct($configuration) {
-    $this->objectType = KlaviyoApi::$dataMap[$configuration['object']];
+    $this->objectType = KlaviyoApi::getModelType($configuration['object']);
     $this->start = $configuration['start'];
     $this->end = $configuration['end'];
     $this->page = $configuration['page'];
@@ -33,11 +33,8 @@ class PageModel extends BaseModel {
    * {@inheritdoc}
    */
   public function jsonSerialize() {
-    $data_map = array_flip(KlaviyoApi::$dataMap);
-    $object_type = $this->objectType;
-
     return [
-      'object' => !empty($data_map[$object_type]) ? $data_map[$object_type] : $object_type,
+      'object' => KlaviyoApi::getModelType($this->objectType, TRUE),
       'start' => $this->start,
       'end' => $this->end,
       'page_size' => $this->pageSize,

@@ -22,6 +22,7 @@ class ListModel extends BaseModel {
     'created' => NULL,
     'updated' => NULL,
     'person_count' => 0,
+    'folder' => NULL,
   ];
 
   /**
@@ -36,6 +37,7 @@ class ListModel extends BaseModel {
     $this->created = new \DateTime($configuration['created']);
     $this->updated = new \DateTime($configuration['updated']);
     $this->personCount = $configuration['person_count'];
+    $this->folder = $configuration['folder'];
   }
 
   /**
@@ -49,6 +51,7 @@ class ListModel extends BaseModel {
       'created' => $this->created->format($this->dateFormat),
       'updated' => $this->updated->format($this->dateFormat),
       'person_count' => $this->personCount,
+      'folder' => $this->folder,
     ];
   }
 
