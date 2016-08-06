@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Klaviyo\CampaignService | Klaviyo PHP API Library</title>
+
+            <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/sami.css">
+        <script src="../js/jquery-1.11.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/typeahead.min.js"></script>
+        <script src="../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Klaviyo_CampaignService" data-root-path="../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                    <form action="#" method="GET">
+                <select id="version-switcher" name="version">
+                                            <option value="../../0.1.0/index.html">0.1.0</option>
+                                            <option value="../../master/index.html">master branch</option>
+                                            <option value="../../develop/index.html" selected>develop branch</option>
+                                    </select>
+            </form>
+                <form id="search-form" action="../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">Klaviyo PHP API Library</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../classes.html">Classes</a></li>
+                                            <li><a href="../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../interfaces.html">Interfaces</a></li>
+                    <li><a href="../traits.html">Traits</a></li>
+                    <li><a href="../doc-index.html">Index</a></li>
+                    <li><a href="../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                                                            <li><a href="../Klaviyo.html">Klaviyo</a></li>
+    
+                <li>CampaignService</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            CampaignService
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>CampaignService</strong>        extends <a href="../Klaviyo/BaseService.html"><abbr title="Klaviyo\BaseService">BaseService</abbr></a>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/CampaignService.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>The campaign manager class used to handle campaigns.</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        
+                                            <p>The constructor for the list manager class.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/BaseService.html#method___construct"><abbr title="Klaviyo\BaseService">BaseService</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_create">create</a>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        
+                                            <p>Instantiates a new instance of this class.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/BaseService.html#method_create"><abbr title="Klaviyo\BaseService">BaseService</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getResourcePath">getResourcePath</a>($resource)
+        
+                                            <p>Retrieve the full resource path.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../Klaviyo/BaseService.html#method_getResourcePath"><abbr title="Klaviyo\BaseService">BaseService</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Klaviyo\CampaignModel">CampaignModel</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCampaign">getCampaign</a>(string $id)
+        
+                                            <p>Retrieve a specific campaign from Klaviyo.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Klaviyo\CampaignModel">CampaignModel</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createCampaign">createCampaign</a>(array $configuration)
+        
+                                            <p>Create a new campaign.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_sendCampaignImmediately">sendCampaignImmediately</a>(string $id)
+        
+                                            <p>Send a campaign immediately.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_scheduleCampaign">scheduleCampaign</a>(string $id, <a target="_blank" href="http://php.net/DateTime">DateTime</a> $send_time)
+        
+                                            <p>Schedule a campaign for a time in the future.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../Klaviyo/BaseService.html#method___construct"><abbr title="Klaviyo\BaseService">BaseService</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/BaseService.php#L28">line 28</a></div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>The constructor for the list manager class.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a></td>
+                <td>$api</td>
+                <td>The Klaviyo API object to use for communicating with the Klaviyo API.</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_create">
+        <div class="location">in <a href="../Klaviyo/BaseService.html#method_create"><abbr title="Klaviyo\BaseService">BaseService</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/BaseService.php#L35">line 35</a></div>
+        <code>        static            
+    <strong>create</strong>(<a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a> $api)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Instantiates a new instance of this class.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a></td>
+                <td>$api</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getResourcePath">
+        <div class="location">in <a href="../Klaviyo/BaseService.html#method_getResourcePath"><abbr title="Klaviyo\BaseService">BaseService</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/BaseService.php#L46">line 46</a></div>
+        <code>                    string
+    <strong>getResourcePath</strong>($resource)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the full resource path.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$resource</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>The full resource path incuding the resource prefix and resource path.
+  Example: /api/v1/lists</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCampaign">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/CampaignService.php#L21">line 21</a></div>
+        <code>                    <abbr title="Klaviyo\CampaignModel">CampaignModel</abbr>
+    <strong>getCampaign</strong>(string $id)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve a specific campaign from Klaviyo.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$id</td>
+                <td>The id for which to retrieve a campaign.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\CampaignModel">CampaignModel</abbr></td>
+            <td>The campaign object retrieved by the specified id.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createCampaign">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/CampaignService.php#L58">line 58</a></div>
+        <code>                    <abbr title="Klaviyo\CampaignModel">CampaignModel</abbr>
+    <strong>createCampaign</strong>(array $configuration)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create a new campaign.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$configuration</td>
+                <td>An array of configuration parameters for the new campaign.</p>
+
+<p>Allowed elements:
+  * list<em>id: string
+    The ID of the List object you will send this campaign to.
+  * template</em>id: string
+    The ID of the Email Template object that will be the content of this
+    campaign. Note the Email Template is copied when creating this
+    campaign, so future changes to that Email Template will not alter the
+    content of this campaign.
+  * from<em>email: string
+    The email address your email will be sent from and will be used in the
+    reply-to header.from</em>namestringThe name or label associated with the
+    email address you're sending from.
+  * subject: string
+  * name (optional): string
+    A name for this campaign. If not specified, this will default to the
+    subject of the campaign.
+  * use<em>smart</em>sending (optional): boolean
+    If set, limits the number of emails sent to an individual within a
+    short period. If not specified, defaults to True.
+  * add<em>google</em>analytics (optional): boolean
+    If specified, adds Google Analytics tracking tags to links. If not
+    specified, defaults to False.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\CampaignModel">CampaignModel</abbr></td>
+            <td>The newly created campaign object.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_sendCampaignImmediately">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/CampaignService.php#L72">line 72</a></div>
+        <code>                    array
+    <strong>sendCampaignImmediately</strong>(string $id)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Send a campaign immediately.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$id</td>
+                <td>The id of the campaign to send immediately.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>The response from the api.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_scheduleCampaign">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/CampaignService.php#L88">line 88</a></div>
+        <code>                    array
+    <strong>scheduleCampaign</strong>(string $id, <a target="_blank" href="http://php.net/DateTime">DateTime</a> $send_time)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Schedule a campaign for a time in the future.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$id</td>
+                <td>The id of the campaign to send immediately.</td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" href="http://php.net/DateTime">DateTime</a></td>
+                <td>$send_time</td>
+                <td>A future date and time to send the campaign.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td>The response from the api.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
