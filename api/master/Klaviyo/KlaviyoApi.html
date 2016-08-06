@@ -25,8 +25,9 @@
                 <div id="control-panel">
                     <form action="#" method="GET">
                 <select id="version-switcher" name="version">
-                                            <option value="../../0.1.0/index.html" selected>0.1.0</option>
-                                            <option value="../../master/index.html">master branch</option>
+                                            <option value="../../0.2.0/index.html">0.2.0</option>
+                                            <option value="../../0.1.0/index.html">0.1.0</option>
+                                            <option value="../../master/index.html" selected>master branch</option>
                                             <option value="../../develop/index.html">develop branch</option>
                                     </select>
             </form>
@@ -85,7 +86,7 @@
     </div>
 
     <p>    class
-    <strong>KlaviyoApi</strong>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php">View source</a>)
+    <strong>KlaviyoApi</strong>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php">View source</a>)
 </p>
 
         
@@ -129,6 +130,16 @@
                     <a href="#method___construct">__construct</a>(<abbr title="GuzzleHttp\ClientInterface">ClientInterface</abbr> $http_client, $api_key = &#039;&#039;, $options = array())
         
                                             <p>The constructor for KlaviyoApi.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModelType">getModelType</a>(string $model_type, bool $reverse = FALSE)
+        
+                                            <p>Retrieve the model type based on the percieved model type.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
                     <div class="row">
@@ -199,7 +210,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L40">line 40</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L40">line 40</a></div>
         <code>                    
     <strong>__construct</strong>(<abbr title="GuzzleHttp\ClientInterface">ClientInterface</abbr> $http_client, $api_key = &#039;&#039;, $options = array())
         </code>
@@ -248,8 +259,58 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_getModelType">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L71">line 71</a></div>
+        <code>        static            string
+    <strong>getModelType</strong>(string $model_type, bool $reverse = FALSE)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve the model type based on the percieved model type.</p>                    <p>Sometimes Klaviyo changinges the model type by placing "$" in front of them
+also I am not sure if there are other mutations that might happen on this
+or if they might change. In order to attempt to prevent this we will use a
+getter for the Klaviyo model type.</p>            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$model_type</td>
+                <td>The percieved model type.</td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$reverse</td>
+                <td>Should we try looking of the model type in the reverse direction?
+  e.x. The way Klaviyo might hand us a transformed model type.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td>The model type or the percieved model type depending on the specified
+  direction.</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_create">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L62">line 62</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L94">line 94</a></div>
         <code>        static            <a href="../Klaviyo/KlaviyoApi.html"><abbr title="Klaviyo\KlaviyoApi">KlaviyoApi</abbr></a>
     <strong>create</strong>($api_key = &#039;&#039;, $options = array())
         </code>
@@ -294,7 +355,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getOption">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L77">line 77</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L109">line 109</a></div>
         <code>                    mixed
     <strong>getOption</strong>(string $option)
         </code>
@@ -334,7 +395,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setOption">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L97">line 97</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L129">line 129</a></div>
         <code>                    <abbr title="Klaviyo\$this">$this</abbr>
     <strong>setOption</strong>(string $option, mixed $value)
         </code>
@@ -379,7 +440,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getAllOptions">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L106">line 106</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L138">line 138</a></div>
         <code>                    
     <strong>getAllOptions</strong>()
         </code>
@@ -400,7 +461,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_request">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L123">line 123</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L155">line 155</a></div>
         <code>                    <abbr title="Klaviyo\ResponseInterface">ResponseInterface</abbr>
     <strong>request</strong>($method, $resource, $options = array(), $public = FALSE)
         </code>
@@ -455,7 +516,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_prepareRequestOptions">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/0.1.0/src/KlaviyoApi.php#L160">line 160</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/KlaviyoApi.php#L192">line 192</a></div>
         <code>                    array
     <strong>prepareRequestOptions</strong>($method, $options, $public = FALSE)
         </code>
