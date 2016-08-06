@@ -10,7 +10,7 @@
 
 ## In action
 
-* [Drupal Klaviyo API Integration](https://www.drupal.org/sandbox/grndlvl/2752805)
+* [Drupal Klaviyo API Integration](https://www.drupal.org/project/klaviyo)
 
 ## Supporting Organizations
 
