@@ -27,8 +27,8 @@
                 <select id="version-switcher" name="version">
                                             <option value="../../../0.2.0/index.html">0.2.0</option>
                                             <option value="../../../0.1.0/index.html">0.1.0</option>
-                                            <option value="../../../master/index.html" selected>master branch</option>
-                                            <option value="../../../develop/index.html">develop branch</option>
+                                            <option value="../../../master/index.html">master branch</option>
+                                            <option value="../../../develop/index.html" selected>develop branch</option>
                                     </select>
             </form>
                 <form id="search-form" action="../../search.html" method="GET">
@@ -87,7 +87,7 @@
     </div>
 
     <p>    class
-    <strong>TemplateModel</strong>        extends <a href="../../Klaviyo/Model/BaseModel.html"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/TemplateModel.php">View source</a>)
+    <strong>TemplateModel</strong>        extends <a href="../../Klaviyo/Model/BaseModel.html"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a>        (<a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/TemplateModel.php">View source</a>)
 </p>
 
         
@@ -130,7 +130,7 @@
                     <a href="#method___set">__set</a>($property, $value)
         
                                             <p>PHPs magic set method to provide access to our mutable attributes.</p>                </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../Klaviyo/Model/BaseModel.html#method___set"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a></small></div>
+                <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -172,6 +172,26 @@
                                             <p>Convert the model to an array.</p>                </div>
                 <div class="col-md-2"><small>from&nbsp;<a href="../../Klaviyo/Model/BaseModel.html#method_toArray"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a></small></div>
             </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Klaviyo\Model\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setHtml">setHtml</a>(<a target="_blank" href="http://php.net/DOMDocument">DOMDocument</a>|string $value)
+        
+                                            <p>Set the html value.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" href="http://php.net/DOMDocument">DOMDocument</a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHtmlObjectFromString">getHtmlObjectFromString</a>(string $content)
+        
+                                            <p>Retrieve an HTML object from the specified string.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
             </div>
 
 
@@ -180,7 +200,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/TemplateModel.php#L24">line 24</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/TemplateModel.php#L27">line 27</a></div>
         <code>                    
     <strong>__construct</strong>(array $configuration)
         </code>
@@ -211,7 +231,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___get">
-        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method___get"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/BaseModel.php#L37">line 37</a></div>
+        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method___get"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/BaseModel.php#L37">line 37</a></div>
         <code>                    
     <strong>__get</strong>($property)
         </code>
@@ -242,7 +262,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___set">
-        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method___set"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/BaseModel.php#L48">line 48</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/TemplateModel.php#L41">line 41</a></div>
         <code>                    <abbr title="Klaviyo\Model\$this">$this</abbr>
     <strong>__set</strong>($property, $value)
         </code>
@@ -287,7 +307,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_create">
-        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method_create"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/BaseModel.php#L65">line 65</a></div>
+        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method_create"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/BaseModel.php#L65">line 65</a></div>
         <code>        static            <abbr title="Klaviyo\Model\KlaviyoModel">KlaviyoModel</abbr>
     <strong>create</strong>(array $configuration = array())
         </code>
@@ -327,7 +347,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_createFromJson">
-        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method_createFromJson"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/BaseModel.php#L78">line 78</a></div>
+        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method_createFromJson"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/BaseModel.php#L78">line 78</a></div>
         <code>        static            <abbr title="Klaviyo\Model\KlaviyoModel">KlaviyoModel</abbr>
     <strong>createFromJson</strong>(array $json = &#039;&#039;)
         </code>
@@ -367,7 +387,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_jsonSerialize">
-        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/TemplateModel.php#L41">line 41</a></div>
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/TemplateModel.php#L90">line 90</a></div>
         <code>                    
     <strong>jsonSerialize</strong>()
         </code>
@@ -388,7 +408,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_toArray">
-        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method_toArray"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/master/src/Model/BaseModel.php#L98">line 98</a></div>
+        <div class="location">in <a href="../../Klaviyo/Model/BaseModel.html#method_toArray"><abbr title="Klaviyo\Model\BaseModel">BaseModel</abbr></a> at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/BaseModel.php#L98">line 98</a></div>
         <code>                    
     <strong>toArray</strong>()
         </code>
@@ -401,6 +421,87 @@
                                     <p>Convert the model to an array.</p>                                </div>
                 <div class="tags">
             
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setHtml">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/TemplateModel.php#L59">line 59</a></div>
+        <code>                    <abbr title="Klaviyo\Model\$this">$this</abbr>
+    <strong>setHtml</strong>(<a target="_blank" href="http://php.net/DOMDocument">DOMDocument</a>|string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the html value.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/DOMDocument">DOMDocument</a>|string</td>
+                <td>$value</td>
+                <td>The HTML for the template. The value may be either a string or a
+  DOMDocument.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Klaviyo\Model\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHtmlObjectFromString">
+        <div class="location">at line         <a href="https://github.com/GollyGood/klaviyo-api-php/blob/develop/src/Model/TemplateModel.php#L81">line 81</a></div>
+        <code>                    <a target="_blank" href="http://php.net/DOMDocument">DOMDocument</a>
+    <strong>getHtmlObjectFromString</strong>(string $content)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Retrieve an HTML object from the specified string.</p>                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$content</td>
+                <td>The valid HTML to transform into an HTML object.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" href="http://php.net/DOMDocument">DOMDocument</a></td>
+            <td>The HTML object that may used to manipulate the DOM.</td>
+        </tr>
+    </table>
+
             
             
                     </div>
