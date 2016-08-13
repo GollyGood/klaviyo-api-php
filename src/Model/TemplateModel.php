@@ -17,6 +17,9 @@ class TemplateModel extends BaseModel {
     'created' => NULL,
     'updated' => NULL,
   ];
+  protected static $mutableAttributes = [
+    'html',
+  ];
 
   /**
    * {@inheritdoc}
@@ -29,10 +32,56 @@ class TemplateModel extends BaseModel {
     $this->name = $configuration['name'];
     $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : NULL;
     $this->updated = !empty($configuration['created']) ? new \DateTime($configuration['updated']) : NULL;
+    $this->setHtml($configuration['html']);
+  }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function __set($property, $value) {
+    if ($property === 'html') {
+      return $this->setHtml($value);
+    }
+    else {
+      return parent::__set($property, $value);
+    }
+  }
+
+  /**
+   * Set the html value.
+   *
+   * @param \DOMDocument|string $value
+   *   The HTML for the template. The value may be either a string or a
+   *   DOMDocument.
+   *
+   * @return $this
+   */
+  public function setHtml($value) {
+    if (is_string($value)) {
+      $value = $this->getHtmlObjectFromString($value);
+    }
+
+    if (!($value instanceof \DOMDocument)) {
+      throw new \InvalidArgumentException('"html" must be set as a valid DOMDocument object.');
+    }
+    $this->html = $value;
+
+    return $this;
+  }
+
+  /**
+   * Retrieve an HTML object from the specified string.
+   *
+   * @param string $content
+   *   The valid HTML to transform into an HTML object.
+   *
+   * @return \DOMDocument
+   *   The HTML object that may used to manipulate the DOM.
+   */
+  public function getHtmlObjectFromString($content) {
     $dom = new \DOMDocument();
-    $dom->loadHTML($configuration['html'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    $this->html = $dom;
+    $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    return $dom;
   }
 
   /**
