@@ -21,7 +21,7 @@ class TemplateService extends BaseService {
    */
   public function updateTemplate(TemplateModel $template) {
     $options = ['name' => $template->name, 'html' => $template->html->saveHtml()];
-    $response = $this->api->request('PUT', $this->getResourcePath("email-templates/{$template->id}"), $options);
+    $response = $this->api->request('PUT', $this->getResourcePath("email-template/{$template->id}"), $options);
     return ModelFactory::createFromJson($response->getBody()->getContents(), 'email-template');
   }
 
