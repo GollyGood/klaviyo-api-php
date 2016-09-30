@@ -40,17 +40,20 @@ class KlaviyoProvider implements ServiceProviderInterface {
     $container['api'] = function ($c) {
       return KlaviyoApi::create($c['api_key']);
     };
+    $container['campaign'] = function ($c) {
+      return CampaignService::create($c['api']);
+    };
     $container['lists'] = function ($c) {
       return ListService::create($c['api']);
     };
     $container['person'] = function ($c) {
       return PersonService::create($c['api']);
     };
+    $container['template'] = function ($c) {
+      return TemplateService::create($c['api']);
+    };
     $container['track'] = function ($c) {
       return TrackService::create($c['api']);
-    };
-    $container['campaign'] = function ($c) {
-      return CampaignService::create($c['api']);
     };
 
     return $container;
