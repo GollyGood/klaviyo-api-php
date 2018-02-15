@@ -77,7 +77,9 @@ class CampaignModel extends BaseModel
         $this->isSegmented = $configuration['is_segmented'];
         $this->campaignType = $configuration['campaign_type'];
 
-        $this->template = is_subclass_of($configuration['template'], BaseModel::class) ? $configuration['template'] : TemplateModel::create($configuration['template']);
+        $this->template = is_subclass_of($configuration['template'], BaseModel::class) ?
+                            $configuration['template'] :
+                            TemplateModel::create($configuration['template']);
         $this->loadLists($configuration['lists']);
     }
 

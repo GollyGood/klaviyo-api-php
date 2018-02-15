@@ -170,8 +170,12 @@ class KlaviyoApi
      * @throws ServerErrorApiException
      * @throws ApiConnectionException
      */
-    public function request(string $method, string $resource, array $options = [], bool $public = false): ResponseInterface
-    {
+    public function request(
+        string $method,
+        string $resource,
+        array $options = [],
+        bool $public = false
+    ): ResponseInterface {
         $response = null;
 
         try {
@@ -209,14 +213,16 @@ class KlaviyoApi
      * Prepare the options array before use in the request.
      *
      * @param RequestInterface $request
-     * @param array $options
-     *   Additional options to pass on to the HTTP client.
+     * @param array $options    Additional options to pass on to the HTTP client.
      *
      * @param bool $public
-     * @return RequestInterface The prepared additional options to pass on to the HTTP client.*   The prepared additional options to pass on to the HTTP client.
+     * @return RequestInterface     The prepared additional options to pass on to the HTTP client.
      */
-    public function prepareRequest(RequestInterface $request, array $options, bool $public = false): RequestInterface
-    {
+    public function prepareRequest(
+        RequestInterface $request,
+        array $options,
+        bool $public = false
+    ): RequestInterface {
         if ($request->getMethod() === 'GET') {
             if (empty($options['query']['api_key'])) {
                 $options['query']['api_key'] = $this->apiKey;
@@ -225,7 +231,11 @@ class KlaviyoApi
             if ($public) {
                 $api_key = $options['query']['api_key'];
                 unset($options['query']['api_key']);
-                $options = ['query' => ['data' => base64_encode(json_encode(['token' => $api_key] + $options['query']))]];
+                $options = [
+                    'query' => [
+                        'data' => base64_encode(json_encode(['token' => $api_key] + $options['query']))
+                    ]
+                ];
             }
             $uri = $request->getUri();
             $uri = $uri->withQuery(http_build_query($options['query']));

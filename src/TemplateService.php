@@ -164,8 +164,14 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function sendTemplate(TemplateModel $template, string $fromEmail, string $fromName, string $subject, array $to, array $context = []): bool
-    {
+    public function sendTemplate(
+        TemplateModel $template,
+        string $fromEmail,
+        string $fromName,
+        string $subject,
+        array $to,
+        array $context = []
+    ): bool {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$template->id}/send"), [
             'from_email' => $fromEmail,
             'from_name' => $fromName,

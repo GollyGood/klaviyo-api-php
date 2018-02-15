@@ -145,7 +145,12 @@ class PersonModel extends BaseModel
      */
     private function setCustomAttributes($configuration)
     {
-        $custom_attribute_keys = array_flip(array_filter(array_keys($configuration), [__CLASS__, 'isCustomAttributeKey']));
+        $custom_attribute_keys = array_flip(
+            array_filter(
+                array_keys($configuration),
+                [__CLASS__, 'isCustomAttributeKey']
+            )
+        );
         $custom_attributes = array_intersect_key($configuration, $custom_attribute_keys);
         $this->customAttributes = $custom_attributes;
     }
@@ -211,7 +216,9 @@ class PersonModel extends BaseModel
         } elseif ($this->getCustomAttribute($attributeKey)) {
             unset($this->customAttributes[$attributeKey]);
         } elseif (isset(self::$attributeKeys)) {
-            throw new CannotDeleteRequiredSpecialAttributeKeyException(sprintf('%s is a required special attribute and cannot be deleted.', $attributeKey));
+            throw new CannotDeleteRequiredSpecialAttributeKeyException(
+                sprintf('%s is a required special attribute and cannot be deleted.', $attributeKey)
+            );
         }
 
         $this->unsetAttributes[] = $attributeKey;
@@ -228,12 +235,17 @@ class PersonModel extends BaseModel
     public static function getModelPropertyFromSpecialAttributeKey(string $attributeKey): string
     {
         if (!self::isSpecialAttributeKey($attributeKey)) {
-            throw new InvalidSpecialAttributeKeyException(sprintf('%s is not a valid special Klaivyo attribute.', $attributeKey));
+            throw new InvalidSpecialAttributeKeyException(
+                sprintf('%s is not a valid special Klaivyo attribute.', $attributeKey)
+            );
         }
 
         if (strpos($attributeKey, '$') !== false) {
             $attribute_key_segements = explode('_', substr($attributeKey, 1));
-            $attributeKey = $attribute_key_segements[0] . implode('', array_map('ucfirst', array_slice($attribute_key_segements, 1)));
+            $attributeKey = $attribute_key_segements[0] . implode('', array_map(
+                'ucfirst',
+                array_slice($attribute_key_segements, 1)
+            ));
         } elseif ($attributeKey === 'object') {
             $attributeKey = 'objectType';
         }
