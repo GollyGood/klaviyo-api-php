@@ -5,96 +5,99 @@ namespace Klaviyo\Model;
 /**
  * Simple model that represents a template.
  */
-class TemplateModel extends BaseModel {
+class TemplateModel extends BaseModel
+{
+    protected $id;
+    protected $name;
+    protected $html;
+    protected $created;
+    protected $updated;
+    protected static $optionalDefaults = [
+        'name' => '',
+        'created' => null,
+        'updated' => null,
+    ];
+    protected static $mutableAttributes = [
+        'html',
+    ];
 
-  protected $id;
-  protected $name;
-  protected $html;
-  protected $created;
-  protected $updated;
-  protected static $optionalDefaults = [
-    'name' => '',
-    'created' => NULL,
-    'updated' => NULL,
-  ];
-  protected static $mutableAttributes = [
-    'html',
-  ];
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($configuration)
+    {
+        parent::__construct($configuration);
+        $configuration += self::$optionalDefaults;
 
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct($configuration) {
-    parent::__construct($configuration);
-    $configuration += self::$optionalDefaults;
-
-    $this->id = $configuration['id'];
-    $this->name = $configuration['name'];
-    $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : NULL;
-    $this->updated = !empty($configuration['created']) ? new \DateTime($configuration['updated']) : NULL;
-    $this->setHtml($configuration['html']);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __set($property, $value) {
-    if ($property === 'html') {
-      return $this->setHtml($value);
-    }
-    else {
-      return parent::__set($property, $value);
-    }
-  }
-
-  /**
-   * Set the html value.
-   *
-   * @param \DOMDocument|string $value
-   *   The HTML for the template. The value may be either a string or a
-   *   DOMDocument.
-   *
-   * @return $this
-   */
-  public function setHtml($value) {
-    if (is_string($value)) {
-      $value = $this->getHtmlObjectFromString($value);
+        $this->id = $configuration['id'];
+        $this->name = $configuration['name'];
+        $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : null;
+        $this->updated = !empty($configuration['created']) ? new \DateTime($configuration['updated']) : null;
+        $this->setHtml($configuration['html']);
     }
 
-    if (!($value instanceof \DOMDocument)) {
-      throw new \InvalidArgumentException('"html" must be set as a valid DOMDocument object.');
+    /**
+     * {@inheritdoc}
+     */
+    public function __set($property, $value)
+    {
+        if ($property === 'html') {
+            return $this->setHtml($value);
+        } else {
+            return parent::__set($property, $value);
+        }
     }
-    $this->html = $value;
 
-    return $this;
-  }
+    /**
+     * Set the html value.
+     *
+     * @param \DOMDocument|string $value
+     *   The HTML for the template. The value may be either a string or a
+     *   DOMDocument.
+     *
+     * @return $this
+     */
+    public function setHtml($value)
+    {
+        if (is_string($value)) {
+            $value = $this->getHtmlObjectFromString($value);
+        }
 
-  /**
-   * Retrieve an HTML object from the specified string.
-   *
-   * @param string $content
-   *   The valid HTML to transform into an HTML object.
-   *
-   * @return \DOMDocument
-   *   The HTML object that may used to manipulate the DOM.
-   */
-  public function getHtmlObjectFromString($content) {
-    $dom = new \DOMDocument();
-    @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    return $dom;
-  }
+        if (!($value instanceof \DOMDocument)) {
+            throw new \InvalidArgumentException('"html" must be set as a valid DOMDocument object.');
+        }
+        $this->html = $value;
 
-  /**
-   * {@inheritdoc}
-   */
-  public function jsonSerialize() {
-    return array_filter(parent::jsonSerialize() + [
-      'id' => $this->id,
-      'name' => $this->name,
-      'html' => trim($this->html->saveHtml()),
-      'created' => !empty($this->created) ? $this->created->format($this->dateFormat) : NULL,
-      'updated' => !empty($this->updated) ? $this->updated->format($this->dateFormat) : NULL,
-    ]);
-  }
+        return $this;
+    }
 
+    /**
+     * Retrieve an HTML object from the specified string.
+     *
+     * @param string $content
+     *   The valid HTML to transform into an HTML object.
+     *
+     * @return \DOMDocument
+     *   The HTML object that may used to manipulate the DOM.
+     */
+    public function getHtmlObjectFromString($content)
+    {
+        $dom = new \DOMDocument();
+        @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        return $dom;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        return array_filter(parent::jsonSerialize() + [
+            'id' => $this->id,
+            'name' => $this->name,
+            'html' => trim($this->html->saveHtml()),
+            'created' => !empty($this->created) ? $this->created->format($this->dateFormat) : null,
+            'updated' => !empty($this->updated) ? $this->updated->format($this->dateFormat) : null,
+        ]);
+    }
 }

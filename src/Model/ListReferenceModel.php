@@ -5,30 +5,31 @@ namespace Klaviyo\Model;
 /**
  * Simple model for a Klaviyo "List" reference.
  */
-class ListReferenceModel extends BaseModel {
+class ListReferenceModel extends BaseModel
+{
+    protected $id;
+    protected $name;
+    protected $listType;
 
-  protected $id;
-  protected $name;
-  protected $listType;
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($configuration)
+    {
+        parent::__construct($configuration);
 
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct($configuration) {
-    parent::__construct($configuration);
+        $this->id = $configuration['id'];
+        $this->name = $configuration['name'];
+    }
 
-    $this->id = $configuration['id'];
-    $this->name = $configuration['name'];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function jsonSerialize() {
-    return parent::jsonSerialize() + [
-      'id' => $this->id,
-      'name' => $this->name,
-    ];
-  }
-
+    /**
+     * {@inheritdoc}
+     */
+    public function jsonSerialize()
+    {
+        return parent::jsonSerialize() + [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
 }
