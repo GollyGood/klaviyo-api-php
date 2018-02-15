@@ -21,8 +21,7 @@ class TrackServiceTest extends KlaviyoTestCase
 
     public function getTrackService(&$container, $responses)
     {
-        $client = $this->getClient($container, $responses);
-        $api = new KlaviyoApi($client, $this->apiKey);
+        $api = $this->getApi($this->apiKey, [], $container, $responses);
         return new TrackService($api);
     }
 

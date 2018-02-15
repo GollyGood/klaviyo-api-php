@@ -24,9 +24,8 @@ class TemplateServiceTest extends KlaviyoTestCase
         $template = $this->templateConfiguration;
         $template['html'] = '<html><body>Yay it was changed.</body></html>';
         $responses[] = new Response(200, [], json_encode($template));
-        $client = $this->getClient($container, $responses);
 
-        $api = new KlaviyoApi($client, $this->apiKey);
+        $api = $this->getApi($this->apiKey, [], $container,  $responses);
         $template_service = new TemplateService($api);
 
         $template = TemplateModel::create($this->templateConfiguration);

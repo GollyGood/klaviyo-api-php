@@ -10,7 +10,6 @@ use Klaviyo\Model\TemplateModel;
  */
 class TemplateService extends BaseService
 {
-
     /**
      * Update the specified template.
      *

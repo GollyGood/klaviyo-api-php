@@ -27,8 +27,7 @@ class PersonServiceTest extends KlaviyoTestCase
 
     public function getPersonService(&$container, $responses)
     {
-        $client = $this->getClient($container, $responses);
-        $api = new KlaviyoApi($client, $this->apiKey);
+        $api = $this->getApi($this->apiKey, [], $container, $responses);
         return new PersonService($api);
     }
 

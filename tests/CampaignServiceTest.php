@@ -3,6 +3,8 @@
 namespace Klaviyo\Tests;
 
 use GuzzleHttp\Psr7\Response;
+use Http\Factory\Guzzle\RequestFactory;
+use Http\Factory\Guzzle\StreamFactory;
 use Klaviyo\CampaignService;
 use Klaviyo\KlaviyoApi;
 use Klaviyo\Model\CampaignModel;
@@ -62,7 +64,7 @@ class CampaignServiceTest extends KlaviyoTestCase
     {
         $client = $this->getClient($container, $responses);
 
-        $api = new KlaviyoApi($client, $this->apiKey);
+        $api = new KlaviyoApi($client, new RequestFactory(), new StreamFactory(), $this->apiKey);
         return new CampaignService($api);
     }
 

@@ -2,15 +2,16 @@
 
 namespace Klaviyo;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Psr7\Request;
+use Interop\Http\Factory\RequestFactoryInterface;
+use Interop\Http\Factory\StreamFactoryInterface;
+use Klaviyo\Exception\ApiConnectionException;
 use Klaviyo\Exception\ApiException;
 use Klaviyo\Exception\BadRequestApiException;
 use Klaviyo\Exception\NotAuthorizedApiException;
 use Klaviyo\Exception\NotFoundApiException;
 use Klaviyo\Exception\ServerErrorApiException;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * The main Klaviyo API class for communicating with the Klaviyo API.
@@ -23,28 +24,53 @@ class KlaviyoApi
         '$person' => 'person',
     ];
 
+    /**
+     * @var string
+     */
     protected $apiKey;
-    protected $httpClient;
+
+    /**
+     * @var array
+     */
     protected $options;
+
+    /**
+     * @var HttpClientInterface
+     */
+    protected $httpClient;
+
+    /**
+     * @var RequestFactoryInterface
+     */
+    protected $requestFactory;
+
+    /**
+     * @var StreamFactoryInterface
+     */
+    protected $streamFactory;
 
     /**
      * The constructor for KlaviyoApi.
      *
-     * @param ClientInterface $http_client
-     *   The HTTP client used for communication with the API.
-     * @param string $api_key
-     *   The API key to use when communicating with the API.
+     * @param HttpClientInterface $httpClient       The HTTP client used for communication with the API.
+     * @param RequestFactoryInterface $requestFactory
+     * @param StreamFactoryInterface $streamFactory
+     * @param string $apiKey                        The API key to use when communicating with the API.
      *
-     * @throws ApiException
+     * @param array $options
      */
-    public function __construct(ClientInterface $http_client, $api_key = '', $options = [])
+    public function __construct(
+        HttpClientInterface $httpClient,
+        RequestFactoryInterface $requestFactory,
+        StreamFactoryInterface $streamFactory,
+        string $apiKey,
+        array $options = []
+    )
     {
-        if (empty($api_key)) {
-            throw new ApiException('You must supply a Klaviyo API key.');
-        }
-
-        $this->apiKey = $api_key;
-        $this->httpClient = $http_client;
+        $this->apiKey = $apiKey;
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
+        $this->streamFactory = $streamFactory;
 
         $this->options = $options + [
             'records_per_page' => 50,
@@ -52,24 +78,24 @@ class KlaviyoApi
     }
 
     /**
-     * Retrieve the model type based on the percieved model type.
+     * Retrieve the model type based on the perceived model type.
      *
-     * Sometimes Klaviyo changinges the model type by placing "$" in front of them
+     * Sometimes Klaviyo changes the model type by placing "$" in front of them
      * also I am not sure if there are other mutations that might happen on this
      * or if they might change. In order to attempt to prevent this we will use a
      * getter for the Klaviyo model type.
      *
-     * @param string $model_type
-     *   The percieved model type.
+     * @param string $modelType
+     *   The perceived model type.
      * @param bool $reverse
      *   Should we try looking of the model type in the reverse direction?
      *   e.x. The way Klaviyo might hand us a transformed model type.
      *
      * @return string
-     *   The model type or the percieved model type depending on the specified
+     *   The model type or the perceived model type depending on the specified
      *   direction.
      */
-    public static function getModelType($model_type, $reverse = false)
+    public static function getModelType(string $modelType, bool $reverse = false): string
     {
         $data_map = static::$dataMap;
 
@@ -77,27 +103,11 @@ class KlaviyoApi
             $data_map = array_flip($data_map);
         }
 
-        if (isset($data_map[$model_type])) {
-            $model_type = $data_map[$model_type];
+        if (isset($data_map[$modelType])) {
+            $modelType = $data_map[$modelType];
         }
 
-        return $model_type;
-    }
-
-    /**
-     * Helper method for creating a new API object.
-     *
-     * @param string $api_key
-     *   The API key to use when communicating with the API.
-     *
-     * @return KlaviyoApi
-     *   An instance of the KlaviyoApi.
-     */
-    public static function create($api_key = '', $options = [])
-    {
-        $httpClient = new Client(['base_uri' => self::$endPoint]);
-
-        return new KlaviyoApi($httpClient, $api_key, $options);
+        return $modelType;
     }
 
     /**
@@ -109,7 +119,7 @@ class KlaviyoApi
      * @return mixed
      *   The value of the option requested.
      */
-    public function getOption($option)
+    public function getOption(string $option)
     {
         $value = null;
 
@@ -130,7 +140,7 @@ class KlaviyoApi
      *
      * @return $this
      */
-    public function setOption($option, $value)
+    public function setOption(string $option, $value)
     {
         $this->options[$option] = $value;
 
@@ -140,7 +150,7 @@ class KlaviyoApi
     /**
      * Retrieve an an array of all available options.
      */
-    public function getAllOptions()
+    public function getAllOptions(): array
     {
         return $this->options;
     }
@@ -148,38 +158,48 @@ class KlaviyoApi
     /**
      * Perform a request against the API.
      *
-     * @param string $method
-     *   The HTTP method to use for the request.
-     * @param string $resource
-     *   The path to the resource to access on the API.
-     * @param array $options
-     *   Additional options to pass on to the HTTP client.
+     * @param string $method        The HTTP method to use for the request.
+     * @param string $resource      The path to the resource to access on the API.
+     * @param array $options        Additional options to pass on to the HTTP client.
+     * @param bool $public
      *
-     * @return ResponseInterface
-     *    The response of the request as provided by the HTTP client.
+     * @return ResponseInterface        The response of the request as provided by the HTTP client.
+     *
+     * @throws BadRequestApiException
+     * @throws NotAuthorizedApiException
+     * @throws NotFoundApiException
+     * @throws ServerErrorApiException
+     * @throws ApiConnectionException
      */
-    public function request($method, $resource, $options = [], $public = false)
+    public function request(string $method, string $resource, array $options = [], bool $public = false): ResponseInterface
     {
         $response = null;
 
         try {
-            $response = $this->httpClient->request($method, $resource, $this->prepareRequestOptions($method, $options, $public));
-        } catch (ClientException $e) {
-            switch ($e->getResponse()->getStatusCode()) {
-                case '400':
-                    throw new BadRequestApiException($e->getMessage());
+            $request = $this->requestFactory->createRequest($method, self::$endPoint . '/' . ltrim($resource, '/'));
+            $request = $this->prepareRequest($request, $options, $public);
 
-                case '401':
-                    throw new NotAuthorizedApiException($e->getMessage());
+            $response = $this->httpClient->fetch($request);
+        } catch (\Exception $e) {
+            if (method_exists($e, 'getResponse')) {
+                switch ($e->getResponse()->getStatusCode()) {
+                    case '400':
+                        throw new BadRequestApiException($e->getMessage());
 
-                case '404':
-                    throw new NotFoundApiException($e->getMessage());
+                    case '401':
+                        throw new NotAuthorizedApiException($e->getMessage());
 
-                case '500':
-                    throw new ServerErrorApiException($e->getMessage());
+                    case '404':
+                        throw new NotFoundApiException($e->getMessage());
 
-                default:
-                    throw new ApiConnectionException($e->getMessage());
+                    case '500':
+                        throw new ServerErrorApiException($e->getMessage());
+
+                    default:
+                        throw new ApiConnectionException($e->getMessage());
+                }
+            } else {
+                throw new ApiConnectionException($e->getMessage());
             }
         }
 
@@ -189,15 +209,16 @@ class KlaviyoApi
     /**
      * Prepare the options array before use in the request.
      *
+     * @param RequestInterface $request
      * @param array $options
      *   Additional options to pass on to the HTTP client.
      *
-     * @return array
-     *   The prepared additional options to pass on to the HTTP client.
+     * @param bool $public
+     * @return RequestInterface The prepared additional options to pass on to the HTTP client.*   The prepared additional options to pass on to the HTTP client.
      */
-    public function prepareRequestOptions($method, $options, $public = false)
+    public function prepareRequest(RequestInterface $request, array $options, bool $public = false): RequestInterface
     {
-        if ($method === 'GET') {
+        if ($request->getMethod() === 'GET') {
             if (empty($options['query']['api_key'])) {
                 $options['query']['api_key'] = $this->apiKey;
             }
@@ -207,14 +228,16 @@ class KlaviyoApi
                 unset($options['query']['api_key']);
                 $options = ['query' => ['data' => base64_encode(json_encode(['token' => $api_key] + $options['query']))]];
             }
+            $uri = $request->getUri();
+            $uri = $uri->withQuery(http_build_query($options['query']));
+            $request = $request->withUri($uri);
         } elseif (empty($options['api_key'])) {
             $options['api_key'] = $this->apiKey;
-
-            if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
-                $options = ['form_params' => $options];
-            }
         }
 
-        return $options;
+        $stream = $this->streamFactory->createStream(http_build_query($options));
+        $request = $request->withBody($stream);
+
+        return $request;
     }
 }
