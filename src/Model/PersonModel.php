@@ -66,7 +66,7 @@ class PersonModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public static function createFromJson($json)
+    public static function createFromJson($json = '')
     {
         $configuration = json_decode($json, true);
 

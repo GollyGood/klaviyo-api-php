@@ -8,8 +8,9 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use Klaviyo\KlaviyoApi;
+use PHPUnit\Framework\TestCase;
 
-class KlaviyoTestCase extends \PHPUnit_Framework_TestCase
+class KlaviyoTestCase extends TestCase
 {
     protected $apiKey = 'asdf';
     public $endPoint = 'https://a.klaviyo.com';
