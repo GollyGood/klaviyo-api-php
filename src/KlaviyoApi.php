@@ -65,8 +65,7 @@ class KlaviyoApi
         StreamFactoryInterface $streamFactory,
         string $apiKey,
         array $options = []
-    )
-    {
+    ) {
         $this->apiKey = $apiKey;
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
@@ -236,6 +235,7 @@ class KlaviyoApi
         }
 
         $stream = $this->streamFactory->createStream(http_build_query($options));
+        $request = $request->withHeader('Content-Type', 'application/x-www-form-urlencoded');
         $request = $request->withBody($stream);
 
         return $request;
