@@ -5,6 +5,7 @@ namespace Klaviyo\Tests;
 use Http\Factory\Guzzle\RequestFactory;
 use Http\Factory\Guzzle\StreamFactory;
 use Klaviyo\KlaviyoApi;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class KlaviyoApiTest extends KlaviyoTestCase
@@ -26,6 +27,22 @@ class KlaviyoApiTest extends KlaviyoTestCase
         $request = $container[0]['request'];
         $this->assertSame('GET', $request->getMethod(), 'The request should had been GET.');
         $this->assertSame($this->endPoint . '/api/v1?api_key=thisisakey', (string) $request->getUri(), 'The request URI should include the resource and api key.');
+        $this->assertInstanceOf(ResponseInterface::class, $response, 'The response should had been a Response object.');
+    }
+
+    public function testRequestWithPostAndContentType()
+    {
+        $container = [];
+        $client = $this->getClient($container);
+
+        $api = new KlaviyoApi($client, new RequestFactory(), new StreamFactory(), 'thisisakey');
+        $response = $api->request('POST', 'api/v1');
+
+        /** @var RequestInterface $request */
+        $request = $container[0]['request'];
+        $this->assertSame('POST', $request->getMethod(), 'The request should had been GET.');
+        $this->assertSame('application/x-www-form-urlencoded', $request->getHeaderLine('Content-Type'), 'The request should have had content-type: application/x-www-form-urlencoded.');
+        $this->assertSame('api_key=thisisakey', (string) $request->getBody(), 'The request body should include the api key.');
         $this->assertInstanceOf(ResponseInterface::class, $response, 'The response should had been a Response object.');
     }
 
