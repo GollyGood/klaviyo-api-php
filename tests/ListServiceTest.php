@@ -146,7 +146,7 @@ class ListServiceTest extends KlaviyoTestCase
     public function testGetListPage()
     {
         $list_manager = $this->getMultiPageListService();
-        $lists = $list_manager->getListsFromPage($list_manager->getResourcePath('list'));
+        $lists = $list_manager->getListsFromPage();
 
         $this->assertCount(2, $lists, 'There should be two records.');
 
