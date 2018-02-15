@@ -4,6 +4,9 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model for a Klaviyo "List" reference.
+ *
+ * @property string $id
+ * @property string $name
  */
 class ListReferenceModel extends BaseModel
 {

@@ -6,6 +6,13 @@ use Klaviyo\KlaviyoApi;
 
 /**
  * Simple model that represents a page.
+ *
+ * @property string $start
+ * @property string $end
+ * @property string $page
+ * @property string $pageSize
+ * @property string $total
+ * @property array $data
  */
 class PageModel extends BaseModel
 {

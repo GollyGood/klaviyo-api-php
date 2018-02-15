@@ -4,6 +4,12 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model that represents a template.
+ *
+ * @property string $id
+ * @property string $name
+ * @property \DOMDocument $html
+ * @property \DateTimeInterface $created
+ * @property \DateTimeInterface $updated
  */
 class TemplateModel extends BaseModel
 {
@@ -80,7 +86,7 @@ class TemplateModel extends BaseModel
      * @return \DOMDocument
      *   The HTML object that may used to manipulate the DOM.
      */
-    public function getHtmlObjectFromString($content)
+    public function getHtmlObjectFromString(string $content): \DOMDocument
     {
         $dom = new \DOMDocument();
         @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);

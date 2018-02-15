@@ -13,6 +13,7 @@ class ModelFactory
     protected static $modelMap = [
         'campaign' => CampaignModel::class,
         'email-template' => TemplateModel::class,
+        'rendered-template' => RenderedTemplateModel::class,
         'list' => ListModel::class,
         'membership' => MembershipModel::class,
         'page' => PageModel::class,
@@ -39,8 +40,9 @@ class ModelFactory
      *
      * @return ModelInterface
      *   A data model representing the specified data type.
+     * @throws MissingModelTypeException
      */
-    public static function create($configuration = [], $type = '')
+    public static function create(array $configuration = [], string $type = ''): ModelInterface
     {
         return self::callModelCreationMethod('create', $configuration, $type);
     }
@@ -48,15 +50,16 @@ class ModelFactory
     /**
      * Create a new model from JSON.
      *
-     * @param array $configuration
+     * @param array|string $configuration
      *   The key, value pair array to use for populating the data model.
      * @param string $type
      *   The type of the data model to create.
      *
      * @return ModelInterface
      *   A data model representing the specified data type.
+     * @throws MissingModelTypeException
      */
-    public static function createFromJson($configuration = '', $type = '')
+    public static function createFromJson($configuration, string $type = ''): ModelInterface
     {
         return self::callModelCreationMethod('createFromJson', $configuration, $type);
     }
@@ -66,15 +69,16 @@ class ModelFactory
      *
      * @param string $method
      *   The method to execute on the model for creation.
-     * @param array $configuration
+     * @param array|string $configuration
      *   The key, value pair array to use for populating the data model.
      * @param string $type
      *   The type of the data model to create.
      *
      * @return ModelInterface
      *   A data model representing the specified data type.
+     * @throws MissingModelTypeException
      */
-    public static function callModelCreationMethod($method, $configuration, $type = '')
+    public static function callModelCreationMethod(string $method, $configuration, string $type = ''): ModelInterface
     {
         $type = self::getModelType($configuration, $type);
 
@@ -91,15 +95,16 @@ class ModelFactory
     /**
      * Get the model type.
      *
-     * @param array $configuration
+     * @param array|string $configuration
      *   The key, value pair array to use for populating the data model.
      * @param string $type
      *   If set then we will check out data map and retrieve the model type.
      *
      * @return string
      *   The model data type.
+     * @throws MissingModelTypeException
      */
-    public static function getModelType($configuration = [], $type = '')
+    public static function getModelType($configuration = [], string $type = ''): string
     {
         if (empty($type) && !empty($configuration['object'])) {
             $type = $configuration['object'];

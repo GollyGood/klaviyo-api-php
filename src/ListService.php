@@ -4,6 +4,8 @@ namespace Klaviyo;
 
 use Klaviyo\Model\ListModel;
 use Klaviyo\Model\ModelFactory;
+use Klaviyo\Model\PageModel;
+use Klaviyo\Model\PersonListModel;
 use Klaviyo\Model\PersonModel;
 
 /**
@@ -16,25 +18,36 @@ class ListService extends BaseService
     /**
      * Retrieve a specific list from Klaviyo.
      *
-     * @param string $id
-     *   The id for which to retrieve a list.
+     * @param string $id The id for which to retrieve a list.
      *
-     * @return ListModel
-     *   The list object retrieved by the specified id.
+     * @return ListModel        The list object retrieved by the specified id.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     * @throws Exception\MissingModelTypeException
      */
-    public function getList($id)
+    public function getList(string  $id): ListModel
     {
         $response = $this->api->request('GET', $this->getResourcePath("list/$id"));
+
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
     }
 
     /**
      * Retrieve all lists from Klaviyo.
      *
-     * @return array
-     *   An array of ListModels that represent all lists in Klaviyo.
+     * @return array        An array of ListModels that represent all lists in Klaviyo.
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function getAllLists()
+    public function getAllLists(): array
     {
         return $this->getAllRecords($this->getResourcePath('lists'));
     }
@@ -42,15 +55,18 @@ class ListService extends BaseService
     /**
      * Get lists from a specific page.
      *
-     * @param int $page
-     *   The page number to retrieve.
-     * @param int $count
-     *   The number of items per page.
+     * @param int $page The page number to retrieve.
+     * @param int $count The number of items per page.
      *
-     * @return array
-     *   An array of records from the specified page.
+     * @return array        An array of records from the specified page.
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function getListsFromPage($page = 0, $count = 0)
+    public function getListsFromPage(int $page = 0, int $count = 0)
     {
         return $this->getRecordsFromSpecificPage($this->getResourcePath('lists'), $page, $count);
     }
@@ -58,15 +74,19 @@ class ListService extends BaseService
     /**
      * Create a new list.
      *
-     * @param string $name
-     *   The name of the list to be created.
-     * @param string $type
-     *   The type of list to be created.
+     * @param string $name      The name of the list to be created.
+     * @param string $type      The type of list to be created.
      *
-     * @return ListModel
-     *   The list object created.
+     * @return ListModel        The list object created.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function createList($name, $type = 'list')
+    public function createList(string $name, string $type = 'list'): ListModel
     {
         $options = ['name' => $name, 'list_type' => $type];
         $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
@@ -76,13 +96,18 @@ class ListService extends BaseService
     /**
      * Update/Modify an existing list.
      *
-     * @param ListModel $list
-     *   The altered list object to update on Klaviyo.
+     * @param ListModel $list   The altered list object to update on Klaviyo.
      *
-     * @return ListModel
-     *   The updated list object.
+     * @return ListModel        The updated list object.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function updateList(ListModel $list)
+    public function updateList(ListModel $list): ListModel
     {
         $options = ['name' => $list->name];
         $response = $this->api->request('PUT', $this->getResourcePath("list/{$list->id}"), $options);
@@ -92,13 +117,18 @@ class ListService extends BaseService
     /**
      * Delete an existing list.
      *
-     * @param ListModel $list
-     *   The list object to be deleted.
+     * @param ListModel $list   The list object to be deleted.
      *
-     * @return ListModel
-     *   The deleted list object.
+     * @return ListModel        The deleted list object.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function deleteList(ListModel $list)
+    public function deleteList(ListModel $list): ListModel
     {
         $response = $this->api->request('DELETE', $this->getResourcePath("list/{$list->id}"));
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
@@ -107,28 +137,46 @@ class ListService extends BaseService
     /**
      * Check if the specified members are in the list by email address.
      *
-     * @param ListModel $list
-     *   The list for which to retrieve members.
-     * @param array $emails
-     *   The emails to check are associated with the specified list.
+     * @param ListModel $list   The list for which to retrieve members.
+     * @param array $emails     The emails to check are associated with the specified list.
      *
-     * @return array
-     *    An array of MembershipModels associated with the specified list.
+     * @return array            An array of MembershipModels associated with the specified list.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function checkMembersAreInList(ListModel $list, $emails)
+    public function checkMembersAreInList(ListModel $list, array $emails): array
     {
         $options = ['query' => ['email' => implode(',', $emails)]];
         $response = $this->api->request('GET', $this->getResourcePath("$list->listType/{$list->id}/members"), $options);
         $page = ModelFactory::create(json_decode($response->getBody()->getContents(), true), 'page');
-        return array_map(ModelFactory::class . '::create', $page->data);
+        if ($page instanceof PageModel) {
+            return array_map(ModelFactory::class . '::create', $page->data);
+        }
+        return [];
     }
 
     /**
      * Check if the specified members are in the segment by email address.
      *
      * @see ListService::checkMembersAreInList()
+     * @param ListModel $segment
+     * @param array $emails
+     *
+     * @return array
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function checkMembersAreInSegment(ListModel $segment, $emails)
+    public function checkMembersAreInSegment(ListModel $segment, array $emails): array
     {
         return $this->checkMembersAreInList($segment, $emails);
     }
@@ -140,21 +188,27 @@ class ListService extends BaseService
      *   The ListModel for which to add the person.
      * @param PersonModel $person
      *   The PersonModel of the person to add to a List.
-     * @param bool $confirm_opt_in
+     * @param bool $confirmOptIn
      *   Default to TRUE. Determines if the person should be asked to confirm
      *   subscribing to list. When TRUE the person will recieve an email with a
      *   confirmation link before zhe is added to the list. Otherwise, when FALSE
      *   the person is automatically added to the list.
      *
-     * @return PersonListModel
-     *   The PersonList wrapper provided by the Klaviyo API.
+     * @return PersonListModel              The PersonList wrapper provided by the Klaviyo API.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function addPersonToList(ListModel $list, PersonModel $person, $confirm_opt_in = true)
+    public function addPersonToList(ListModel $list, PersonModel $person, bool $confirmOptIn = true): PersonListModel
     {
         $options = [
             'email' => $person->email,
             'properties' => json_encode($person),
-            'confirm_optin' => ($confirm_opt_in) ? 'true' : 'false',
+            'confirm_optin' => ($confirmOptIn) ? 'true' : 'false',
         ];
 
         $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members"), $options);

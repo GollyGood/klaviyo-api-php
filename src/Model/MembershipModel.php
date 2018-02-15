@@ -4,6 +4,10 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model for a Klaviyo "Membership".
+ *
+ * @property string $email
+ * @property \DateTimeInterface $dateAdded
+ * @property PersonModel $person
  */
 class MembershipModel extends BaseModel
 {
@@ -38,7 +42,7 @@ class MembershipModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'object' => $this->objectType,

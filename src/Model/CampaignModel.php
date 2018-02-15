@@ -4,6 +4,24 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model that represents a campaign.
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $subject
+ * @property string $fromEmail
+ * @property string $fromName
+ * @property string $lists
+ * @property TemplateModel $template
+ * @property string $status
+ * @property string $statusId
+ * @property string $statusLabel
+ * @property string $sentAt
+ * @property string $sendTime
+ * @property \DateTimeInterface $created
+ * @property \DateTimeInterface $updated
+ * @property string $numRecipients
+ * @property string $isSegmented
+ * @property string $campaignType
  */
 class CampaignModel extends BaseModel
 {

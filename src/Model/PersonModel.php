@@ -7,6 +7,19 @@ use Klaviyo\Exception\InvalidSpecialAttributeKeyException;
 
 /**
  * Simple model for a Klaviyo "Person".
+ *
+ * @property string $id
+ * @property string email
+ * @property string firstName
+ * @property string lastName
+ * @property string organization
+ * @property string title
+ * @property string city
+ * @property string region
+ * @property string zip
+ * @property string country
+ * @property string timezone
+ * @property string phoneNumber
  */
 class PersonModel extends BaseModel
 {
@@ -66,7 +79,7 @@ class PersonModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public static function createFromJson($json)
+    public static function createFromJson($json): ModelInterface
     {
         $configuration = json_decode($json, true);
 
@@ -82,8 +95,9 @@ class PersonModel extends BaseModel
 
     /**
      * Set the attributes for the person model.
+     * @param array $configuration
      */
-    protected function setAttributes($configuration)
+    protected function setAttributes(array $configuration)
     {
         $this->id = $configuration['id'];
         $this->email = $configuration['$email'];
@@ -107,6 +121,7 @@ class PersonModel extends BaseModel
     /**
      * Update the person model from an array.
      *
+     * @param array $configuration
      * @return $this
      */
     public function updateFromArray($configuration)
@@ -120,7 +135,7 @@ class PersonModel extends BaseModel
     /**
      * Retrieve an array of all attribute keys.
      */
-    public static function getAttributeKeys()
+    public static function getAttributeKeys(): array
     {
         return self::$attributeKeys;
     }
@@ -138,32 +153,36 @@ class PersonModel extends BaseModel
     /**
      * Determine if the attribute is a custom attribute.
      *
+     * @param string $attributeKey
      * @return bool
      *   Returns TRUE if the attribute is considered to be a custom attribute.
      */
-    public static function isCustomAttributeKey($attribute_key)
+    public static function isCustomAttributeKey(string $attributeKey): bool
     {
-        return !self::isSpecialAttributeKey($attribute_key);
+        return !self::isSpecialAttributeKey($attributeKey);
     }
 
     /**
      * Determine if the attribute is a special attribute.
      *
+     * @param string $attributeKey
      * @return bool
      *   Returns TRUE if the attribute is considered to be a "special" Klaviyo
      *   attribute.
      */
-    public static function isSpecialAttributeKey($attribute_key)
+    public static function isSpecialAttributeKey(string $attributeKey): bool
     {
-        return in_array($attribute_key, self::$attributeKeys);
+        return in_array($attributeKey, self::$attributeKeys);
     }
 
     /**
      * Retrieve a custom attribute by its attribute key.
+     * @param string $attributeKey
+     * @return mixed
      */
-    public function getCustomAttribute($attribute_key)
+    public function getCustomAttribute(string $attributeKey)
     {
-        return !empty($this->customAttributes[$attribute_key]) ? $this->customAttributes[$attribute_key] : '';
+        return !empty($this->customAttributes[$attributeKey]) ? $this->customAttributes[$attributeKey] : '';
     }
 
     /**
@@ -177,49 +196,49 @@ class PersonModel extends BaseModel
     /**
      * Delete an attribute from the person model.
      *
-     * @param string $attribute_key
+     * @param string $attributeKey
      *   The attribute key of the attribute to delete.
      *
      * @return $this
+     * @throws CannotDeleteRequiredSpecialAttributeKeyException
+     * @throws InvalidSpecialAttributeKeyException
      */
-    public function deleteAttribute($attribute_key)
+    public function deleteAttribute(string $attributeKey)
     {
-        if (self::isSpecialAttributeKey($attribute_key) && isset(self::$optionalDefaults[$attribute_key])) {
-            $property = self::getModelPropertyFromSpecialAttributeKey($attribute_key);
-            $this->{$property} = self::$optionalDefaults[$attribute_key];
-        } elseif ($this->getCustomAttribute($attribute_key)) {
-            unset($this->customAttributes[$attribute_key]);
+        if (self::isSpecialAttributeKey($attributeKey) && isset(self::$optionalDefaults[$attributeKey])) {
+            $property = self::getModelPropertyFromSpecialAttributeKey($attributeKey);
+            $this->{$property} = self::$optionalDefaults[$attributeKey];
+        } elseif ($this->getCustomAttribute($attributeKey)) {
+            unset($this->customAttributes[$attributeKey]);
         } elseif (isset(self::$attributeKeys)) {
-            throw new CannotDeleteRequiredSpecialAttributeKeyException(sprintf('%s is a required special attribute and cannot be deleted.', $attribute_key));
+            throw new CannotDeleteRequiredSpecialAttributeKeyException(sprintf('%s is a required special attribute and cannot be deleted.', $attributeKey));
         }
 
-        $this->unsetAttributes[] = $attribute_key;
+        $this->unsetAttributes[] = $attributeKey;
         return $this;
     }
 
     /**
      * Retrieve the model property from the special attribute key.
      *
-     * @param string $attribute_key
-     *   The special attribute key for which to retrieve the model property.
-     *
-     * @return string
-     *   The string representing the model property.
+     * @param string $attributeKey      The special attribute key for which to retrieve the model property.
+     * @return string                   The string representing the model property.
+     * @throws InvalidSpecialAttributeKeyException
      */
-    public static function getModelPropertyFromSpecialAttributeKey($attribute_key)
+    public static function getModelPropertyFromSpecialAttributeKey(string $attributeKey): string
     {
-        if (!self::isSpecialAttributeKey($attribute_key)) {
-            throw new InvalidSpecialAttributeKeyException(sprintf('%s is not a valid special Klaivyo attribute.', $attribute_key));
+        if (!self::isSpecialAttributeKey($attributeKey)) {
+            throw new InvalidSpecialAttributeKeyException(sprintf('%s is not a valid special Klaivyo attribute.', $attributeKey));
         }
 
-        if (strpos($attribute_key, '$') !== false) {
-            $attribute_key_segements = explode('_', substr($attribute_key, 1));
-            $attribute_key = $attribute_key_segements[0] . implode('', array_map('ucfirst', array_slice($attribute_key_segements, 1)));
-        } elseif ($attribute_key === 'object') {
-            $attribute_key = 'objectType';
+        if (strpos($attributeKey, '$') !== false) {
+            $attribute_key_segements = explode('_', substr($attributeKey, 1));
+            $attributeKey = $attribute_key_segements[0] . implode('', array_map('ucfirst', array_slice($attribute_key_segements, 1)));
+        } elseif ($attributeKey === 'object') {
+            $attributeKey = 'objectType';
         }
 
-        return $attribute_key;
+        return $attributeKey;
     }
 
     /**
@@ -254,7 +273,7 @@ class PersonModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         // Add object type back when converting to an array since we removed it due
         // to an oddity in the Klaviyo API.

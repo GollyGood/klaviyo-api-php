@@ -4,6 +4,10 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model for a Klaviyo "Person and List".
+ *
+ * @property PersonReferenceModel $person;
+ * @property ListReferenceModel $list
+ * @property bool $alreadyMember
  */
 class PersonListModel extends BaseModel
 {

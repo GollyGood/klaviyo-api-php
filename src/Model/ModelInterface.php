@@ -13,10 +13,10 @@ interface ModelInterface extends \JsonSerializable
      * @param array $configuration
      *   The key, value pair array to use for populating the data model.
      *
-     * @return KlaviyoModel
+     * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function create($configuration);
+    public static function create($configuration): ModelInterface;
 
     /**
      * Helper method to create the data model from a JSON array.
@@ -24,13 +24,13 @@ interface ModelInterface extends \JsonSerializable
      * @param array $json
      *   The configuration json to use for populating the data model.
      *
-     * @return KlaviyoModel
+     * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function createFromJson($json);
+    public static function createFromJson($json): ModelInterface;
 
     /**
      * Convert the model to an array.
      */
-    public function toArray();
+    public function toArray(): array;
 }

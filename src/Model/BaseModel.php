@@ -4,6 +4,8 @@ namespace Klaviyo\Model;
 
 /**
  * The base Klaviyo data model.
+ *
+ * @property string $objectType
  */
 abstract class BaseModel implements ModelInterface
 {
@@ -34,6 +36,8 @@ abstract class BaseModel implements ModelInterface
 
     /**
      * PHPs magic get method to provide access to our protected attributes.
+     * @param string $property
+     * @return mixed;
      */
     public function __get($property)
     {
@@ -45,6 +49,8 @@ abstract class BaseModel implements ModelInterface
     /**
      * PHPs magic set method to provide access to our mutable attributes.
      *
+     * @param string $property
+     * @param mixed $value
      * @return $this
      */
     public function __set($property, $value)
@@ -62,10 +68,10 @@ abstract class BaseModel implements ModelInterface
      * @param array $configuration
      *   The key, value pair array to use for populating the data model.
      *
-     * @return KlaviyoModel
+     * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function create($configuration = [])
+    public static function create($configuration = []): ModelInterface
     {
         return new static($configuration);
     }
@@ -73,15 +79,19 @@ abstract class BaseModel implements ModelInterface
     /**
      * Helper method to create the data model from a JSON array.
      *
-     * @param array $json
+     * @param array|string $json
      *   The configuration json to use for populating the data model.
      *
-     * @return KlaviyoModel
+     * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function createFromJson($json = '')
+    public static function createFromJson($json = ''): ModelInterface
     {
-        $configuration = json_decode($json, true);
+        if (is_string($json)) {
+            $configuration = json_decode($json, true);
+        } else {
+            $configuration = $json;
+        }
         if (is_null($configuration)) {
             $configuration = [];
         }
@@ -101,7 +111,7 @@ abstract class BaseModel implements ModelInterface
     /**
      * Convert the model to an array.
      */
-    public function toArray()
+    public function toArray(): array
     {
         return json_decode(json_encode($this), true);
     }

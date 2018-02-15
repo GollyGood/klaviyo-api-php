@@ -4,6 +4,9 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model for a Klaviyo "Person" reference.
+ *
+ * @property string $id
+ * @property string $email
  */
 class PersonReferenceModel extends BaseModel
 {

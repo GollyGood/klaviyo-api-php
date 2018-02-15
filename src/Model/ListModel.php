@@ -4,6 +4,13 @@ namespace Klaviyo\Model;
 
 /**
  * Simple model for a Klaviyo "List".
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $listType
+ * @property \DateTimeInterface $created
+ * @property \DateTimeInterface $updated
+ * @property string $personCount
  */
 class ListModel extends BaseModel
 {
