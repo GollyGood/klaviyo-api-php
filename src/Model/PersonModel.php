@@ -21,7 +21,7 @@ use Klaviyo\Exception\InvalidSpecialAttributeKeyException;
  * @property string timezone
  * @property string phoneNumber
  */
-class PersonModel extends BaseModel
+class PersonModel extends BaseModel implements PersonIdInterface
 {
     protected $id;
     protected $objectType = 'person';
@@ -290,5 +290,10 @@ class PersonModel extends BaseModel
         // Add object type back when converting to an array since we removed it due
         // to an oddity in the Klaviyo API.
         return ['object' => $this->objectType] + json_decode(json_encode($this), true);
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 }

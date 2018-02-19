@@ -4,6 +4,7 @@ namespace Klaviyo\Tests;
 
 use GuzzleHttp\Psr7\Response;
 use Klaviyo\KlaviyoApi;
+use Klaviyo\Model\ObjectId;
 use Klaviyo\Model\PersonModel;
 use Klaviyo\PersonService;
 
@@ -24,6 +25,16 @@ class PersonServiceTest extends KlaviyoTestCase
         '$timezone' => 'US/Eastern',
         '$phone_number' => '',
     ];
+    private $responseUpdate;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->responseUpdate = $this->responsePerson;
+
+        $this->responseUpdate['$title'] = 'Ex-President';
+    }
 
     public function getPersonService(&$container, $responses)
     {
@@ -36,11 +47,26 @@ class PersonServiceTest extends KlaviyoTestCase
         $container = $responses = [];
         $responses[] = new Response(200, [], json_encode($this->responsePerson));
         $person_manager = $this->getPersonService($container, $responses);
-        $person = $person_manager->getPerson('abc');
+        $person = $person_manager->getPerson(new ObjectId('abc'));
 
         $this->assertTrue($person instanceof PersonModel, 'The person manager should had returned an instance of a PersonModel.');
 
         $response_person = PersonModel::create($this->responsePerson);
+        $this->assertEquals($response_person, $person);
+    }
+
+    public function testUpdatePerson()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseUpdate));
+        $personService = $this->getPersonService($container, $responses);
+        $person = $personService->updatePerson(new ObjectId('abc'), [
+            '$title' => 'Ex-President'
+        ]);
+
+        $this->assertTrue($person instanceof PersonModel, 'The person manager should had returned an instance of a PersonModel.');
+
+        $response_person = PersonModel::create($this->responseUpdate);
         $this->assertEquals($response_person, $person);
     }
 }
