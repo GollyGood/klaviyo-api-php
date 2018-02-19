@@ -2,6 +2,7 @@
 
 namespace Klaviyo;
 
+use Klaviyo\Model\EventModel;
 use Klaviyo\Model\PersonModel;
 
 /**
@@ -19,12 +20,35 @@ class TrackService extends BaseService
      *   An instance of the person model that should be written.
      *
      * @return bool
-     *   Returns TRUE if the record was successfully written and FALSE otherwise.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
-    public function identify(PersonModel $person)
+    public function identify(PersonModel $person): bool
     {
         $options = ['query' => ['properties' => $person]];
         $response = $this->api->request('GET', $this->getResourcePath('identify'), $options, true);
+        return (bool) $response->getBody()->getContents();
+    }
+
+    /**
+     * Track an event in  Klaviyo API
+     *
+     * @param EventModel $event
+     * @return bool
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function track(EventModel $event): bool
+    {
+        $options = ['query' => $event->toArray()];
+        $response = $this->api->request('GET', $this->getResourcePath('track'), $options, true);
         return (bool) $response->getBody()->getContents();
     }
 }
