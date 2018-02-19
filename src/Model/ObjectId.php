@@ -2,7 +2,7 @@
 
 namespace Klaviyo\Model;
 
-class TemplateId implements IdInterface
+class ObjectId implements TemplateIdInterface, PersonIdInterface
 {
     private $id;
 

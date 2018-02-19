@@ -2,9 +2,9 @@
 
 namespace Klaviyo;
 
-use Klaviyo\Model\IdInterface;
 use Klaviyo\Model\ModelFactory;
 use Klaviyo\Model\RenderedTemplateModel;
+use Klaviyo\Model\TemplateIdInterface;
 use Klaviyo\Model\TemplateModel;
 
 /**
@@ -83,7 +83,7 @@ class TemplateService extends BaseService
     /**
      * Delete an existing template.
      *
-     * @param IdInterface $id
+     * @param TemplateIdInterface $id
      * @return TemplateModel        The deleted template object.
      *
      * @throws Exception\ApiConnectionException
@@ -93,14 +93,14 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function deleteTemplate(IdInterface $id): TemplateModel
+    public function deleteTemplate(TemplateIdInterface $id): TemplateModel
     {
         $response = $this->api->request('DELETE', $this->getResourcePath("email-template/{$id->getId()}"));
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'email-template');
     }
 
     /**
-     * @param IdInterface $id               Model with id
+     * @param TemplateIdInterface $id               Model with id
      * @param string $name                  The name of the new email template.
      *
      * @return TemplateModel                The newly created Email Template object with summary information.
@@ -112,7 +112,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function cloneTemplate(IdInterface $id, string $name): TemplateModel
+    public function cloneTemplate(TemplateIdInterface $id, string $name): TemplateModel
     {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/clone"), [
             'name' => $name
@@ -121,7 +121,7 @@ class TemplateService extends BaseService
     }
 
     /**
-     * @param IdInterface $id
+     * @param TemplateIdInterface $id
      * @param array $context    JSON encoded hashThis is the context your email template will be rendered with.
      *                          Email templates are rendered with contexts in a similar manner to how Django templates
      *                          are rendered. This means that nested template variables can be referenced via dot
@@ -136,7 +136,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function renderTemplate(IdInterface $id, array $context = []): RenderedTemplateModel
+    public function renderTemplate(TemplateIdInterface $id, array $context = []): RenderedTemplateModel
     {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/render"), [
             'context' => json_encode($context)
@@ -145,7 +145,7 @@ class TemplateService extends BaseService
     }
 
     /**
-     * @param IdInterface $id
+     * @param TemplateIdInterface $id
      * @param string $fromEmail The email address your email will be sent from and will be used in the reply-to header.
      * @param string $fromName The name or label associated with the email address you're sending from.
      * @param string $subject Subject of email
@@ -164,7 +164,7 @@ class TemplateService extends BaseService
      * @throws Exception\ServerErrorApiException
      */
     public function sendTemplate(
-        IdInterface $id,
+        TemplateIdInterface $id,
         string $fromEmail,
         string $fromName,
         string $subject,

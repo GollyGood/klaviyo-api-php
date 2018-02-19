@@ -4,8 +4,9 @@ namespace Klaviyo\Tests;
 
 use GuzzleHttp\Psr7\Response;
 use Klaviyo\KlaviyoApi;
+use Klaviyo\Model\ObjectId;
 use Klaviyo\Model\RenderedTemplateModel;
-use Klaviyo\Model\TemplateId;
+use Klaviyo\Model\TemplateIdInterface;
 use Klaviyo\Model\TemplateModel;
 use Klaviyo\TemplateService;
 use Psr\Http\Message\RequestInterface;
@@ -310,7 +311,7 @@ class TemplateServiceTest extends KlaviyoTestCase
         $responses[] = new Response(200, [], json_encode($this->responseTemplateSent));
         $templateService = $this->getTemplateSerive($container, $responses);
 
-        $templateId = new TemplateId($this->responseTemplateZero['id']);
+        $templateId = new ObjectId($this->responseTemplateZero['id']);
 
         $rs = $templateService->sendTemplate(
             $templateId,

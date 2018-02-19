@@ -11,7 +11,7 @@ namespace Klaviyo\Model;
  * @property \DateTimeInterface $created
  * @property \DateTimeInterface $updated
  */
-class TemplateModel extends BaseModel implements IdInterface
+class TemplateModel extends BaseModel implements TemplateIdInterface
 {
     protected $id;
     protected $name;
