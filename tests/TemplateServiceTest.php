@@ -5,6 +5,7 @@ namespace Klaviyo\Tests;
 use GuzzleHttp\Psr7\Response;
 use Klaviyo\KlaviyoApi;
 use Klaviyo\Model\RenderedTemplateModel;
+use Klaviyo\Model\TemplateId;
 use Klaviyo\Model\TemplateModel;
 use Klaviyo\TemplateService;
 use Psr\Http\Message\RequestInterface;
@@ -264,6 +265,55 @@ class TemplateServiceTest extends KlaviyoTestCase
 
         $rs = $templateService->sendTemplate(
             $templateZero,
+            $this->sendMailData['from_email'],
+            $this->sendMailData['from_name'],
+            $this->sendMailData['subject'],
+            $this->sendMailData['to'],
+            $this->sendMailData['context']
+        );
+
+        $this->assertTrue($rs);
+
+        /** @var RequestInterface $request */
+        $request = $container[0]['request'];
+
+        $this->assertSame('POST', $request->getMethod());
+
+        $fields = array();
+        parse_str(urldecode((string) $request->getBody()), $fields);
+        $this->assertSame(
+            $this->sendMailData['from_email'],
+            $fields['from_email']
+        );
+        $this->assertSame(
+            $this->sendMailData['from_name'],
+            $fields['from_name']
+        );
+        $this->assertSame(
+            $this->sendMailData['subject'],
+            $fields['subject']
+        );
+        $this->assertSame(
+            json_encode($this->sendMailData['to']),
+            $fields['to']
+        );
+        $this->assertSame(
+            json_encode($this->sendMailData['context']),
+            $fields['context']
+        );
+        $this->assertSame($this->apiKey, $fields['api_key']);
+    }
+
+    public function testSendWithId()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseTemplateSent));
+        $templateService = $this->getTemplateSerive($container, $responses);
+
+        $templateId = new TemplateId($this->responseTemplateZero['id']);
+
+        $rs = $templateService->sendTemplate(
+            $templateId,
             $this->sendMailData['from_email'],
             $this->sendMailData['from_name'],
             $this->sendMailData['subject'],

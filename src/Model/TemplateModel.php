@@ -11,7 +11,7 @@ namespace Klaviyo\Model;
  * @property \DateTimeInterface $created
  * @property \DateTimeInterface $updated
  */
-class TemplateModel extends BaseModel
+class TemplateModel extends BaseModel implements IdInterface
 {
     protected $id;
     protected $name;
@@ -105,5 +105,10 @@ class TemplateModel extends BaseModel
             'created' => !empty($this->created) ? $this->created->format($this->dateFormat) : null,
             'updated' => !empty($this->updated) ? $this->updated->format($this->dateFormat) : null,
         ]);
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 }
