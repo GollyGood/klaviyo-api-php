@@ -43,8 +43,11 @@ class PersonService extends BaseService
      */
     public function updatePerson(PersonIdInterface $id, array $context): PersonModel
     {
-        $response = $this->api->request('PUT', $this->getResourcePath("person/{$id->getId()}"), $context);
+        $response = $this->api->request(
+            'PUT',
+            $this->getResourcePath("person/{$id->getId()}"),
+            $context
+        );
         return PersonModel::createFromJson($response->getBody());
-
     }
 }
