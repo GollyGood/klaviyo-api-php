@@ -17,7 +17,6 @@ class KlaviyoPageTest extends KlaviyoBaseTest
             'start' => 0,
             'end' => 0,
             'page_size' => 0,
-            'next_page' => 0,
             'total' => 0,
             'page' => 0,
             'data' => [],
@@ -36,7 +35,6 @@ class KlaviyoPageTest extends KlaviyoBaseTest
         $this->assertSame($this->configuration['page_size'], $model->pageSize);
         $this->assertSame($this->configuration['total'], $model->total);
         $this->assertSame($this->configuration['page'], $model->page);
-        $this->assertSame($this->configuration['next_page'], $model->nextPage);
         $this->assertSame($this->configuration['data'], $model->data);
     }
 }
