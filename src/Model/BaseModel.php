@@ -85,7 +85,7 @@ abstract class BaseModel implements ModelInterface
      * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function createFromJson($json = ''): ModelInterface
+    public static function createFromJson($json): ModelInterface
     {
         if (is_string($json)) {
             $configuration = json_decode($json, true);
