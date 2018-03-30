@@ -11,6 +11,7 @@ use Klaviyo\KlaviyoApi;
  * @property string $end
  * @property string $page
  * @property string $pageSize
+ * @property string $nextPage
  * @property string $total
  * @property array $data
  */
@@ -22,6 +23,7 @@ class PageModel extends BaseModel
     protected $pageSize;
     protected $total;
     protected $data;
+    protected $nextPage;
 
     /**
      * The configuration to use to populate the Page model.
@@ -33,6 +35,7 @@ class PageModel extends BaseModel
         $this->end = $configuration['end'];
         $this->page = $configuration['page'];
         $this->pageSize = $configuration['page_size'];
+        $this->nextPage = !empty($configuration['next_page']) ? $configuration['next_page'] : 0;
         $this->total = $configuration['total'];
         $this->data = $configuration['data'];
     }
@@ -47,6 +50,7 @@ class PageModel extends BaseModel
             'start' => $this->start,
             'end' => $this->end,
             'page_size' => $this->pageSize,
+            'next_page' => $this->nextPage,
             'total' => $this->total,
             'page' => $this->page,
             'data' => $this->data,

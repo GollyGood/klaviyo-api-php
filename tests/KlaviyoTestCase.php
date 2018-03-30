@@ -29,7 +29,8 @@ class KlaviyoTestCase extends TestCase
         $handlerStack->push($history);
         return new GuzzleHttpClient(new Client(['handler' => $handlerStack]));
     }
-    public function getApi(?string $apiKey, array $options = [], &$container = [], $responses = array())
+
+    public function getApi(string $apiKey, array $options = [], &$container = [], $responses = array())
     {
         return new KlaviyoApi($this->getClient($container, $responses), new RequestFactory(), new StreamFactory(), $apiKey ?? $this->apiKey, $options);
     }

@@ -39,7 +39,7 @@ trait PagerTrait
 
         $records = array_map(ModelFactory::class . '::create', $page->data);
         while (count($records) < $page->total) {
-            $page = $this->getPage($resource, $page->netPage, $count, $queryParameters);
+            $page = $this->getPage($resource, $page->nextPage, $count, $queryParameters);
             $records = array_merge($records, array_map(ModelFactory::class . '::create', $page->data));
         }
 
@@ -92,8 +92,8 @@ trait PagerTrait
      */
     public function getPage(
         string $resource,
-        ?int $page = 0,
-        ?int $count = 5,
+        int $page = 0,
+        int $count = 5,
         array $queryParameters = []
     ) : PageModel {
         $options = ['query' => ['page' => $page, 'count' => $count] + $queryParameters];
