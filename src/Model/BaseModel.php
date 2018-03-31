@@ -99,6 +99,23 @@ abstract class BaseModel implements ModelInterface
     }
 
     /**
+     * Retrieve an HTML object from the specified string.
+     *
+     * @param string $content
+     *   The valid HTML to transform into an HTML object.
+     *
+     * @return \DOMDocument
+     *   The HTML object that may used to manipulate the DOM.
+     */
+    public function getHtmlObjectFromString(string $content): \DOMDocument
+    {
+        $dom = new \DOMDocument();
+        @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+        return $dom;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function jsonSerialize()

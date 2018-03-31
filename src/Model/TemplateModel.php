@@ -38,7 +38,7 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
         $this->id = $configuration['id'];
         $this->name = $configuration['name'];
         $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : null;
-        $this->updated = !empty($configuration['created']) ? new \DateTime($configuration['updated']) : null;
+        $this->updated = !empty($configuration['updated']) ? new \DateTime($configuration['updated']) : null;
         $this->setHtml($configuration['html']);
     }
 
@@ -75,22 +75,6 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
         $this->html = $value;
 
         return $this;
-    }
-
-    /**
-     * Retrieve an HTML object from the specified string.
-     *
-     * @param string $content
-     *   The valid HTML to transform into an HTML object.
-     *
-     * @return \DOMDocument
-     *   The HTML object that may used to manipulate the DOM.
-     */
-    public function getHtmlObjectFromString(string $content): \DOMDocument
-    {
-        $dom = new \DOMDocument();
-        @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        return $dom;
     }
 
     /**

@@ -27,8 +27,45 @@ class RenderedTemplateModel extends BaseModel
         $this->id = $configuration['id'];
         $this->name = $configuration['name'];
         $this->text = $configuration['data']['text'];
-        $this->html = $configuration['data']['html'];
+        $this->setHtml($configuration['data']['html']);
+        $this->objectType = 'rendered-template';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __set($property, $value)
+    {
+        if ($property === 'html') {
+            return $this->setHtml($value);
+        } else {
+            return parent::__set($property, $value);
+        }
+    }
+
+    /**
+     * Set the html value.
+     *
+     * @param \DOMDocument|string $value
+     *   The HTML for the template. The value may be either a string or a
+     *   DOMDocument.
+     *
+     * @return $this
+     */
+    public function setHtml($value)
+    {
+        if (is_string($value)) {
+            $value = $this->getHtmlObjectFromString($value);
+        }
+
+        if (!($value instanceof \DOMDocument)) {
+            throw new \InvalidArgumentException('"html" must be set as a valid DOMDocument object.');
+        }
+        $this->html = $value;
+
+        return $this;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -40,7 +77,7 @@ class RenderedTemplateModel extends BaseModel
                 'name' => $this->name,
                 'data' => [
                     'text' => $this->text,
-                    'html' => $this->html,
+                    'html' => trim($this->html->saveHtml()),
                 ]
             ]);
     }

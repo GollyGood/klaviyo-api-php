@@ -34,6 +34,8 @@ class KlaviyoRenderedTemplateTest extends KlaviyoBaseTest
         $this->assertSame($this->configuration['id'], $model->id);
         $this->assertSame($this->configuration['name'], $model->name);
         $this->assertSame($this->configuration['data']['text'], $model->text);
-        $this->assertSame($this->configuration['data']['html'], $model->html);
+        $dom = new \DOMDocument();
+        $dom->loadHTML($this->configuration['data']['html']);
+        $this->assertEquals($dom, $model->html);
     }
 }
