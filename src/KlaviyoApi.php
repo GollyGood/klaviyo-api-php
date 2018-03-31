@@ -12,6 +12,7 @@ use Klaviyo\Exception\NotFoundApiException;
 use Klaviyo\Exception\ServerErrorApiException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Http\Client\HttpClient as HttpClientInterface;
 
 /**
  * The main Klaviyo API class for communicating with the Klaviyo API.
@@ -182,7 +183,7 @@ class KlaviyoApi
             $request = $this->requestFactory->createRequest($method, self::$endPoint . '/' . ltrim($resource, '/'));
             $request = $this->prepareRequest($request, $options, $public);
 
-            $response = $this->httpClient->fetch($request);
+            $response = $this->httpClient->sendRequest($request);
         } catch (\Exception $e) {
             if (method_exists($e, 'getResponse')) {
                 switch ($e->getResponse()->getStatusCode()) {

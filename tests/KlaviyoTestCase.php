@@ -2,7 +2,6 @@
 
 namespace Klaviyo\Tests;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Middleware;
@@ -11,6 +10,8 @@ use Http\Factory\Guzzle\RequestFactory;
 use Http\Factory\Guzzle\StreamFactory;
 use Klaviyo\KlaviyoApi;
 use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 
 class KlaviyoTestCase extends TestCase
 {
@@ -27,7 +28,8 @@ class KlaviyoTestCase extends TestCase
         $mock = new MockHandler($responses);
         $handlerStack = HandlerStack::create($mock);
         $handlerStack->push($history);
-        return new GuzzleHttpClient(new Client(['handler' => $handlerStack]));
+
+        return new GuzzleAdapter(new GuzzleClient(['handler' => $handlerStack]));
     }
 
     public function getApi(string $apiKey, array $options = [], &$container = [], $responses = array())
