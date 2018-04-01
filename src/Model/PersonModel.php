@@ -79,7 +79,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
     /**
      * {@inheritdoc}
      */
-    public static function createFromJson($json): ModelInterface
+    public static function createFromJson($json)
     {
         $configuration = json_decode($json, true);
 
@@ -135,7 +135,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
     /**
      * Retrieve an array of all attribute keys.
      */
-    public static function getAttributeKeys(): array
+    public static function getAttributeKeys()
     {
         return self::$attributeKeys;
     }
@@ -162,7 +162,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      * @return bool
      *   Returns TRUE if the attribute is considered to be a custom attribute.
      */
-    public static function isCustomAttributeKey(string $attributeKey): bool
+    public static function isCustomAttributeKey(string $attributeKey)
     {
         return !self::isSpecialAttributeKey($attributeKey);
     }
@@ -175,7 +175,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      *   Returns TRUE if the attribute is considered to be a "special" Klaviyo
      *   attribute.
      */
-    public static function isSpecialAttributeKey(string $attributeKey): bool
+    public static function isSpecialAttributeKey(string $attributeKey)
     {
         return in_array($attributeKey, self::$attributeKeys);
     }
@@ -232,7 +232,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      * @return string                   The string representing the model property.
      * @throws InvalidSpecialAttributeKeyException
      */
-    public static function getModelPropertyFromSpecialAttributeKey(string $attributeKey): string
+    public static function getModelPropertyFromSpecialAttributeKey(string $attributeKey)
     {
         if (!self::isSpecialAttributeKey($attributeKey)) {
             throw new InvalidSpecialAttributeKeyException(
@@ -285,14 +285,14 @@ class PersonModel extends BaseModel implements PersonIdInterface
     /**
      * {@inheritdoc}
      */
-    public function toArray(): array
+    public function toArray()
     {
         // Add object type back when converting to an array since we removed it due
         // to an oddity in the Klaviyo API.
         return ['object' => $this->objectType] + json_decode(json_encode($this), true);
     }
 
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }
