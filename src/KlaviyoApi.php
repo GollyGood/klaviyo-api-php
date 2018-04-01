@@ -53,10 +53,12 @@ class KlaviyoApi
     /**
      * The constructor for KlaviyoApi.
      *
-     * @param HttpClientInterface $httpClient       The HTTP client used for communication with the API.
+     * @param HttpClientInterface $httpClient
+     *    The HTTP client used for communication with the API.
      * @param RequestFactoryInterface $requestFactory
-     * @param StreamFactoryInterface $streamFactory
-     * @param string $apiKey                        The API key to use when communicating with the API.
+     * @param StreamFactoryInterface  $streamFactory
+     * @param string $apiKey
+     *    The API key to use when communicating with the API.
      *
      * @param array $options
      */
@@ -158,12 +160,16 @@ class KlaviyoApi
     /**
      * Perform a request against the API.
      *
-     * @param string $method        The HTTP method to use for the request.
-     * @param string $resource      The path to the resource to access on the API.
-     * @param array $options        Additional options to pass on to the HTTP client.
+     * @param string $method
+     *     The HTTP method to use for the request.
+     * @param string $resource
+     *     The path to the resource to access on the API.
+     * @param array $options
+     *     Additional options to pass on to the HTTP client.
      * @param bool $public
      *
-     * @return ResponseInterface        The response of the request as provided by the HTTP client.
+     * @return ResponseInterface
+     *     The response of the request as provided by the HTTP client.
      *
      * @throws BadRequestApiException
      * @throws NotAuthorizedApiException
@@ -214,10 +220,12 @@ class KlaviyoApi
      * Prepare the options array before use in the request.
      *
      * @param RequestInterface $request
-     * @param array $options    Additional options to pass on to the HTTP client.
-     *
+     * @param array $options
+     *     Additional options to pass on to the HTTP client.
      * @param bool $public
-     * @return RequestInterface     The prepared additional options to pass on to the HTTP client.
+     *
+     * @return RequestInterface
+     *     The prepared additional options to pass on to the HTTP client.
      */
     public function prepareRequest(
         RequestInterface $request,
