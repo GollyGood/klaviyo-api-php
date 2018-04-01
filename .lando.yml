@@ -1,0 +1,22 @@
+name: phpcli
+services:
+  phpcli:
+    type: php:5.6
+    via: cli
+    run:
+      - "cd $LANDO_MOUNT && composer install || true"
+
+    # Optionally activate xdebug
+    #
+    # If you are having trouble getting xdebug to work please see:
+    # https://docs.devwithlando.io/services/php.html#using-xdebug
+    xdebug: true
+tooling:
+  composer:
+    service: phpcli
+    description: Run composer commands
+    cmd:
+      - composer
+      - --ansi
+  php:
+    service: phpcli
