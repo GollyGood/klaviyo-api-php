@@ -15,9 +15,11 @@ class TemplateService extends BaseService
     use PagerTrait;
 
     /**
-     * Retrieve all lists from Klaviyo.
+     * Retrieve all templates from Klaviyo.
      *
-     * @return array        An array of TemplateModels that represent all templates in Klaviyo.
+     * @return array
+     *      An array of TemplateModels that represent all templates in Klaviyo.
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\MissingModelTypeException
@@ -38,6 +40,7 @@ class TemplateService extends BaseService
      *
      * @return TemplateModel
      *   The updated template object.
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\MissingModelTypeException
@@ -55,10 +58,13 @@ class TemplateService extends BaseService
     /**
      * Create a new template.
      *
-     * @param string $name          The name of the template to be created.
-     * @param \DOMDocument $html    The HTML content for this template.
+     * @param string $name
+     *     The name of the template to be created.
+     * @param \DOMDocument $htmli
+     *     The HTML content for this template.
      *
-     * @return TemplateModel        The template object created.
+     * @return TemplateModel
+     *     The template object created.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -81,7 +87,8 @@ class TemplateService extends BaseService
      * Delete an existing template.
      *
      * @param TemplateIdInterface $id
-     * @return TemplateModel        The deleted template object.
+     * @return TemplateModel
+     *     The deleted template object.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -97,10 +104,13 @@ class TemplateService extends BaseService
     }
 
     /**
-     * @param TemplateIdInterface $id               Model with id
-     * @param string $name                  The name of the new email template.
+     * @param TemplateIdInterface $id
+     *      Model with id.
+     * @param string $name
+     *      The name of the new email template.
      *
-     * @return TemplateModel                The newly created Email Template object with summary information.
+     * @return TemplateModel
+     *      The newly created Email Template object with summary information.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -119,11 +129,13 @@ class TemplateService extends BaseService
 
     /**
      * @param TemplateIdInterface $id
-     * @param array $context    JSON encoded hashThis is the context your email template will be rendered with.
-     *                          Email templates are rendered with contexts in a similar manner to how Django templates
-     *                          are rendered. This means that nested template variables can be referenced via dot
-     *                          notation and template variables without corresponding context values are treated as
-     *                          falsely and output nothing.
+     * @param array $context
+     *      JSON encoded hashThis is the context your email template will be
+     *      rendered with. Email templates are rendered with contexts in a
+     *      similar manner to how Django templates are rendered. This means
+     *      that nested template variables can be referenced via dot notation
+     *      and template variables without corresponding context values are
+     *      treated as falsely and output nothing.
      *
      * @return RenderedTemplateModel
      * @throws Exception\ApiConnectionException
@@ -143,15 +155,21 @@ class TemplateService extends BaseService
 
     /**
      * @param TemplateIdInterface $id
-     * @param string $fromEmail The email address your email will be sent from and will be used in the reply-to header.
-     * @param string $fromName The name or label associated with the email address you're sending from.
-     * @param string $subject Subject of email
-     * @param array $to Array with email/name pairs
-     * @param array $context JSON encoded hashThis is the context your email template will be rendered with.
-     *                          Email templates are rendered with contexts in a similar manner to how Django templates
-     *                          are rendered. This means that nested template variables can be referenced via dot
-     *                          notation and template variables without corresponding context values are treated as
-     *                          falsely and output nothing.
+     * @param string $fromEmail
+     *      The email address your email will be sent from and will be used in the reply-to header.
+     * @param string $fromName
+     *      The name or label associated with the email address you're sending from.
+     * @param string $subject
+     *      Subject of email.
+     * @param array $to
+     *      Array with email/name pairs
+     * @param array $context
+     *      JSON encoded hashThis is the context your email template will be
+     *      rendered with. Email templates are rendered with contexts in a
+     *      similar manner to how Django templates are rendered. This means
+     *      that nested template variables can be referenced via dot notation
+     *      and template variables without corresponding context values are
+     *      treated as falsely and output nothing.
      * @return bool
      *
      * @throws Exception\ApiConnectionException
