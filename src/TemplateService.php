@@ -109,7 +109,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function cloneTemplate(TemplateIdInterface $id, string $name)
+    public function cloneTemplate(TemplateIdInterface $id, $name)
     {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/clone"), [
             'name' => $name
@@ -162,9 +162,9 @@ class TemplateService extends BaseService
      */
     public function sendTemplate(
         TemplateIdInterface $id,
-        string $fromEmail,
-        string $fromName,
-        string $subject,
+        $fromEmail,
+        $fromName,
+        $subject,
         array $to,
         $context = []
     ) {

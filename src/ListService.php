@@ -86,7 +86,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function createList($name, string $type = 'list')
+    public function createList($name, $type = 'list')
     {
         $options = ['name' => $name, 'list_type' => $type];
         $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
@@ -203,7 +203,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function addPersonToList(ListModel $list, PersonModel $person, bool $confirmOptIn = true)
+    public function addPersonToList(ListModel $list, PersonModel $person, $confirmOptIn = true)
     {
         $options = [
             'email' => $person->email,
