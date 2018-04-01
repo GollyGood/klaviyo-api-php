@@ -33,7 +33,8 @@ class EventModel extends BaseModel
     protected $time;
 
     protected static $optionalDefaults = [
-        'properties' => null,
+        'event_id' => '',
+        'properties' => [],
         'time' => null,
     ];
 
@@ -49,7 +50,6 @@ class EventModel extends BaseModel
         }
 
         parent::__construct($configuration);
-        $configuration += self::$optionalDefaults;
 
         $this->event = $configuration['event'];
         $this->customer_properties = $configuration['customer_properties'];

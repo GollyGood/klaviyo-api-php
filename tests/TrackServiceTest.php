@@ -36,6 +36,7 @@ class TrackServiceTest extends KlaviyoTestCase
     public function getTrackService(&$container, $responses)
     {
         $api = $this->getApi($this->apiKey, [], $container, $responses);
+        $api->setPublicApiToken('pUbLic');
         return new TrackService($api);
     }
 
@@ -51,7 +52,7 @@ class TrackServiceTest extends KlaviyoTestCase
         $request = $container[0]['request'];
         $this->assertEquals('GET', $request->getMethod());
 
-        $options = http_build_query(['data' => base64_encode(json_encode(['token' => $this->apiKey, 'properties' => $person]))]);
+        $options = http_build_query(['data' => base64_encode(json_encode(['token' => 'pUbLic', 'properties' => $person]))]);
         $this->assertSame($options, $request->getUri()->getQuery());
     }
 
@@ -67,7 +68,7 @@ class TrackServiceTest extends KlaviyoTestCase
         $request = $container[0]['request'];
         $this->assertEquals('GET', $request->getMethod());
 
-        $options = http_build_query(['data' => base64_encode(json_encode(['token' => $this->apiKey] + $event->toArray()))]);
+        $options = http_build_query(['data' => base64_encode(json_encode(['token' => 'pUbLic'] + $event->toArray()))]);
         $this->assertSame($options, $request->getUri()->getQuery());
     }
 }

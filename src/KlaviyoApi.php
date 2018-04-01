@@ -31,6 +31,11 @@ class KlaviyoApi
     protected $apiKey;
 
     /**
+     * @var string
+     */
+    protected $publicApiToken;
+
+    /**
      * @var array
      */
     protected $options;
@@ -77,6 +82,30 @@ class KlaviyoApi
         $this->options = $options + [
             'records_per_page' => 50,
         ];
+    }
+
+    /**
+     * Set the public api token.
+     *
+     *  @param string $token
+     *    The public token to use for public requests
+     *
+     * @return KlaviyoApi
+     */
+    public function setPublicApiToken($token)
+    {
+        $this->publicApiToken = $token;
+        return $this;
+    }
+
+    /**
+     * Retireve the valu of the public api token.
+     *
+     * @return string
+     */
+    public function getPublicApiToken()
+    {
+        return $this->publicApiToken;
     }
 
     /**
@@ -234,7 +263,7 @@ class KlaviyoApi
     ) {
         if ($request->getMethod() === 'GET') {
             if (empty($options['query']['api_key'])) {
-                $options['query']['api_key'] = $this->apiKey;
+                $options['query']['api_key'] = !empty($this->publicApiToken) ? $this->publicApiToken : $this->apiKey;
             }
 
             if ($public) {
