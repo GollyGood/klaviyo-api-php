@@ -38,7 +38,9 @@ class TrackService extends BaseService
      * Track an event in  Klaviyo API
      *
      * @param EventModel $event
+     *
      * @return bool
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\NotAuthorizedApiException
