@@ -66,7 +66,7 @@ class KlaviyoApi
         HttpClientInterface $httpClient,
         RequestFactoryInterface $requestFactory,
         StreamFactoryInterface $streamFactory,
-        string $apiKey,
+        $apiKey,
         array $options = []
     ) {
         $this->apiKey = $apiKey;
@@ -97,7 +97,7 @@ class KlaviyoApi
      *   The model type or the perceived model type depending on the specified
      *   direction.
      */
-    public static function getModelType(string $modelType, $reverse = false)
+    public static function getModelType($modelType, $reverse = false)
     {
         $data_map = static::$dataMap;
 
@@ -121,7 +121,7 @@ class KlaviyoApi
      * @return mixed
      *   The value of the option requested.
      */
-    public function getOption(string $option)
+    public function getOption($option)
     {
         $value = null;
 
@@ -142,7 +142,7 @@ class KlaviyoApi
      *
      * @return $this
      */
-    public function setOption(string $option, $value)
+    public function setOption($option, $value)
     {
         $this->options[$option] = $value;
 
@@ -178,8 +178,8 @@ class KlaviyoApi
      * @throws ApiConnectionException
      */
     public function request(
-        string $method,
-        string $resource,
+        $method,
+        $resource,
         $options = [],
         $public = false
     ) {

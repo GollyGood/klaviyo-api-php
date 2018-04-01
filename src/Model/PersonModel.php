@@ -162,7 +162,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      * @return bool
      *   Returns TRUE if the attribute is considered to be a custom attribute.
      */
-    public static function isCustomAttributeKey(string $attributeKey)
+    public static function isCustomAttributeKey($attributeKey)
     {
         return !self::isSpecialAttributeKey($attributeKey);
     }
@@ -175,7 +175,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      *   Returns TRUE if the attribute is considered to be a "special" Klaviyo
      *   attribute.
      */
-    public static function isSpecialAttributeKey(string $attributeKey)
+    public static function isSpecialAttributeKey($attributeKey)
     {
         return in_array($attributeKey, self::$attributeKeys);
     }
@@ -185,7 +185,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      * @param string $attributeKey
      * @return mixed
      */
-    public function getCustomAttribute(string $attributeKey)
+    public function getCustomAttribute($attributeKey)
     {
         return !empty($this->customAttributes[$attributeKey]) ? $this->customAttributes[$attributeKey] : '';
     }
@@ -208,7 +208,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      * @throws CannotDeleteRequiredSpecialAttributeKeyException
      * @throws InvalidSpecialAttributeKeyException
      */
-    public function deleteAttribute(string $attributeKey)
+    public function deleteAttribute($attributeKey)
     {
         if (self::isSpecialAttributeKey($attributeKey) && isset(self::$optionalDefaults[$attributeKey])) {
             $property = self::getModelPropertyFromSpecialAttributeKey($attributeKey);
@@ -232,7 +232,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      * @return string                   The string representing the model property.
      * @throws InvalidSpecialAttributeKeyException
      */
-    public static function getModelPropertyFromSpecialAttributeKey(string $attributeKey)
+    public static function getModelPropertyFromSpecialAttributeKey($attributeKey)
     {
         if (!self::isSpecialAttributeKey($attributeKey)) {
             throw new InvalidSpecialAttributeKeyException(

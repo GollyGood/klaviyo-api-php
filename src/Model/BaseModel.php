@@ -107,7 +107,7 @@ abstract class BaseModel implements ModelInterface
      * @return \DOMDocument
      *   The HTML object that may used to manipulate the DOM.
      */
-    public function getHtmlObjectFromString(string $content)
+    public function getHtmlObjectFromString($content)
     {
         $dom = new \DOMDocument();
         @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);

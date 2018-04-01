@@ -45,7 +45,7 @@ class BaseService implements ServiceInterface
      *   The full resource path incuding the resource prefix and resource path.
      *   Example: /api/v1/lists
      */
-    public function getResourcePath(string $resource)
+    public function getResourcePath($resource)
     {
         return $this->resourcePrefix . $resource;
     }

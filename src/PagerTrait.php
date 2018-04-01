@@ -21,10 +21,13 @@ trait PagerTrait
     /**
      * Retrieve all records for the specified paginated resource.
      *
-     * @param string $resource          The resource path to retrieve and paginate against.
+     * @param string $resource
+     *     The resource path to retrieve and paginate against.
      * @param array $queryParameters
      *
-     * @return array                    An array of all records retrieved from the API.
+     * @return array
+     *     An array of all records retrieved from the API.
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\MissingModelTypeException
@@ -32,7 +35,7 @@ trait PagerTrait
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getAllRecords(string $resource, $queryParameters = [])
+    public function getAllRecords($resource, $queryParameters = [])
     {
         $count = $this->getApi()->getOption('records_per_page');
         $page = $this->getPage($resource, 0, $count, $queryParameters);
@@ -64,7 +67,7 @@ trait PagerTrait
      * @throws Exception\ServerErrorApiException
      */
     public function getRecordsFromSpecificPage(
-        string $resource,
+        $resource,
         $page = 0,
         $count = 0,
         $query_parameters = []
@@ -91,7 +94,7 @@ trait PagerTrait
      * @throws Exception\ServerErrorApiException
      */
     public function getPage(
-        string $resource,
+        $resource,
         $page = 0,
         $count = 5,
         $queryParameters = []

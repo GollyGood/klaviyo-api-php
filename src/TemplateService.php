@@ -67,7 +67,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function createTemplate(string $name, \DOMDocument $html)
+    public function createTemplate($name, \DOMDocument $html)
     {
         $options = [
             'name' => $name,

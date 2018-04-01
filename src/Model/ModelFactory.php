@@ -78,7 +78,7 @@ class ModelFactory
      *   A data model representing the specified data type.
      * @throws MissingModelTypeException
      */
-    public static function callModelCreationMethod(string $method, $configuration, $type = '')
+    public static function callModelCreationMethod($method, $configuration, $type = '')
     {
         $type = self::getModelType($configuration, $type);
 

@@ -29,7 +29,7 @@ class ListService extends BaseService
      * @throws Exception\ServerErrorApiException
      * @throws Exception\MissingModelTypeException
      */
-    public function getList(string  $id)
+    public function getList($id)
     {
         $response = $this->api->request('GET', $this->getResourcePath("list/$id"));
 
@@ -86,7 +86,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function createList(string $name, string $type = 'list')
+    public function createList($name, string $type = 'list')
     {
         $options = ['name' => $name, 'list_type' => $type];
         $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
