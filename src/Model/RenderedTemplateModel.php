@@ -12,6 +12,8 @@ namespace Klaviyo\Model;
  */
 class RenderedTemplateModel extends BaseModel
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $name;
     protected $html;

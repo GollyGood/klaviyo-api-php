@@ -10,6 +10,8 @@ namespace Klaviyo\Model;
  */
 class PersonReferenceModel extends BaseModel
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $email;
 
@@ -20,7 +22,7 @@ class PersonReferenceModel extends BaseModel
     {
         parent::__construct($configuration);
 
-        $this->id = $configuration['id'];
+        $this->setId($configuration['id']);
         $this->email = $configuration['email'];
     }
 

@@ -23,8 +23,10 @@ namespace Klaviyo\Model;
  * @property string $isSegmented
  * @property string $campaignType
  */
-class CampaignModel extends BaseModel
+class CampaignModel extends BaseModel implements IdInterface
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $name;
     protected $subject;
@@ -61,7 +63,7 @@ class CampaignModel extends BaseModel
     {
         parent::__construct($configuration);
 
-        $this->id = $configuration['id'];
+        $this->setId($configuration['id']);
         $this->name = $configuration['name'];
         $this->subject = $configuration['subject'];
         $this->fromEmail = $configuration['from_email'];
@@ -108,7 +110,7 @@ class CampaignModel extends BaseModel
     public function jsonSerialize()
     {
         return parent::jsonSerialize() + [
-            'id' => $this->id,
+            'id' => $this->getId(),
             'name' => $this->name,
             'subject' => $this->subject,
             'from_email' => $this->fromEmail,

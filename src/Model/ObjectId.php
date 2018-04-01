@@ -4,15 +4,12 @@ namespace Klaviyo\Model;
 
 class ObjectId implements TemplateIdInterface, PersonIdInterface
 {
-    private $id;
+    use ObjectIdTrait;
+
+    protected $id;
 
     public function __construct($id)
     {
-        $this->id = $id;
-    }
-
-    public function getId()
-    {
-        return $this->id;
+        $this->setId($id);
     }
 }

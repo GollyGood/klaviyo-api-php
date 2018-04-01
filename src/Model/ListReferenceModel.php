@@ -8,8 +8,10 @@ namespace Klaviyo\Model;
  * @property string $id
  * @property string $name
  */
-class ListReferenceModel extends BaseModel
+class ListReferenceModel extends BaseModel implements IdInterface
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $name;
     protected $listType;
@@ -21,7 +23,7 @@ class ListReferenceModel extends BaseModel
     {
         parent::__construct($configuration);
 
-        $this->id = $configuration['id'];
+        $this->setId($configuration['id']);
         $this->name = $configuration['name'];
     }
 
@@ -31,7 +33,7 @@ class ListReferenceModel extends BaseModel
     public function jsonSerialize()
     {
         return parent::jsonSerialize() + [
-            'id' => $this->id,
+            'id' => $this->getId(),
             'name' => $this->name,
         ];
     }

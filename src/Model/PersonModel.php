@@ -23,6 +23,8 @@ use Klaviyo\Exception\InvalidSpecialAttributeKeyException;
  */
 class PersonModel extends BaseModel implements PersonIdInterface
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $objectType = 'person';
     protected $email;
@@ -99,7 +101,7 @@ class PersonModel extends BaseModel implements PersonIdInterface
      */
     protected function setAttributes(array $configuration)
     {
-        $this->id = $configuration['id'];
+        $this->setId($configuration['id']);
         $this->email = $configuration['$email'];
         $this->firstName = $configuration['$first_name'];
         $this->lastName = $configuration['$last_name'];

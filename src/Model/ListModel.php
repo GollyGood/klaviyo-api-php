@@ -12,8 +12,10 @@ namespace Klaviyo\Model;
  * @property \DateTimeInterface $updated
  * @property string $personCount
  */
-class ListModel extends BaseModel
+class ListModel extends BaseModel implements IdInterface
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $name;
     protected $listType;
@@ -39,7 +41,7 @@ class ListModel extends BaseModel
     {
         parent::__construct($configuration);
 
-        $this->id = $configuration['id'];
+        $this->setid($configuration['id']);
         $this->name = $configuration['name'];
         $this->listType = $configuration['list_type'];
         $this->created = new \DateTime($configuration['created']);
@@ -54,7 +56,7 @@ class ListModel extends BaseModel
     public function jsonSerialize()
     {
         return parent::jsonSerialize() + [
-            'id' => $this->id,
+            'id' => $this->getId(),
             'name' => $this->name,
             'list_type' => $this->listType,
             'created' => $this->created->format($this->dateFormat),

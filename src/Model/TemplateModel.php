@@ -13,6 +13,8 @@ namespace Klaviyo\Model;
  */
 class TemplateModel extends BaseModel implements TemplateIdInterface
 {
+    use ObjectIdTrait;
+
     protected $id;
     protected $name;
     protected $html;
@@ -35,7 +37,7 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
         parent::__construct($configuration);
         $configuration += self::$optionalDefaults;
 
-        $this->id = $configuration['id'];
+        $this->setId($configuration['id']);
         $this->name = $configuration['name'];
         $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : null;
         $this->updated = !empty($configuration['updated']) ? new \DateTime($configuration['updated']) : null;
@@ -83,7 +85,7 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
     public function jsonSerialize()
     {
         return array_filter(parent::jsonSerialize() + [
-            'id' => $this->id,
+            'id' => $this->getId(),
             'name' => $this->name,
             'html' => trim($this->html->saveHtml()),
             'created' => !empty($this->created) ? $this->created->format($this->dateFormat) : null,
