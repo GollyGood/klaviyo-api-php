@@ -133,7 +133,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function renderTemplate(TemplateIdInterface $id, array $context = [])
+    public function renderTemplate(TemplateIdInterface $id, $context = [])
     {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/render"), [
             'context' => json_encode($context)
@@ -166,7 +166,7 @@ class TemplateService extends BaseService
         string $fromName,
         string $subject,
         array $to,
-        array $context = []
+        $context = []
     ) {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/send"), [
             'from_email' => $fromEmail,

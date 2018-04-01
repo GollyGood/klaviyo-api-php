@@ -32,7 +32,7 @@ trait PagerTrait
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getAllRecords(string $resource, array $queryParameters = [])
+    public function getAllRecords(string $resource, $queryParameters = [])
     {
         $count = $this->getApi()->getOption('records_per_page');
         $page = $this->getPage($resource, 0, $count, $queryParameters);
@@ -65,9 +65,9 @@ trait PagerTrait
      */
     public function getRecordsFromSpecificPage(
         string $resource,
-        int $page = 0,
-        int $count = 0,
-        array $query_parameters = []
+        $page = 0,
+        $count = 0,
+        $query_parameters = []
     ) {
         $page = $this->getPage($resource, $page, $count, $query_parameters);
         return array_map(ModelFactory::class . '::create', $page->data);
@@ -92,9 +92,9 @@ trait PagerTrait
      */
     public function getPage(
         string $resource,
-        int $page = 0,
-        int $count = 5,
-        array $queryParameters = []
+        $page = 0,
+        $count = 5,
+        $queryParameters = []
     ) {
         $options = ['query' => ['page' => $page, 'count' => $count] + $queryParameters];
         $response = $this->getApi()->request('GET', $resource, $options);

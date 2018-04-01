@@ -97,7 +97,7 @@ class KlaviyoApi
      *   The model type or the perceived model type depending on the specified
      *   direction.
      */
-    public static function getModelType(string $modelType, bool $reverse = false)
+    public static function getModelType(string $modelType, $reverse = false)
     {
         $data_map = static::$dataMap;
 
@@ -180,8 +180,8 @@ class KlaviyoApi
     public function request(
         string $method,
         string $resource,
-        array $options = [],
-        bool $public = false
+        $options = [],
+        $public = false
     ) {
         $response = null;
 
@@ -230,7 +230,7 @@ class KlaviyoApi
     public function prepareRequest(
         RequestInterface $request,
         array $options,
-        bool $public = false
+        $public = false
     ) {
         if ($request->getMethod() === 'GET') {
             if (empty($options['query']['api_key'])) {

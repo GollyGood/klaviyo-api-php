@@ -66,7 +66,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getListsFromPage(int $page = 0, int $count = 0)
+    public function getListsFromPage($page = 0, $count = 0)
     {
         return $this->getRecordsFromSpecificPage($this->getResourcePath('lists'), $page, $count);
     }
