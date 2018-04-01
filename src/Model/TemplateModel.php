@@ -91,7 +91,7 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
         ]);
     }
 
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }
