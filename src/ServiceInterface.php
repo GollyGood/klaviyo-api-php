@@ -12,7 +12,7 @@ interface ServiceInterface
      * @param KlaviyoApi $api
      * @return ServiceInterface
      */
-    public static function create(KlaviyoApi $api): ServiceInterface;
+    public static function create(KlaviyoApi $api);
 
     /**
      * Retrieve the full resource path.
@@ -22,5 +22,5 @@ interface ServiceInterface
      *   The full resource path incuding the resource prefix and resource path.
      *   Example: /api/v1/lists
      */
-    public function getResourcePath(string $resource): string;
+    public function getResourcePath(string $resource);
 }

@@ -11,7 +11,7 @@ class ObjectId implements TemplateIdInterface, PersonIdInterface
         $this->id = $id;
     }
 
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }

@@ -110,7 +110,7 @@ class TemplateServiceTest extends KlaviyoTestCase
         return $this->getTemplateSerive($container, $responses);
     }
 
-    public function getTemplateSerive(&$container, $responses): TemplateService
+    public function getTemplateSerive(&$container, $responses)
     {
         $api = $this->getApi($this->apiKey, [], $container,  $responses);
         return new TemplateService($api);

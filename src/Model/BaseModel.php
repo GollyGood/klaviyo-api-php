@@ -71,7 +71,7 @@ abstract class BaseModel implements ModelInterface
      * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function create($configuration = []): ModelInterface
+    public static function create($configuration = [])
     {
         return new static($configuration);
     }
@@ -85,7 +85,7 @@ abstract class BaseModel implements ModelInterface
      * @return ModelInterface
      *   An instance of the Klaviyo data model.
      */
-    public static function createFromJson($json): ModelInterface
+    public static function createFromJson($json)
     {
         if (is_string($json)) {
             $configuration = json_decode($json, true);
@@ -107,7 +107,7 @@ abstract class BaseModel implements ModelInterface
      * @return \DOMDocument
      *   The HTML object that may used to manipulate the DOM.
      */
-    public function getHtmlObjectFromString(string $content): \DOMDocument
+    public function getHtmlObjectFromString(string $content)
     {
         $dom = new \DOMDocument();
         @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -128,7 +128,7 @@ abstract class BaseModel implements ModelInterface
     /**
      * Convert the model to an array.
      */
-    public function toArray(): array
+    public function toArray()
     {
         return json_decode(json_encode($this), true);
     }

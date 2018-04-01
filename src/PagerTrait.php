@@ -13,7 +13,7 @@ trait PagerTrait
     /**
      * Retrieve the KlaviyoApi service object.
      */
-    public function getApi(): KlaviyoApi
+    public function getApi()
     {
         return $this->api;
     }
@@ -32,7 +32,7 @@ trait PagerTrait
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getAllRecords(string $resource, array $queryParameters = []): array
+    public function getAllRecords(string $resource, array $queryParameters = [])
     {
         $count = $this->getApi()->getOption('records_per_page');
         $page = $this->getPage($resource, 0, $count, $queryParameters);
@@ -68,7 +68,7 @@ trait PagerTrait
         int $page = 0,
         int $count = 0,
         array $query_parameters = []
-    ): array {
+    ) {
         $page = $this->getPage($resource, $page, $count, $query_parameters);
         return array_map(ModelFactory::class . '::create', $page->data);
     }
@@ -95,8 +95,7 @@ trait PagerTrait
         int $page = 0,
         int $count = 5,
         array $queryParameters = []
-    ) : PageModel {
-        $options = ['query' => ['page' => $page, 'count' => $count] + $queryParameters];
+    ) {
         $response = $this->getApi()->request('GET', $resource, $options);
         return ModelFactory::create(json_decode($response->getBody()->getContents(), true), 'page');
     }

@@ -42,7 +42,7 @@ class ModelFactory
      *   A data model representing the specified data type.
      * @throws MissingModelTypeException
      */
-    public static function create(array $configuration = [], string $type = ''): ModelInterface
+    public static function create(array $configuration = [], string $type = '')
     {
         return self::callModelCreationMethod('create', $configuration, $type);
     }
@@ -59,7 +59,7 @@ class ModelFactory
      *   A data model representing the specified data type.
      * @throws MissingModelTypeException
      */
-    public static function createFromJson($configuration, string $type = ''): ModelInterface
+    public static function createFromJson($configuration, string $type = '')
     {
         return self::callModelCreationMethod('createFromJson', $configuration, $type);
     }
@@ -78,7 +78,7 @@ class ModelFactory
      *   A data model representing the specified data type.
      * @throws MissingModelTypeException
      */
-    public static function callModelCreationMethod(string $method, $configuration, string $type = ''): ModelInterface
+    public static function callModelCreationMethod(string $method, $configuration, string $type = '')
     {
         $type = self::getModelType($configuration, $type);
 
@@ -104,7 +104,7 @@ class ModelFactory
      *   The model data type.
      * @throws MissingModelTypeException
      */
-    public static function getModelType($configuration = [], string $type = ''): string
+    public static function getModelType($configuration = [], string $type = '')
     {
         if (empty($type) && !empty($configuration['object'])) {
             $type = $configuration['object'];

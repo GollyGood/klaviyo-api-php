@@ -33,7 +33,7 @@ class BaseService implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public static function create(KlaviyoApi $api): ServiceInterface
+    public static function create(KlaviyoApi $api)
     {
         return new static($api);
     }
@@ -45,7 +45,7 @@ class BaseService implements ServiceInterface
      *   The full resource path incuding the resource prefix and resource path.
      *   Example: /api/v1/lists
      */
-    public function getResourcePath(string $resource): string
+    public function getResourcePath(string $resource)
     {
         return $this->resourcePrefix . $resource;
     }

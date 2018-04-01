@@ -14,7 +14,6 @@ class TemplateService extends BaseService
 {
     use PagerTrait;
 
-
     /**
      * Retrieve all lists from Klaviyo.
      *
@@ -26,11 +25,10 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getAllTemplates(): array
+    public function getAllTemplates()
     {
         return $this->getAllRecords($this->getResourcePath('email-templates'));
     }
-
 
     /**
      * Update the specified template.
@@ -47,13 +45,12 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function updateTemplate(TemplateModel $template): TemplateModel
+    public function updateTemplate(TemplateModel $template)
     {
         $options = ['name' => $template->name, 'html' => $template->html->saveHtml()];
         $response = $this->api->request('PUT', $this->getResourcePath("email-template/{$template->id}"), $options);
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'email-template');
     }
-
 
     /**
      * Create a new template.
@@ -70,7 +67,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function createTemplate(string $name, \DOMDocument $html): TemplateModel
+    public function createTemplate(string $name, \DOMDocument $html)
     {
         $options = [
             'name' => $name,
@@ -93,7 +90,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function deleteTemplate(TemplateIdInterface $id): TemplateModel
+    public function deleteTemplate(TemplateIdInterface $id)
     {
         $response = $this->api->request('DELETE', $this->getResourcePath("email-template/{$id->getId()}"));
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'email-template');
@@ -112,7 +109,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function cloneTemplate(TemplateIdInterface $id, string $name): TemplateModel
+    public function cloneTemplate(TemplateIdInterface $id, string $name)
     {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/clone"), [
             'name' => $name
@@ -136,7 +133,7 @@ class TemplateService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function renderTemplate(TemplateIdInterface $id, array $context = []): RenderedTemplateModel
+    public function renderTemplate(TemplateIdInterface $id, array $context = [])
     {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/render"), [
             'context' => json_encode($context)
@@ -170,7 +167,7 @@ class TemplateService extends BaseService
         string $subject,
         array $to,
         array $context = []
-    ): bool {
+    ) {
         $response = $this->api->request('POST', $this->getResourcePath("email-template/{$id->getId()}/send"), [
             'from_email' => $fromEmail,
             'from_name' => $fromName,

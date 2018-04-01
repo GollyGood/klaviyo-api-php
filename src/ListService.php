@@ -29,7 +29,7 @@ class ListService extends BaseService
      * @throws Exception\ServerErrorApiException
      * @throws Exception\MissingModelTypeException
      */
-    public function getList(string  $id): ListModel
+    public function getList(string  $id)
     {
         $response = $this->api->request('GET', $this->getResourcePath("list/$id"));
 
@@ -47,7 +47,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getAllLists(): array
+    public function getAllLists()
     {
         return $this->getAllRecords($this->getResourcePath('lists'));
     }
@@ -66,7 +66,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getListsFromPage(int $page = 0, int $count = 0): array
+    public function getListsFromPage(int $page = 0, int $count = 0)
     {
         return $this->getRecordsFromSpecificPage($this->getResourcePath('lists'), $page, $count);
     }
@@ -86,7 +86,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function createList(string $name, string $type = 'list'): ListModel
+    public function createList(string $name, string $type = 'list')
     {
         $options = ['name' => $name, 'list_type' => $type];
         $response = $this->api->request('POST', $this->getResourcePath('lists'), $options);
@@ -107,7 +107,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function updateList(ListModel $list): ListModel
+    public function updateList(ListModel $list)
     {
         $options = ['name' => $list->name];
         $response = $this->api->request('PUT', $this->getResourcePath("list/{$list->id}"), $options);
@@ -128,7 +128,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function deleteList(ListModel $list): ListModel
+    public function deleteList(ListModel $list)
     {
         $response = $this->api->request('DELETE', $this->getResourcePath("list/{$list->id}"));
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
@@ -149,7 +149,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function checkMembersAreInList(ListModel $list, array $emails): array
+    public function checkMembersAreInList(ListModel $list, array $emails)
     {
         $options = ['query' => ['email' => implode(',', $emails)]];
         $response = $this->api->request('GET', $this->getResourcePath("$list->listType/{$list->id}/members"), $options);
@@ -176,7 +176,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function checkMembersAreInSegment(ListModel $segment, array $emails): array
+    public function checkMembersAreInSegment(ListModel $segment, array $emails)
     {
         return $this->checkMembersAreInList($segment, $emails);
     }
@@ -203,7 +203,7 @@ class ListService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function addPersonToList(ListModel $list, PersonModel $person, bool $confirmOptIn = true): PersonListModel
+    public function addPersonToList(ListModel $list, PersonModel $person, bool $confirmOptIn = true)
     {
         $options = [
             'email' => $person->email,

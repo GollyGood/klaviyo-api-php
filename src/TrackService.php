@@ -27,7 +27,7 @@ class TrackService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function identify(PersonModel $person): bool
+    public function identify(PersonModel $person)
     {
         $options = ['query' => ['properties' => $person]];
         $response = $this->api->request('GET', $this->getResourcePath('identify'), $options, true);
@@ -45,7 +45,7 @@ class TrackService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function track(EventModel $event): bool
+    public function track(EventModel $event)
     {
         $options = ['query' => $event->toArray()];
         $response = $this->api->request('GET', $this->getResourcePath('track'), $options, true);

@@ -23,7 +23,7 @@ class PersonService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function getPerson(PersonIdInterface $id): PersonModel
+    public function getPerson(PersonIdInterface $id)
     {
         $response = $this->api->request('GET', $this->getResourcePath("person/{$id->getId()}"));
         return PersonModel::createFromJson($response->getBody());
@@ -41,7 +41,7 @@ class PersonService extends BaseService
      * @throws Exception\NotFoundApiException
      * @throws Exception\ServerErrorApiException
      */
-    public function updatePerson(PersonIdInterface $id, array $context): PersonModel
+    public function updatePerson(PersonIdInterface $id, array $context)
     {
         $response = $this->api->request(
             'PUT',

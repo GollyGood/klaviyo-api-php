@@ -42,7 +42,7 @@ class MembershipModel extends BaseModel
     /**
      * {@inheritdoc}
      */
-    public function toArray(): array
+    public function toArray()
     {
         return [
             'object' => $this->objectType,
