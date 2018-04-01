@@ -33,7 +33,6 @@ class EventModel extends BaseModel
     protected $time;
 
     protected static $optionalDefaults = [
-        'event_id' => '',
         'properties' => [],
         'time' => null,
     ];
