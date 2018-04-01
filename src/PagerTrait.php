@@ -96,6 +96,7 @@ trait PagerTrait
         int $count = 5,
         array $queryParameters = []
     ) {
+        $options = ['query' => ['page' => $page, 'count' => $count] + $queryParameters];
         $response = $this->getApi()->request('GET', $resource, $options);
         return ModelFactory::create(json_decode($response->getBody()->getContents(), true), 'page');
     }
