@@ -157,6 +157,7 @@ class CampaignServiceTest extends KlaviyoTestCase
         return $this->getCampaignService($container, $responses);
     }
 
+
     public function testGetCampaign()
     {
         $container = $responses = [];
@@ -175,16 +176,27 @@ class CampaignServiceTest extends KlaviyoTestCase
 
         $this->assertCount(4, $campaigns);
 
-        /*
-        $listZero = new ListModel($this->responsePageZero['data'][0]);
-        $this->assertEquals($listZero, $lists[0]);
-        $listOne = new ListModel($this->responsePageZero['data'][1]);
-        $this->assertEquals($listOne, $lists[1]);
-        $listTwo = new ListModel($this->responsePageOne['data'][0]);
-        $this->assertEquals($listTwo, $lists[2]);
-        $listThree = new ListModel($this->responsePageOne['data'][1]);
-        $this->assertEquals($listThree, $lists[3]);
-         */
+        $listZero = new CampaignModel($this->responsePageZero['data'][0]);
+        $this->assertEquals($listZero, $campaigns[0]);
+        $listOne = new CampaignModel($this->responsePageZero['data'][1]);
+        $this->assertEquals($listOne, $campaigns[1]);
+        $listTwo = new CampaignModel($this->responsePageOne['data'][0]);
+        $this->assertEquals($listTwo, $campaigns[2]);
+        $listThree = new CampaignModel($this->responsePageOne['data'][1]);
+        $this->assertEquals($listThree, $campaigns[3]);
+    }
+
+    public function testGetCampaignPage()
+    {
+        $list_manager = $this->getMultiPageCampaignService();
+        $campaigns = $list_manager->getCampaignsFromPage(1);
+
+        $this->assertCount(2, $campaigns, 'There should be two records.');
+
+        $campaign_zero = new CampaignModel($this->responsePageZero['data'][0]);
+        $this->assertEquals($campaign_zero, $campaigns[0]);
+        $campaign_one = new CampaignModel($this->responsePageZero['data'][1]);
+        $this->assertEquals($campaign_one, $campaigns[1]);
     }
 
     public function testCreateCampaign()

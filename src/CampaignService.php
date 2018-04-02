@@ -47,6 +47,29 @@ class CampaignService extends BaseService
     }
 
     /**
+     * Get campaigns from a specific page.
+     *
+     * @param int $page
+     *    The page number to retrieve.
+     * @param int $count
+     *    The number of items per page.
+     *
+     * @return array
+     *    An array of records from the specified page.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function getCampaignsFromPage($page = 0, $count = 0)
+    {
+        return $this->getRecordsFromSpecificPage($this->getResourcePath('campaigns'), $page, $count);
+    }
+
+    /**
      * Create a new campaign.
      *
      * @param array $configuration
