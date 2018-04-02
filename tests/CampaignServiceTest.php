@@ -189,7 +189,7 @@ class CampaignServiceTest extends KlaviyoTestCase
     public function testGetCampaignPage()
     {
         $list_manager = $this->getMultiPageCampaignService();
-        $campaigns = $list_manager->getCampaignsFromPage(1);
+        $campaigns = $list_manager->getCampaignsFromPage(0);
 
         $this->assertCount(2, $campaigns, 'There should be two records.');
 

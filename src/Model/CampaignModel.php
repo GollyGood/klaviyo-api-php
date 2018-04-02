@@ -50,7 +50,7 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
         'status_id' => 2,
         'status_label' => 'Draft',
         'send_time' => '',
-        'updated' => '',
+        'updated' => null,
         'num_recipients' => 0,
         'is_segmented' => false,
         'campaign_type' => 'Regular',
@@ -76,7 +76,7 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
         $this->sentAt = $configuration['sent_at'];
         $this->sendTime = $configuration['send_time'];
         $this->created = new \DateTime($configuration['created']);
-        $this->updated = new \DateTime($configuration['updated']);
+        $this->updated = !empty($configuration['updated']) ? new \DateTime($configuration['updated']) : null;
         $this->numRecipients = $configuration['num_recipients'];
         $this->isSegmented = $configuration['is_segmented'];
         $this->campaignType = $configuration['campaign_type'];
@@ -129,7 +129,7 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
             'sent_at' => $this->sentAt,
             'send_time' => $this->sendTime,
             'created' => $this->created->format($this->dateFormat),
-            'updated' => $this->created->format($this->dateFormat),
+            'updated' => !empty($this->updated) ? $this->updated->format($this->dateFormat) : null,
             'num_recipients' => $this->numRecipients,
             'is_segmented' => $this->isSegmented,
             'campaign_type' => $this->campaignType,
