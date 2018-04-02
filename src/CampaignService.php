@@ -3,12 +3,16 @@
 namespace Klaviyo;
 
 use Klaviyo\Model\ModelFactory;
+use Klaviyo\Model\CampaignIdInterface;
 
 /**
  * The campaign manager class used to handle campaigns.
  */
 class CampaignService extends BaseService
 {
+
+    use PagerTrait;
+
     /**
      * Retrieve a specific campaign from Klaviyo.
      *
@@ -18,10 +22,28 @@ class CampaignService extends BaseService
      * @return CampaignModel
      *   The campaign object retrieved by the specified id.
      */
-    public function getCampaign($id)
+    public function getCampaign(CampaignIdInterface $id)
     {
-        $response = $this->api->request('GET', $this->getResourcePath("campaign/$id"));
+        $response = $this->api->request('GET', $this->getResourcePath('campaign/' . $id->getId()));
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
+    }
+
+    /**
+     * Retrieve all campaigns from Klaviyo.
+     *
+     * @return array
+     *     An array of CampaignModels that represent all campaigns in Klaviyo.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function getAllCampaigns()
+    {
+        return $this->getAllRecords($this->getResourcePath('campaigns'));
     }
 
     /**

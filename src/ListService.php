@@ -39,7 +39,9 @@ class ListService extends BaseService
     /**
      * Retrieve all lists from Klaviyo.
      *
-     * @return array        An array of ListModels that represent all lists in Klaviyo.
+     * @return array
+     *     An array of ListModels that represent all lists in Klaviyo.
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\MissingModelTypeException

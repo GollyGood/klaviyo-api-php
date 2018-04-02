@@ -34,7 +34,9 @@ class PersonService extends BaseService
      *
      * @param PersonIdInterface $id
      * @param array $context
+     *
      * @return Model\ModelInterface
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\NotAuthorizedApiException

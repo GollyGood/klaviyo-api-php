@@ -263,11 +263,11 @@ class KlaviyoApi
     ) {
         if ($request->getMethod() === 'GET') {
             if (empty($options['query']['api_key'])) {
-                $options['query']['api_key'] = !empty($this->publicApiToken) ? $this->publicApiToken : $this->apiKey;
+                $options['query']['api_key'] = $this->apiKey;
             }
 
             if ($public) {
-                $api_key = $options['query']['api_key'];
+                $api_key = !empty($this->publicApiToken) ? $this->publicApiToken : $options['query']['api_key'];
                 unset($options['query']['api_key']);
                 $options = [
                     'query' => [

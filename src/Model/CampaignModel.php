@@ -23,7 +23,7 @@ namespace Klaviyo\Model;
  * @property string $isSegmented
  * @property string $campaignType
  */
-class CampaignModel extends BaseModel implements IdInterface
+class CampaignModel extends BaseModel implements CampaignIdInterface
 {
     use ObjectIdTrait;
 
@@ -54,6 +54,8 @@ class CampaignModel extends BaseModel implements IdInterface
         'num_recipients' => 0,
         'is_segmented' => false,
         'campaign_type' => 'Regular',
+        'template' => null,
+        'template_id' => 0,
     ];
 
     /**
@@ -78,18 +80,22 @@ class CampaignModel extends BaseModel implements IdInterface
         $this->numRecipients = $configuration['num_recipients'];
         $this->isSegmented = $configuration['is_segmented'];
         $this->campaignType = $configuration['campaign_type'];
+        $this->template_id = $configuration['template_id'];
 
-        $this->template = is_subclass_of($configuration['template'], BaseModel::class) ?
-                            $configuration['template'] :
-                            TemplateModel::create($configuration['template']);
+        if (isset($configuration['template'])) {
+            $this->template = is_subclass_of($configuration['template'], BaseModel::class) ?
+                                $configuration['template'] :
+                                TemplateModel::create($configuration['template']);
+        }
+
         $this->loadLists($configuration['lists']);
     }
 
     /**
      * Load the lists associated with the campaign.
      *
-     * @param array $lists
-     *   An array of list data for which to load the list models.
+     * @param array $configuration
+     *   The configuration array.
      *
      * @return $this
      */
