@@ -28,7 +28,7 @@ class EventModel extends BaseModel
     protected $properties = [];
 
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     protected $time;
 

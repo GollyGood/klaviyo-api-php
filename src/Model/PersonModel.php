@@ -8,18 +8,23 @@ use Klaviyo\Exception\InvalidSpecialAttributeKeyException;
 /**
  * Simple model for a Klaviyo "Person".
  *
- * @property string $id
- * @property string email
- * @property string firstName
- * @property string lastName
- * @property string organization
- * @property string title
- * @property string city
- * @property string region
- * @property string zip
- * @property string country
- * @property string timezone
- * @property string phoneNumber
+ * @param string $id
+ * @param string $objectType
+ * @param string $email
+ * @param string $firstName
+ * @param string $lastName
+ * @param string $organization
+ * @param string $title
+ * @param string $city
+ * @param string $region
+ * @param string $zip
+ * @param string $country
+ * @param string $timezone
+ * @param string $phoneNumber
+ * @param string $customAttributes
+ * @param string $unsetAttributes
+ * @param array $optionalDefaults
+ * @param array $attributeKeys
  */
 class PersonModel extends BaseModel implements PersonIdInterface
 {

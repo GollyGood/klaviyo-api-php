@@ -2,17 +2,19 @@
 
 namespace Klaviyo;
 
-use Interop\Http\Factory\RequestFactoryInterface;
-use Interop\Http\Factory\StreamFactoryInterface;
 use Klaviyo\Exception\ApiConnectionException;
 use Klaviyo\Exception\ApiException;
 use Klaviyo\Exception\BadRequestApiException;
 use Klaviyo\Exception\NotAuthorizedApiException;
 use Klaviyo\Exception\NotFoundApiException;
 use Klaviyo\Exception\ServerErrorApiException;
+
+use Interop\Http\Factory\RequestFactoryInterface;
+use Interop\Http\Factory\StreamFactoryInterface;
+use Http\Client\HttpClient as HttpClientInterface;
+use Http\Client\Exception\HttpException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Http\Client\HttpClient as HttpClientInterface;
 
 /**
  * The main Klaviyo API class for communicating with the Klaviyo API.
@@ -212,37 +214,31 @@ class KlaviyoApi
         $options = [],
         $public = false
     ) {
-        $response = null;
-
         try {
             $request = $this->requestFactory->createRequest($method, self::$endPoint . '/' . ltrim($resource, '/'));
             $request = $this->prepareRequest($request, $options, $public);
 
-            $response = $this->httpClient->sendRequest($request);
-        } catch (\Exception $e) {
-            if (method_exists($e, 'getResponse')) {
-                switch ($e->getResponse()->getStatusCode()) {
-                    case '400':
-                        throw new BadRequestApiException($e->getMessage());
+            return $this->httpClient->sendRequest($request);
+        } catch (HttpException $e) {
+            switch ($e->getResponse()->getStatusCode()) {
+                case '400':
+                    throw new BadRequestApiException($e->getMessage());
 
-                    case '401':
-                        throw new NotAuthorizedApiException($e->getMessage());
+                case '401':
+                    throw new NotAuthorizedApiException($e->getMessage());
 
-                    case '404':
-                        throw new NotFoundApiException($e->getMessage());
+                case '404':
+                    throw new NotFoundApiException($e->getMessage());
 
-                    case '500':
-                        throw new ServerErrorApiException($e->getMessage());
+                case '500':
+                    throw new ServerErrorApiException($e->getMessage());
 
-                    default:
-                        throw new ApiConnectionException($e->getMessage());
-                }
-            } else {
-                throw new ApiConnectionException($e->getMessage());
+                default:
+                    throw new ApiConnectionException($e->getMessage());
             }
+        } catch (\Exception $e) {
+            throw new ApiConnectionException($e->getMessage());
         }
-
-        return $response;
     }
 
     /**

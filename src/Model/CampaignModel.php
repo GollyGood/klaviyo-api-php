@@ -44,6 +44,7 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
     protected $numRecipients;
     protected $isSegmented;
     protected $campaignType;
+    protected $templateId;
     protected static $optionalDefaults = [
         'id' => '',
         'status' => 'draft',
@@ -80,7 +81,7 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
         $this->numRecipients = $configuration['num_recipients'];
         $this->isSegmented = $configuration['is_segmented'];
         $this->campaignType = $configuration['campaign_type'];
-        $this->template_id = $configuration['template_id'];
+        $this->templateId = $configuration['template_id'];
 
         if (isset($configuration['template'])) {
             $this->template = is_subclass_of($configuration['template'], BaseModel::class) ?
@@ -94,8 +95,8 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
     /**
      * Load the lists associated with the campaign.
      *
-     * @param array $configuration
-     *   The configuration array.
+     * @param array $lists
+     *   An array of lists associated with the campaign.
      *
      * @return $this
      */

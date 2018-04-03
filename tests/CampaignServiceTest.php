@@ -61,6 +61,11 @@ class CampaignServiceTest extends KlaviyoTestCase
         'add_google_analytics' => false,
     ];
 
+    protected $responseCampaignZero;
+    protected $responseCampaignOne;
+    protected $responsePageZero;
+    protected $responsePageOne;
+
     public function setUp()
     {
         $this->responseCampaignZero = [

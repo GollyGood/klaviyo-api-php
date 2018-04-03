@@ -36,6 +36,7 @@ abstract class BaseModel implements ModelInterface
 
     /**
      * PHPs magic get method to provide access to our protected attributes.
+     *
      * @param string $property
      * @return mixed;
      */
@@ -68,7 +69,7 @@ abstract class BaseModel implements ModelInterface
      * @param array $configuration
      *   The key, value pair array to use for populating the data model.
      *
-     * @return ModelInterface
+     * @return mixed
      *   An instance of the Klaviyo data model.
      */
     public static function create($configuration = [])
@@ -82,7 +83,7 @@ abstract class BaseModel implements ModelInterface
      * @param array|string $json
      *   The configuration json to use for populating the data model.
      *
-     * @return ModelInterface
+     * @return mixed
      *   An instance of the Klaviyo data model.
      */
     public static function createFromJson($json)

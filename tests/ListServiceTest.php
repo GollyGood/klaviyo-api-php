@@ -14,8 +14,12 @@ use Klaviyo\Model\PersonReferenceModel;
 
 class ListServiceTest extends KlaviyoTestCase
 {
+    protected $responseListZero;
+    protected $responseListOne;
+    protected $responsePageZero;
     protected $responsePageOne;
-    protected $responsePageTwo;
+    protected $responseListMembers;
+    protected $responseAddListPerson;
 
     public function setUp()
     {

@@ -187,16 +187,17 @@ class ListService extends BaseService
      * Add a person to an existing List.
      *
      * @param ListModel $list
-     *   The ListModel for which to add the person.
+     *     The ListModel for which to add the person.
      * @param PersonModel $person
-     *   The PersonModel of the person to add to a List.
+     *     The PersonModel of the person to add to a List.
      * @param bool $confirmOptIn
-     *   Default to TRUE. Determines if the person should be asked to confirm
-     *   subscribing to list. When TRUE the person will recieve an email with a
-     *   confirmation link before zhe is added to the list. Otherwise, when FALSE
-     *   the person is automatically added to the list.
+     *     Default to TRUE. Determines if the person should be asked to confirm
+     *     subscribing to list. When TRUE the person will recieve an email with a
+     *     confirmation link before zhe is added to the list. Otherwise, when FALSE
+     *     the person is automatically added to the list.
      *
-     * @return PersonListModel              The PersonList wrapper provided by the Klaviyo API.
+     * @return PersonListModel
+     *     The PersonList wrapper provided by the Klaviyo API.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException

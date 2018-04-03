@@ -2,6 +2,7 @@
 
 namespace Klaviyo;
 
+use Klaviyo\Model\CampaignModel;
 use Klaviyo\Model\ModelFactory;
 use Klaviyo\Model\CampaignIdInterface;
 
@@ -16,7 +17,7 @@ class CampaignService extends BaseService
     /**
      * Retrieve a specific campaign from Klaviyo.
      *
-     * @param string $id
+     * @param CampaignIdInterface $id
      *   The id for which to retrieve a campaign.
      *
      * @return CampaignModel

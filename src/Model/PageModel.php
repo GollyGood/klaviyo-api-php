@@ -28,6 +28,8 @@ class PageModel extends BaseModel
      */
     public function __construct($configuration)
     {
+        parent::__construct($configuration);
+
         $this->objectType = KlaviyoApi::getModelType($configuration['object']);
         $this->start = $configuration['start'];
         $this->end = $configuration['end'];

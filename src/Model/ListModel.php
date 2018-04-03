@@ -22,6 +22,7 @@ class ListModel extends BaseModel implements IdInterface
     protected $created;
     protected $updated;
     protected $personCount;
+    protected $folder;
     protected static $mutableAttributes = ['name'];
     protected static $optionalDefaults = [
         'object' => 'list',
@@ -31,7 +32,7 @@ class ListModel extends BaseModel implements IdInterface
         'created' => null,
         'updated' => null,
         'person_count' => 0,
-        'folder' => null,
+        'folder' => '',
     ];
 
     /**
@@ -41,7 +42,7 @@ class ListModel extends BaseModel implements IdInterface
     {
         parent::__construct($configuration);
 
-        $this->setid($configuration['id']);
+        $this->setId($configuration['id']);
         $this->name = $configuration['name'];
         $this->listType = $configuration['list_type'];
         $this->created = new \DateTime($configuration['created']);

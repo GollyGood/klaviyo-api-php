@@ -38,8 +38,9 @@ class ModelFactory
      * @param string $type
      *   The type of the data model to create.
      *
-     * @return ModelInterface
+     * @return mixed
      *   A data model representing the specified data type.
+     *
      * @throws MissingModelTypeException
      */
     public static function create($configuration = [], $type = '')
@@ -55,8 +56,9 @@ class ModelFactory
      * @param string $type
      *   The type of the data model to create.
      *
-     * @return ModelInterface
+     * @return mixed
      *   A data model representing the specified data type.
+     *
      * @throws MissingModelTypeException
      */
     public static function createFromJson($configuration, $type = '')
@@ -74,8 +76,9 @@ class ModelFactory
      * @param string $type
      *   The type of the data model to create.
      *
-     * @return ModelInterface
+     * @return mixed
      *   A data model representing the specified data type.
+     *
      * @throws MissingModelTypeException
      */
     public static function callModelCreationMethod($method, $configuration, $type = '')
@@ -102,6 +105,7 @@ class ModelFactory
      *
      * @return string
      *   The model data type.
+     *
      * @throws MissingModelTypeException
      */
     public static function getModelType($configuration = [], $type = '')
