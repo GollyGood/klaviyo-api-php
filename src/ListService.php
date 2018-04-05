@@ -217,4 +217,23 @@ class ListService extends BaseService
         $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members"), $options);
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'person_list');
     }
+
+    /**
+     * @todo: Document.
+     */
+    public function addPeopleToList(ListModel $list, array $people, $confirmOptIn = true)
+    {
+        $options = [
+            'batch' => array_map(function($person) {
+                return [
+                    'email' => $person->email,
+                    'properties' => json_encode($person),
+                ];
+            }, $people),
+            'confirm_optin' => ($confirmOptIn) ? 'true' : 'false',
+        ];
+
+        $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members/batch"), $options);
+        return ModelFactory::createFromJson($response->getBody()->getContents(), 'people_list');
+    }
 }

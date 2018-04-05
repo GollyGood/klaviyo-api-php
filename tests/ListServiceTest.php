@@ -9,6 +9,7 @@ use Klaviyo\Model\ListModel;
 use Klaviyo\Model\ListReferenceModel;
 use Klaviyo\Model\MembershipModel;
 use Klaviyo\Model\PersonListModel;
+use Klaviyo\Model\PeopleListModel;
 use Klaviyo\Model\PersonModel;
 use Klaviyo\Model\PersonReferenceModel;
 
@@ -20,6 +21,7 @@ class ListServiceTest extends KlaviyoTestCase
     protected $responsePageOne;
     protected $responseListMembers;
     protected $responseAddListPerson;
+    protected $responseAddListPeople;
 
     public function setUp()
     {
@@ -129,6 +131,31 @@ class ListServiceTest extends KlaviyoTestCase
                 'name' => 'List 1',
             ],
             'already_member' => true,
+        ];
+        $this->responseAddListPeople = [
+            'people' => [
+                [
+                  'person'  => [
+                    'object' => 'person',
+                    'id' => 'erRoOX',
+                    'email' => 'george.washington@example.com'
+                  ],
+                  'already_member' => true,
+                ],
+                [
+                  'person'  => [
+                    'object' => 'person',
+                    'id' => 'fsSpPY',
+                    'email' => 'thomas.jefferson@example.com'
+                  ],
+                  'already_member' => false,
+                ]
+            ],
+            'list' => [
+                'object' => 'list',
+                'id' => 'arY8wg',
+                'name' => 'List 1',
+            ]
         ];
     }
 
@@ -313,5 +340,30 @@ class ListServiceTest extends KlaviyoTestCase
         $this->assertSame('george.washington@example.com', $fields['email']);
         $this->assertEquals($person, PersonModel::createFromJson($fields['properties']));
         $this->assertTrue((bool) $fields['confirm_optin']);
+    }
+
+    public function testAddPeopleToList()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseAddListPeople));
+        $list_manager = $this->getListService($container, $responses);
+        $list = new ListModel($this->responseListZero);
+        $people = [
+            PersonModel::create(['$first_name' => 'George', 'Birthday' => '02/22/1732', '$email' => 'george.washington@example.com']),
+            PersonModel::create(['$first_name' => 'Thomas', 'Birthday' => '04/13/1743', '$email' => 'thomas.jefferson@example.com']),
+        ];
+        $people_list = $list_manager->addPeopleToList($list, $people);
+        $this->assertTrue($people_list instanceof PeopleListModel, 'The returned object should be an instance of PeopleListModel.');
+        $people_references = [
+            [
+                'person' => PersonReferenceModel::create($this->responseAddListPeople['people'][0]['person']),
+                'already_member' => true,
+            ],
+            [
+                'person' => PersonReferenceModel::create($this->responseAddListPeople['people'][1]['person']),
+                'already_member' => false,
+            ]
+        ];
+        $this->assertEquals($people_references, $people_list->people);
     }
 }

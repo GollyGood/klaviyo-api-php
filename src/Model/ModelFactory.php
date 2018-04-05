@@ -15,10 +15,14 @@ class ModelFactory
         'email-template' => TemplateModel::class,
         'rendered-template' => RenderedTemplateModel::class,
         'list' => ListModel::class,
+        'list_reference' => ListReferenceModel::class,
         'membership' => MembershipModel::class,
         'page' => PageModel::class,
         'person' => PersonModel::class,
+        'person_reference' => PersonReferenceModel::class,
         'person_list' => PersonListModel::class,
+        'people_list' => PeopleListModel::class,
+        'people_list' => PeopleListModel::class,
         'empty' => EmptyModel::class,
     ];
 

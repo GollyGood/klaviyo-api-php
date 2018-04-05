@@ -22,8 +22,8 @@ class PersonListModel extends BaseModel
     {
         parent::__construct($configuration);
 
-        $this->person = PersonReferenceModel::create($configuration['person']);
-        $this->list = ListReferenceModel::create($configuration['list']);
+        $this->person = ModelFactory::create($configuration['person'], 'person_reference');
+        $this->list = ModelFactory::create($configuration['list'], 'list_reference');
         $this->alreadyMember = $configuration['already_member'];
     }
 

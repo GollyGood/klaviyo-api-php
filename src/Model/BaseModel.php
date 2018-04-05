@@ -111,7 +111,7 @@ abstract class BaseModel implements ModelInterface
     public function getHtmlObjectFromString($content)
     {
         $dom = new \DOMDocument();
-        @$dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         return $dom;
     }
