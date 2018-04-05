@@ -20,13 +20,13 @@ class PeopleListModel extends BaseModel
     public function __construct($configuration)
     {
         parent::__construct($configuration);
-        $this->people = array_map(function($person) {
-          return [
-            // @todo: It was expected based on the api that this was a person
-            //        reference, however, it was simply an email.
-            'email' => $person['email'],
-            'already_member' => $person['already_member'],
-          ];
+        $this->people = array_map(function ($person) {
+            return [
+                // It was expected based on the api that this was a person
+                // reference, however, it was simply an email.
+                'email' => $person['email'],
+                'already_member' => $person['already_member'],
+            ];
         }, $configuration['people']);
         $this->list = ModelFactory::create($configuration['list'], 'list_reference');
     }

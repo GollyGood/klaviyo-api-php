@@ -3,9 +3,11 @@
 namespace Klaviyo;
 
 use Klaviyo\Model\ListModel;
+use Klaviyo\Model\ListIdInterface;
 use Klaviyo\Model\ModelFactory;
 use Klaviyo\Model\PageModel;
 use Klaviyo\Model\PersonListModel;
+use Klaviyo\Model\PeopleListModel;
 use Klaviyo\Model\PersonModel;
 
 /**
@@ -18,9 +20,11 @@ class ListService extends BaseService
     /**
      * Retrieve a specific list from Klaviyo.
      *
-     * @param string $id The id for which to retrieve a list.
+     * @param ListIdInterface $id
+     *     The id for which to retrieve a list.
      *
-     * @return ListModel        The list object retrieved by the specified id.
+     * @return ListModel
+     *     The list object retrieved by the specified id.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -29,9 +33,9 @@ class ListService extends BaseService
      * @throws Exception\ServerErrorApiException
      * @throws Exception\MissingModelTypeException
      */
-    public function getList($id)
+    public function getList(ListIdInterface $id)
     {
-        $response = $this->api->request('GET', $this->getResourcePath("list/$id"));
+        $response = $this->api->request('GET', $this->getResourcePath("list/{$id->getId()}"));
 
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'list');
     }
@@ -57,10 +61,14 @@ class ListService extends BaseService
     /**
      * Get lists from a specific page.
      *
-     * @param int $page The page number to retrieve.
-     * @param int $count The number of items per page.
+     * @param int $page
+     *     The page number to retrieve.
+     * @param int $count
+     *     The number of items per page.
      *
-     * @return array        An array of records from the specified page.
+     * @return array
+     *     An array of records from the specified page.
+     *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
      * @throws Exception\MissingModelTypeException
@@ -76,10 +84,13 @@ class ListService extends BaseService
     /**
      * Create a new list.
      *
-     * @param string $name      The name of the list to be created.
-     * @param string $type      The type of list to be created.
+     * @param string $name
+     *     The name of the list to be created.
+     * @param string $type
+     *     The type of list to be created.
      *
-     * @return ListModel        The list object created.
+     * @return ListModel
+     *     The list object created.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -98,9 +109,11 @@ class ListService extends BaseService
     /**
      * Update/Modify an existing list.
      *
-     * @param ListModel $list   The altered list object to update on Klaviyo.
+     * @param ListModel $list
+     *     The altered list object to update on Klaviyo.
      *
-     * @return ListModel        The updated list object.
+     * @return ListModel
+     *     The updated list object.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -119,9 +132,11 @@ class ListService extends BaseService
     /**
      * Delete an existing list.
      *
-     * @param ListModel $list   The list object to be deleted.
+     * @param ListModel $list
+     *     The list object to be deleted.
      *
-     * @return ListModel        The deleted list object.
+     * @return ListModel
+     *     The deleted list object.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -139,10 +154,13 @@ class ListService extends BaseService
     /**
      * Check if the specified members are in the list by email address.
      *
-     * @param ListModel $list   The list for which to retrieve members.
-     * @param array $emails     The emails to check are associated with the specified list.
+     * @param ListModel $list
+     *     The list for which to retrieve members.
+     * @param array $emails
+     *     The emails to check are associated with the specified list.
      *
-     * @return array            An array of MembershipModels associated with the specified list.
+     * @return MembershipModels[]
+     *      An array of MembershipModels associated with the specified list.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -219,12 +237,32 @@ class ListService extends BaseService
     }
 
     /**
-     * @todo: Document.
+     * Add muiltiple people to an existing List.
+     *
+     * @param ListModel $list
+     *     The ListModel for which to add the person.
+     * @param PersonModel[] $people
+     *     The an array of PersonModels of the people to add to a List.
+     * @param bool $confirmOptIn
+     *     Default to TRUE. Determines if the person should be asked to confirm
+     *     subscribing to list. When TRUE the person will recieve an email with a
+     *     confirmation link before zhe is added to the list. Otherwise, when FALSE
+     *     the person is automatically added to the list.
+     *
+     * @return PeopleListModel
+     *     The PeopleList wrapper provided by the Klaviyo API.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
     public function addPeopleToList(ListModel $list, array $people, $confirmOptIn = true)
     {
         $options = [
-            'batch' => array_map(function($person) {
+            'batch' => array_map(function ($person) {
                 return [
                     'email' => $person->email,
                     'properties' => $person,

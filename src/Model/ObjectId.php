@@ -2,7 +2,7 @@
 
 namespace Klaviyo\Model;
 
-class ObjectId implements TemplateIdInterface, PersonIdInterface, CampaignIdInterface
+class ObjectId implements TemplateIdInterface, PersonIdInterface, CampaignIdInterface, ListIdInterface
 {
     use ObjectIdTrait;
 

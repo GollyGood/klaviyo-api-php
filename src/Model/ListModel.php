@@ -12,7 +12,7 @@ namespace Klaviyo\Model;
  * @property \DateTimeInterface $updated
  * @property string $personCount
  */
-class ListModel extends BaseModel implements IdInterface
+class ListModel extends BaseModel implements ListIdInterface
 {
     use ObjectIdTrait;
 
