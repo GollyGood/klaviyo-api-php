@@ -22,7 +22,6 @@ class ModelFactory
         'person_reference' => PersonReferenceModel::class,
         'person_list' => PersonListModel::class,
         'people_list' => PeopleListModel::class,
-        'people_list' => PeopleListModel::class,
         'empty' => EmptyModel::class,
     ];
 

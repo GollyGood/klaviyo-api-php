@@ -227,11 +227,12 @@ class ListService extends BaseService
             'batch' => array_map(function($person) {
                 return [
                     'email' => $person->email,
-                    'properties' => json_encode($person),
+                    'properties' => $person,
                 ];
             }, $people),
             'confirm_optin' => ($confirmOptIn) ? 'true' : 'false',
         ];
+        $options['batch'] = json_encode($options['batch']);
 
         $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members/batch"), $options);
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'people_list');
