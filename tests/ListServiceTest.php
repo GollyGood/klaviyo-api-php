@@ -7,6 +7,7 @@ use Klaviyo\KlaviyoApi;
 use Klaviyo\ListService;
 use Klaviyo\Model\ListModel;
 use Klaviyo\Model\ExcludedFromListModel;
+use Klaviyo\Model\ExclusionModel;
 use Klaviyo\Model\ListReferenceModel;
 use Klaviyo\Model\MembershipModel;
 use Klaviyo\Model\PersonListModel;
@@ -24,6 +25,9 @@ class ListServiceTest extends KlaviyoTestCase
     protected $responseListMembers;
     protected $responseAddListPerson;
     protected $responseAddListPeople;
+    protected $responseListExcludePerson;
+    protected $responseExclusionsResponsePageZero;
+    protected $responseExclusionsResponsePageOne;
 
     public function setUp()
     {
@@ -159,21 +163,34 @@ class ListServiceTest extends KlaviyoTestCase
             'num_excluded' => 1,
         ];
 
-        $this->responseExclusionsResponsePage = [
-            'end' => 0,
+        $this->responseExclusionsResponsePageZero = [
+            'end' => 1,
             'object' => '$list',
             'page_size' => 1,
             'start' => 0,
-            'total' => 1,
+            'total' => 2,
             'data' => [
                 [
                     'timestamp' => '2018-04-06 13:26:58',
                     'reason' => 'unsubscribed',
                     'object' => 'exclusion',
-                    'email' => 'delaigle.jonathan@gmail.com'
+                    'email' => 'george.washington@example.com'
                 ]
             ],
             'page' => 0
+        ];
+
+        $this->responseExclusionsResponsePageOne = $this->responseExclusionsResponsePageZero;
+        $this->responseExclusionsResponsePageOne['start'] = 2;
+        $this->responseExclusionsResponsePageOne['end'] = 1;
+        $this->responseExclusionsResponsePageOne['page'] = 1;
+        $this->responseExclusionsResponsePageOne['data'] = [
+              [
+                  'timestamp' => '2018-04-06 13:26:58',
+                  'reason' => 'unsubscribed',
+                  'object' => 'exclusion',
+                  'email' => 'thomas.jeffereson@example.com'
+              ]
         ];
     }
 
@@ -416,5 +433,21 @@ class ListServiceTest extends KlaviyoTestCase
 
         $this->assertFalse($excluded->alreadyExcluded);
         $this->assertSame(1, $excluded->numExcluded);
+    }
+
+    public function testGetAllExclusions()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseExclusionsResponsePageZero));
+        $responses[] = new Response(200, [], json_encode($this->responseExclusionsResponsePageOne));
+        $list_manager = $this->getListService($container, $responses);
+
+        $exclusions = $list_manager->getAllExclusions();
+        $this->assertCount(2, $exclusions, 'There should be two records');
+
+        $exclusionZero = new ExclusionModel($this->responseExclusionsResponsePageZero['data'][0]);
+        $this->assertEquals($exclusionZero, $exclusions[0]);
+        $exclusionOne = new ExclusionModel($this->responseExclusionsResponsePageOne['data'][0]);
+        $this->assertEquals($exclusionOne, $exclusions[1]);
     }
 }

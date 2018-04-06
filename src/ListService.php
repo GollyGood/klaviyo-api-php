@@ -304,4 +304,23 @@ class ListService extends BaseService
         $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members/exclude"), $options);
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'excluded_from_list');
     }
+
+    /**
+     * @todo: Document.
+     */
+    public function getAllExclusions($reason = '', $sort = '')
+    {
+        $options = [
+            'reason' => $reason,
+            'sort' => $sort,
+        ];
+        return $this->getAllRecords($this->getResourcePath('people/exclusions'), $options);
+    }
+
+    /**
+     * @todo: Document.
+     */
+    public function getExclusionsFromPage($page = 0, $count = 0, $fitler = '', $sort = '')
+    {
+    }
 }

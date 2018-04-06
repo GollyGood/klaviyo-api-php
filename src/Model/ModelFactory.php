@@ -13,6 +13,7 @@ class ModelFactory
     protected static $modelMap = [
         'campaign' => CampaignModel::class,
         'email-template' => TemplateModel::class,
+        'exclusion' => ExclusionModel::class,
         'excluded_from_list' => ExcludedFromListModel::class,
         'rendered-template' => RenderedTemplateModel::class,
         'list' => ListModel::class,
