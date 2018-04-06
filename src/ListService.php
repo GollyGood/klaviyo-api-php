@@ -2,9 +2,11 @@
 
 namespace Klaviyo;
 
+use Klaviyo\Model\ExcludedFromListModel;
 use Klaviyo\Model\ListModel;
 use Klaviyo\Model\ListIdInterface;
 use Klaviyo\Model\ModelFactory;
+use Klaviyo\Model\MembershipModel;
 use Klaviyo\Model\PageModel;
 use Klaviyo\Model\PersonListModel;
 use Klaviyo\Model\PeopleListModel;
@@ -159,7 +161,7 @@ class ListService extends BaseService
      * @param array $emails
      *     The emails to check are associated with the specified list.
      *
-     * @return MembershipModels[]
+     * @return MembershipModel[]
      *      An array of MembershipModels associated with the specified list.
      *
      * @throws Exception\ApiConnectionException
@@ -274,5 +276,32 @@ class ListService extends BaseService
 
         $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members/batch"), $options);
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'people_list');
+    }
+
+    /**
+     * Exclude a person from list.
+     *
+     * @param ListModel $list
+     *     The ListModel for which to exclude the person.
+     * @param PersonModel $person
+     *     The  PersonModels of the person to exclude from a List.
+     *
+     * @return ExcludedFromListModel
+     *     The ExcludedFromListModel wrapper provided by the Klaviyo API.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function excludePersonFromList(ListModel $list, PersonModel $person)
+    {
+        $options = [
+            'email' => $person->email,
+        ];
+        $response = $this->api->request('POST', $this->getResourcePath("list/{$list->id}/members/exclude"), $options);
+        return ModelFactory::createFromJson($response->getBody()->getContents(), 'excluded_from_list');
     }
 }

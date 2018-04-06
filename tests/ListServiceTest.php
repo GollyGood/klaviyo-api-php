@@ -6,13 +6,14 @@ use GuzzleHttp\Psr7\Response;
 use Klaviyo\KlaviyoApi;
 use Klaviyo\ListService;
 use Klaviyo\Model\ListModel;
-use Klaviyo\Model\ObjectId;
+use Klaviyo\Model\ExcludedFromListModel;
 use Klaviyo\Model\ListReferenceModel;
 use Klaviyo\Model\MembershipModel;
 use Klaviyo\Model\PersonListModel;
 use Klaviyo\Model\PeopleListModel;
 use Klaviyo\Model\PersonModel;
 use Klaviyo\Model\PersonReferenceModel;
+use Klaviyo\Model\ObjectId;
 
 class ListServiceTest extends KlaviyoTestCase
 {
@@ -151,6 +152,11 @@ class ListServiceTest extends KlaviyoTestCase
                 'id' => 'arY8wg',
                 'name' => 'List 1',
             ]
+        ];
+
+        $this->responseListExcludePerson = [
+            'already_excluded' => false,
+            'num_excluded' => 1,
         ];
     }
 
@@ -375,5 +381,23 @@ class ListServiceTest extends KlaviyoTestCase
         $this->assertEquals($people[0], PersonModel::create($batch[0]['properties']));
         $this->assertEquals($people[1], PersonModel::create($batch[1]['properties']));
         $this->assertTrue((bool) $fields['confirm_optin']);
+    }
+
+    public function testExcludePersonFromList()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseListExcludePerson));
+        $list_manager = $this->getListService($container, $responses);
+        $list = new ListModel($this->responseListZero);
+        $person = PersonModel::create(['$first_name' => 'George', 'Birthday' => '02/22/1732', '$email' => 'george.washington@example.com']);
+
+        $excluded = $list_manager->excludePersonFromList($list, $person);
+        $this->assertTrue($excluded instanceof ExcludedFromListModel, 'The returned object should be an instance of ExcludedFromListModel.');
+
+        $excluded_from_list = ExcludedFromListModel::create($this->responseListExcludePerson);
+        $this->assertEquals($excluded_from_list, $excluded);
+
+        $this->assertFalse($excluded->alreadyExcluded);
+        $this->assertSame(1, $excluded->numExcluded);
     }
 }
