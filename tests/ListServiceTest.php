@@ -158,6 +158,23 @@ class ListServiceTest extends KlaviyoTestCase
             'already_excluded' => false,
             'num_excluded' => 1,
         ];
+
+        $this->responseExclusionsResponsePage = [
+            'end' => 0,
+            'object' => '$list',
+            'page_size' => 1,
+            'start' => 0,
+            'total' => 1,
+            'data' => [
+                [
+                    'timestamp' => '2018-04-06 13:26:58',
+                    'reason' => 'unsubscribed',
+                    'object' => 'exclusion',
+                    'email' => 'delaigle.jonathan@gmail.com'
+                ]
+            ],
+            'page' => 0
+        ];
     }
 
     public function getMultiPageListService()
