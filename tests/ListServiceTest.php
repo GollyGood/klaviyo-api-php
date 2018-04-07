@@ -491,4 +491,23 @@ class ListServiceTest extends KlaviyoTestCase
         $exclusionOne = new ExclusionModel($this->responseExclusionsResponsePageOne['data'][0]);
         $this->assertEquals($exclusionOne, $exclusions[1]);
     }
+
+    public function testExcludePersonFromAllEmail()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseListExcludePerson));
+        $list_manager = $this->getListService($container, $responses);
+        $person = PersonModel::create(['$first_name' => 'George', 'Birthday' => '02/22/1732', '$email' => 'george.washington@example.com']);
+
+        $excluded = $list_manager->excludePersonFromAllEmail($person);
+        $this->assertTrue($excluded instanceof ExcludedFromListModel, 'The returned object should be an instance of ExcludedFromListModel.');
+
+        $excluded_from_list = ExcludedFromListModel::create($this->responseListExcludePerson);
+        $this->assertEquals($excluded_from_list, $excluded);
+
+        $this->assertFalse($excluded->alreadyExcluded);
+        $this->assertSame(1, $excluded->numExcluded);
+    }
+
+
 }

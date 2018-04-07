@@ -403,4 +403,30 @@ class ListService extends BaseService
         ];
         return $this->getRecordsFromSpecificPage($this->getResourcePath('people/exclusions'), $page, $count, $options);
     }
+
+    /**
+     * Exclude a person from all email.
+     *
+     * @param PersonModel $person
+     *     The PersonModel of the person to exclude from a List.
+     *
+     * @return ExcludedFromListModel
+     *     The ExcludedFromListModel wrapper provided by the Klaviyo API.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function excludePersonFromAllEmail(PersonModel $person, \DateTimeInterface $timestamp = null)
+    {
+        $options = [
+            'email' => $person->email,
+            'timestamp' => $timestamp
+        ];
+        $response = $this->api->request('POST', $this->getResourcePath('people/exclusions'), $options);
+        return ModelFactory::createFromJson($response->getBody()->getContents(), 'excluded_from_list');
+    }
 }
