@@ -3,10 +3,11 @@
 namespace Klaviyo;
 
 use Klaviyo\Model\ExcludedFromListModel;
-use Klaviyo\Model\ListModel;
+use Klaviyo\Model\ExclusionModel;
 use Klaviyo\Model\ListIdInterface;
-use Klaviyo\Model\ModelFactory;
+use Klaviyo\Model\ListModel;
 use Klaviyo\Model\MembershipModel;
+use Klaviyo\Model\ModelFactory;
 use Klaviyo\Model\PageModel;
 use Klaviyo\Model\PersonListModel;
 use Klaviyo\Model\PeopleListModel;
@@ -306,9 +307,73 @@ class ListService extends BaseService
     }
 
     /**
-     * @todo: Document.
+     * Get exclusions for a specific list from the specified page.
+     *
+     * @param ListIdInterface $listId
+     *     The id of the list for which to retireve exclusions.
+     * @param int $page
+     * @param int $count
+     * @param string $reason
+     *     The reason hey persons' were excluded from all lists.
+     * @param string $sort
+     *     Sort either by 'asc' or 'desc'.
+     *
+     * @return ExclusionModel[]
+     *     An array of exclusions retrieved.
      */
-    public function getAllExclusions($reason = '', $sort = '')
+    public function getListExclusionsFromPage(
+        ListIdInterface $listId,
+        $page = 0,
+        $count = 0,
+        $reason = '',
+        $sort = 'asc'
+    ) {
+        $options = [
+            'reason' => $reason,
+            'sort' => $sort,
+        ];
+        return $this->getRecordsFromSpecificPage(
+            $this->getResourcePath("list/{$listId->getId()}/exclusions"),
+            $page,
+            $count,
+            $options
+        );
+    }
+
+    /**
+     * Get all exclusions for a specific list.
+     *
+     * @param ListIdInterface $listId
+     *     The id of the list for which to retireve exclusions.
+     * @param string $reason
+     *     The reason hey persons' were excluded from all lists.
+     * @param string $sort
+     *     Sort either by 'asc' or 'desc'.
+     *
+     * @return ExclusionModel[]
+     *     An array of exclusions retrieved.
+     */
+    public function getAllListExclusions(ListIdInterface $listId, $reason = '', $sort = 'asc')
+    {
+        $options = [
+            'reason' => $reason,
+            'sort' => $sort,
+        ];
+        return $this->getAllRecords($this->getResourcePath("list/{$listId->getId()}/exclusions"), $options);
+    }
+
+    /**
+     * Get all exclusions.
+     *
+     * @param string $reason
+     *     The reason hey persons' were excluded from all lists.
+     * @param string $sort
+     *     Sort either by 'asc' or 'desc'.
+     *
+     * @return ExclusionModel[]
+     *     An array of exclusions retrieved.
+     */
+    public function getAllExclusions($reason = '', $sort = 'asc')
     {
         $options = [
             'reason' => $reason,
@@ -318,9 +383,24 @@ class ListService extends BaseService
     }
 
     /**
-     * @todo: Document.
+     * Get exclusions from a specific page.
+     *
+     * @param int $page
+     * @param int $count
+     * @param string $reason
+     *     The reason hey persons' were excluded from all lists.
+     * @param string $sort
+     *     Sort either by 'asc' or 'desc'.
+     *
+     * @return ExclusionModel[]
+     *     An array of exclusions retrieved.
      */
-    public function getExclusionsFromPage($page = 0, $count = 0, $fitler = '', $sort = '')
+    public function getExclusionsFromPage($page = 0, $count = 0, $reason = '', $sort = 'asc')
     {
+        $options = [
+            'reason' => $reason,
+            'sort' => $sort,
+        ];
+        return $this->getRecordsFromSpecificPage($this->getResourcePath('people/exclusions'), $page, $count, $options);
     }
 }

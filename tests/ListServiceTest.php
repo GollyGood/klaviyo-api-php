@@ -435,6 +435,47 @@ class ListServiceTest extends KlaviyoTestCase
         $this->assertSame(1, $excluded->numExcluded);
     }
 
+    public function testGetListExclusionsPage()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseExclusionsResponsePageOne));
+        $list_manager = $this->getListService($container, $responses);
+
+        $exclusions = $list_manager->getListExclusionsFromPage(new ObjectId('arY8wg'), 1);
+
+        $list_one = new ExclusionModel($this->responseExclusionsResponsePageOne['data'][0]);
+        $this->assertEquals($list_one, $exclusions[0]);
+    }
+
+    public function testGetAllListExclusions()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseExclusionsResponsePageZero));
+        $responses[] = new Response(200, [], json_encode($this->responseExclusionsResponsePageOne));
+        $list_manager = $this->getListService($container, $responses);
+
+        $list = new ListModel($this->responseListZero);
+        $exclusions = $list_manager->getAllListExclusions($list);
+        $this->assertCount(2, $exclusions, 'There should be two records');
+
+        $exclusionZero = new ExclusionModel($this->responseExclusionsResponsePageZero['data'][0]);
+        $this->assertEquals($exclusionZero, $exclusions[0]);
+        $exclusionOne = new ExclusionModel($this->responseExclusionsResponsePageOne['data'][0]);
+        $this->assertEquals($exclusionOne, $exclusions[1]);
+    }
+
+    public function testGetExclusionsPage()
+    {
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($this->responseExclusionsResponsePageOne));
+        $list_manager = $this->getListService($container, $responses);
+
+        $exclusions = $list_manager->getExclusionsFromPage(1);
+
+        $list_one = new ExclusionModel($this->responseExclusionsResponsePageOne['data'][0]);
+        $this->assertEquals($list_one, $exclusions[0]);
+    }
+
     public function testGetAllExclusions()
     {
         $container = $responses = [];

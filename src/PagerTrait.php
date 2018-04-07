@@ -10,6 +10,7 @@ use Klaviyo\Model\PageModel;
  */
 trait PagerTrait
 {
+
     /**
      * Retrieve the KlaviyoApi service object.
      */
@@ -51,12 +52,14 @@ trait PagerTrait
     /**
      * Retrieve the records from a specific page.
      *
-     * @param string $resource          The resource path to retrieve and paginate against.
+     * @param string $resource
+     *     The resource path to retrieve and paginate against.
      * @param int $page
      * @param int $count
      * @param array $query_parameters
      *
-     * @return array        An array of all records retrieved from the API for the specified page.
+     * @return PageModel[]
+     *     An array of all records retrieved from the API for the specified page.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
@@ -79,11 +82,16 @@ trait PagerTrait
      * Retrieve a specific page from Klaviyo.
      *
      * @param string $resource
-     * @param int $page                 The page number to retrieve.
-     * @param int $count                The number of items per page.
+     *      The resource path to retrieve and paginate against.
+     * @param int $page
+     *     The page number to retrieve.
+     * @param int $count
+     *     The number of items per page.
      * @param array $queryParameters
      *
-     * @return PageModel An array of information that represents a page. An array of information that represents a page.
+     * @return PageModel
+     *     An array of information that represents a page. An array of
+     *     information that represents a page.
      *
      * @throws Exception\ApiConnectionException
      * @throws Exception\BadRequestApiException
