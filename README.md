@@ -1,5 +1,6 @@
 # Klaviyo API PHP Library
-[![GitHub (pre-)release](https://img.shields.io/github/release/gollygood/klaviyo-api-php/all.svg?style=plastic)](http://github.com/gollygood/klaviyo-api-php/releases)
+![Latest relase](https://img.shields.io/packagist/v/gollygood/klaviyo-api-php.svg)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://travis-ci.org/GollyGood/klaviyo-api-php.svg?branch=develop)](http://travis-ci.org/GollyGood/klaviyo-api-php)
 [![Stories in Ready](https://badge.waffle.io/GollyGood/klaviyo-api-php.png?label=ready&title=Ready)](http://waffle.io/GollyGood/klaviyo-api-php)
 
