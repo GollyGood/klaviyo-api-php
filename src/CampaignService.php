@@ -137,22 +137,22 @@ class CampaignService extends BaseService
     /**
      * Send a campaign immediately.
      *
-     * @param string $id
+     * @param CampaignIdInterface $campaign
      *   The id of the campaign to send immediately.
      *
      * @return array
      *   The response from the api.
      */
-    public function sendCampaignImmediately($id)
+    public function sendCampaignImmediately(CampaignIdInterface $campaign)
     {
-        $response = $this->api->request('POST', $this->getResourcePath("campaign/$id/send"));
+        $response = $this->api->request('POST', $this->getResourcePath("campaign/{$campaign->getId()}/send"));
         return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
      * Schedule a campaign for a time in the future.
      *
-     * @param string $id
+     * @param CampaignIdInterface $campaign
      *   The id of the campaign to send immediately.
      * @param \DateTime $send_time
      *   A future date and time to send the campaign.
@@ -160,14 +160,33 @@ class CampaignService extends BaseService
      * @return array
      *   The response from the api.
      */
-    public function scheduleCampaign($id, \DateTime $send_time)
+    public function scheduleCampaign(CampaignIdInterface $campaign, \DateTime $send_time)
     {
         // @todo: So the API is wrong about this one we should file a bug as it
         // it currently does not treat the send time as UTC, but instead it treats
         // it as the default time specified by the account.
         // $send_time->setTimezone(new \DateTimeZone('UTC'));
         $options = ['send_time' => $send_time->format('Y-m-d H:i:s')];
-        $response = $this->api->request('POST', $this->getResourcePath("campaign/$id/schedule"), $options);
+        $response = $this->api->request(
+            'POST',
+            $this->getResourcePath("campaign/{$campaign->getId()}/schedule"),
+            $options
+        );
         return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Cancel a campaign.
+     *
+     * @param CampaignIdInterface $campaign
+     *   The id of the campaign to send immediately.
+     *
+     * @return CampaignModel
+     *   The cancelled campaign.
+     */
+    public function cancelCampaign(CampaignIdInterface $campaign)
+    {
+        $response = $this->api->request('POST', $this->getResourcePath("campaign/{$campaign->getId()}/cancel"));
+        return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
     }
 }

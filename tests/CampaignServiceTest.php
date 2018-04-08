@@ -240,7 +240,7 @@ class CampaignServiceTest extends KlaviyoTestCase
         $container = $responses = [];
         $responses[] = new Response(200, [], json_encode(['status' => 'queued']));
         $campaign_service = $this->getCampaignService($container, $responses);
-        $this->assertSame(['status' => 'queued'], $campaign_service->sendCampaignImmediately('dqQnNW'));
+        $this->assertSame(['status' => 'queued'], $campaign_service->sendCampaignImmediately(new ObjectId('dqQnNW')));
     }
 
     public function testScheduleCampaign()
@@ -250,6 +250,18 @@ class CampaignServiceTest extends KlaviyoTestCase
         $campaign_service = $this->getCampaignService($container, $responses);
 
         $send_time = new \DateTime();
-        $this->assertSame(['status' => 'queued'], $campaign_service->scheduleCampaign('dqQnNW', $send_time));
+        $this->assertSame(['status' => 'queued'], $campaign_service->scheduleCampaign(new ObjectId('dqQnNW'), $send_time));
+    }
+
+    public function testCancelCampaign()
+    {
+        $campaign_response = $this->campaignResponse;
+        $campaign_response['status'] = 'cancelled';
+
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($campaign_response));
+        $campaign_service = $this->getCampaignService($container, $responses);
+        $campaign = CampaignModel::create($campaign_response);
+        $this->assertEquals($campaign, $campaign_service->cancelCampaign(new ObjectId('dqQnNW')));
     }
 }
