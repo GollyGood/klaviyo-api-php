@@ -3,7 +3,10 @@
 namespace Klaviyo\Model;
 
 /**
- * @todo: Document
+ * Model to represent the response from excluding from a list.
+ *
+ * @param bool $alreadyExcluded
+ * @param int $numExcluded
  */
 class ExcludedFromListModel extends BaseModel
 {

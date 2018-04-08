@@ -58,6 +58,17 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
         'template' => null,
         'template_id' => 0,
     ];
+    protected static $mutableAttributes = [
+        'lists',
+        'template',
+        'templateId',
+        'fromEmail',
+        'fromName',
+        'subject',
+        'name',
+        'useSmartSending',
+        'addGoogleAnalytics',
+    ];
 
     /**
      * {@inheritdoc}
@@ -81,15 +92,61 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
         $this->numRecipients = $configuration['num_recipients'];
         $this->isSegmented = $configuration['is_segmented'];
         $this->campaignType = $configuration['campaign_type'];
-        $this->templateId = $configuration['template_id'];
 
+        $this->loadTemplate($configuration);
+        $this->loadLists($configuration['lists']);
+    }
+
+    /**
+     * Load the template associated with the campaign.
+     *
+     * @param array $configuration
+     *     An array of configuration values.
+     *
+     * @return $this
+     */
+    public function loadTemplate($configuration)
+    {
         if (isset($configuration['template'])) {
-            $this->template = is_subclass_of($configuration['template'], BaseModel::class) ?
+            $template = is_subclass_of($configuration['template'], BaseModel::class) ?
                                 $configuration['template'] :
                                 TemplateModel::create($configuration['template']);
+            $this->setTemplate($template);
+        } else {
+            $this->setTemplateId(new ObjectId($configuration['template_id']));
         }
 
-        $this->loadLists($configuration['lists']);
+        return $this;
+    }
+
+    /**
+     * Set the template and template id to associate with the campaign.
+     *
+     * @param TemplateModel $template
+     *    The template that should be associated with the campaign.
+     *
+     * @return $this
+     */
+    public function setTemplate(TemplateModel $template)
+    {
+        $this->template = $template;
+        $this->templateId = $template->getId();
+        return $this;
+    }
+
+    /**
+     * Set the template id and remove the template to associate with the campaign.
+     *
+     * @param TemplateIdInterface $id
+     *    The template id to associate with the campaign.
+     *
+     * @return $this
+     */
+    public function setTemplateId(TemplateIdInterface $id)
+    {
+        $this->template = null;
+        $this->templateId = $id->getId();
+        return $this;
     }
 
     /**

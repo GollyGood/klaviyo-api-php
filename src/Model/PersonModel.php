@@ -72,6 +72,19 @@ class PersonModel extends BaseModel implements PersonIdInterface
         '$timezone',
         '$phone_number',
     ];
+    protected static $mutableAttributes = [
+        'id',
+        'email',
+        'firstName',
+        'lastName',
+        'phoneNumber',
+        'title',
+        'organization',
+        'city',
+        'region',
+        'country',
+        'zip'
+    ];
 
     /**
      * {@inheritdoc}

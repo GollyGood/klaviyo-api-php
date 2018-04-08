@@ -109,6 +109,32 @@ class CampaignService extends BaseService
     }
 
     /**
+     * Update/Modify and existing campaign.
+     *
+     * @param CampaignModel $campaign
+     *     The campaign that should be updated.
+     *
+     * @return CampaignModel
+     *    The updated campaign model.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function updateCampaign(CampaignModel $campaign)
+    {
+        $response = $this->api->request(
+            'PUT',
+            $this->getResourcePath("campaign/{$campaign->getId()}"),
+            $campaign->toArray()
+        );
+        return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
+    }
+
+    /**
      * Send a campaign immediately.
      *
      * @param string $id

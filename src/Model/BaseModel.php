@@ -2,6 +2,8 @@
 
 namespace Klaviyo\Model;
 
+use Klaviyo\Exception\CannotModifyImmutablePropertyException;
+
 /**
  * The base Klaviyo data model.
  *
@@ -52,12 +54,19 @@ abstract class BaseModel implements ModelInterface
      *
      * @param string $property
      * @param mixed $value
+     *
      * @return $this
+     *
+     * @throws CannotModifyImmutableProperty
      */
     public function __set($property, $value)
     {
         if (in_array($property, static::$mutableAttributes)) {
             $this->{$property} = $value;
+        } else {
+            throw new CannotModifyImmutablePropertyException(
+                sprintf('Unable to modify immutable property "%s".', $property)
+            );
         }
 
         return $this;

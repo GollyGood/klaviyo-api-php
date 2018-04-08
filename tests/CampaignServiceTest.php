@@ -218,6 +218,23 @@ class CampaignServiceTest extends KlaviyoTestCase
         $this->assertEquals($campaign_response, $campaign_service->createCampaign($this->campaignConfiguration));
     }
 
+    public function testUpdateCampaign()
+    {
+        $temp_campaign_response = $this->campaignResponse;
+        $temp_campaign_response['subject'] = 'Updated subject';
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($temp_campaign_response));
+
+        $campaign_response = $this->campaignResponse;
+        $campaign_response['template'] = TemplateModel::create($campaign_response['template']);
+        $campaign_response['lists'][0] = ListModel::create($campaign_response['lists'][0]);
+        $campaign_response = CampaignModel::create($campaign_response);
+        $campaign_response->subject = 'Updated subject';
+
+        $campaign_service = $this->getCampaignService($container, $responses);
+        $this->assertEquals($campaign_response, $campaign_service->updateCampaign($campaign_response));
+    }
+
     public function testSendCampaignImmediately()
     {
         $container = $responses = [];

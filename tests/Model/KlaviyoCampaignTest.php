@@ -4,6 +4,7 @@ namespace Klaviyo\Tests\Model;
 
 use Klaviyo\Model\ModelFactory;
 use Klaviyo\Model\ModelInterface;
+use Klaviyo\Model\ObjectId;
 
 class KlaviyoCampaignTest extends KlaviyoBaseTest
 {
@@ -63,6 +64,7 @@ class KlaviyoCampaignTest extends KlaviyoBaseTest
         $this->assertSame($this->configuration['from_name'], $model->fromName);
         $template = ModelFactory::create($this->configuration['template']);
         $this->assertEquals($template, $model->template);
+        $this->assertSame($template->getId(), $model->templateId);
         $this->assertSame($this->configuration['status'], $model->status);
         $this->assertSame($this->configuration['status_id'], $model->statusId);
         $this->assertSame($this->configuration['status_label'], $model->statusLabel);
@@ -81,5 +83,13 @@ class KlaviyoCampaignTest extends KlaviyoBaseTest
             $lists[] = ModelFactory::create($list);
         }
         $this->assertEquals($lists, $model->lists);
+    }
+
+    public function testSetTemplateId()
+    {
+        $campaign = ModelFactory::create($this->configuration, 'campaign');
+        $template_id = new ObjectId('abc');
+        $campaign->setTemplateId($template_id);
+        $this->assertSame($template_id->getId(), $campaign->templateId);
     }
 }

@@ -5,7 +5,11 @@ namespace Klaviyo\Model;
 use Klaviyo\Exception\InvalidExclusionReasonException;
 
 /**
- * @todo: Document
+ * Model that represents an exclusion.
+ *
+ * @param \DateTime $timestamp
+ * @param string $reason
+ * @param email $email
  */
 class ExclusionModel extends BaseModel
 {
