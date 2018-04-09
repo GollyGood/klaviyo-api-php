@@ -12,7 +12,6 @@ class PeopleListModel extends BaseModel
 {
     protected $people;
     protected $list;
-    protected $alreadyMember;
 
     /**
      * {@inheritdoc}

@@ -238,7 +238,11 @@ class CampaignService extends BaseService
             'name' => $name,
             'list_id' => $list->getId(),
         ];
-        $response = $this->api->request('POST', $this->getResourcePath("campaign/{$campaign->getId()}/clone"), $options);
+        $response = $this->api->request(
+            'POST',
+            $this->getResourcePath("campaign/{$campaign->getId()}/clone"),
+            $options
+        );
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
     }
 }
