@@ -264,4 +264,17 @@ class CampaignServiceTest extends KlaviyoTestCase
         $campaign = CampaignModel::create($campaign_response);
         $this->assertEquals($campaign, $campaign_service->cancelCampaign(new ObjectId('dqQnNW')));
     }
+
+    public function testCloneCampaign()
+    {
+        $campaign_response = $this->campaignResponse;
+        $campaign_response['id'] = 'abc';
+        $campaign_response['name'] = 'New campaign';
+
+        $container = $responses = [];
+        $responses[] = new Response(200, [], json_encode($campaign_response));
+        $campaign_service = $this->getCampaignService($container, $responses);
+        $campaign = CampaignModel::create($campaign_response);
+        $this->assertEquals($campaign, $campaign_service->cloneCampaign(new ObjectId('dqQnNW'), 'New campaign', new ObjectId('dqQnNW')));
+    }
 }

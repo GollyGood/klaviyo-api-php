@@ -5,6 +5,7 @@ namespace Klaviyo;
 use Klaviyo\Model\CampaignModel;
 use Klaviyo\Model\ModelFactory;
 use Klaviyo\Model\CampaignIdInterface;
+use Klaviyo\Model\ListIdInterface;
 
 /**
  * The campaign manager class used to handle campaigns.
@@ -142,6 +143,13 @@ class CampaignService extends BaseService
      *
      * @return array
      *   The response from the api.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
     public function sendCampaignImmediately(CampaignIdInterface $campaign)
     {
@@ -159,6 +167,13 @@ class CampaignService extends BaseService
      *
      * @return array
      *   The response from the api.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
     public function scheduleCampaign(CampaignIdInterface $campaign, \DateTime $send_time)
     {
@@ -183,10 +198,47 @@ class CampaignService extends BaseService
      *
      * @return CampaignModel
      *   The cancelled campaign.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
      */
     public function cancelCampaign(CampaignIdInterface $campaign)
     {
         $response = $this->api->request('POST', $this->getResourcePath("campaign/{$campaign->getId()}/cancel"));
+        return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
+    }
+
+    /**
+     * Clone a campaign.
+     *
+     * @param CampaignIdInterface $campaign
+     *   The id of the campaign to clone.
+     * @param string $name
+     *   The Name to associate with the new campaign.
+     * @param ListIdInterface $list
+     *   The list to associate with the new campaign.
+     *
+     * @return CampaignModel
+     *   The newly created campaign.
+     *
+     * @throws Exception\ApiConnectionException
+     * @throws Exception\BadRequestApiException
+     * @throws Exception\MissingModelTypeException
+     * @throws Exception\NotAuthorizedApiException
+     * @throws Exception\NotFoundApiException
+     * @throws Exception\ServerErrorApiException
+     */
+    public function cloneCampaign(CampaignIdInterface $campaign, $name, ListIdInterface $list)
+    {
+        $options = [
+            'name' => $name,
+            'list_id' => $list->getId(),
+        ];
+        $response = $this->api->request('POST', $this->getResourcePath("campaign/{$campaign->getId()}/clone"), $options);
         return ModelFactory::createFromJson($response->getBody()->getContents(), 'campaign');
     }
 }
