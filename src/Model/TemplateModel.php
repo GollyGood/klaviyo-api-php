@@ -17,16 +17,13 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
 
     protected $id;
     protected $name;
-    protected $html;
     protected $created;
     protected $updated;
+    public $html;
     protected static $optionalDefaults = [
         'name' => '',
         'created' => null,
         'updated' => null,
-    ];
-    protected static $mutableAttributes = [
-        'html',
     ];
 
     /**
@@ -41,19 +38,8 @@ class TemplateModel extends BaseModel implements TemplateIdInterface
         $this->name = $configuration['name'];
         $this->created = !empty($configuration['created']) ? new \DateTime($configuration['created']) : null;
         $this->updated = !empty($configuration['updated']) ? new \DateTime($configuration['updated']) : null;
-        $this->setHtml($configuration['html']);
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __set($property, $value)
-    {
-        if ($property === 'html') {
-            return $this->setHtml($value);
-        } else {
-            return parent::__set($property, $value);
-        }
+        $this->setHtml($configuration['html']);
     }
 
     /**

@@ -30,19 +30,19 @@ class PersonModel extends BaseModel implements PersonIdInterface
 {
     use ObjectIdTrait;
 
-    protected $id;
+    public $id;
+    public $email;
+    public $firstName;
+    public $lastName;
+    public $phoneNumber;
+    public $title;
+    public $city;
+    public $organization;
+    public $region;
+    public $country;
+    public $zip;
     protected $objectType = 'person';
-    protected $email;
-    protected $firstName;
-    protected $lastName;
-    protected $organization;
-    protected $title;
-    protected $city;
-    protected $region;
-    protected $zip;
-    protected $country;
     protected $timezone;
-    protected $phoneNumber;
     protected $customAttributes;
     protected $unsetAttributes;
     protected static $optionalDefaults = [
@@ -71,19 +71,6 @@ class PersonModel extends BaseModel implements PersonIdInterface
         '$country',
         '$timezone',
         '$phone_number',
-    ];
-    protected static $mutableAttributes = [
-        'id',
-        'email',
-        'firstName',
-        'lastName',
-        'phoneNumber',
-        'title',
-        'organization',
-        'city',
-        'region',
-        'country',
-        'zip'
     ];
 
     /**

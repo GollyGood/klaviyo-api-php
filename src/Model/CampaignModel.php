@@ -27,13 +27,16 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
 {
     use ObjectIdTrait;
 
+    public $name;
+    public $subject;
+    public $fromEmail;
+    public $fromName;
+    public $lists;
+    public $template;
+    public $useSmartSending;
+    public $addGoogleAnalytics;
+
     protected $id;
-    protected $name;
-    protected $subject;
-    protected $fromEmail;
-    protected $fromName;
-    protected $lists;
-    protected $template;
     protected $status;
     protected $statusId;
     protected $statusLabel;
@@ -57,17 +60,6 @@ class CampaignModel extends BaseModel implements CampaignIdInterface
         'campaign_type' => 'Regular',
         'template' => null,
         'template_id' => 0,
-    ];
-    protected static $mutableAttributes = [
-        'lists',
-        'template',
-        'templateId',
-        'fromEmail',
-        'fromName',
-        'subject',
-        'name',
-        'useSmartSending',
-        'addGoogleAnalytics',
     ];
 
     /**

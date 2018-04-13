@@ -277,4 +277,7 @@ class CampaignServiceTest extends KlaviyoTestCase
         $campaign = CampaignModel::create($campaign_response);
         $this->assertEquals($campaign, $campaign_service->cloneCampaign(new ObjectId('dqQnNW'), 'New campaign', new ObjectId('dqQnNW')));
     }
+
+    public function testGetRecipients()
+    {}
 }

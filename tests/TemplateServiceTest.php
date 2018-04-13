@@ -126,7 +126,7 @@ class TemplateServiceTest extends KlaviyoTestCase
         $template_service = $this->getTemplateSerive($container, $responses);
 
         $template = TemplateModel::create($this->templateConfiguration);
-        $template->html = '<html><body>Yay it was changed.</body></html>';
+        $template->setHtml('<html><body>Yay it was changed.</body></html>');
 
         $response = $template_service->updateTemplate($template);
         $this->assertEquals($template, $response);

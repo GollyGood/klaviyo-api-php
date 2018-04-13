@@ -14,11 +14,6 @@ abstract class BaseModel implements ModelInterface
     protected $objectType = '';
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    /**
-     * An array of attributes/properties that may be altered.
-     */
-    protected static $mutableAttributes = [];
-
     protected static $optionalDefaults = [];
 
     /**
@@ -47,29 +42,6 @@ abstract class BaseModel implements ModelInterface
         if (property_exists($this, $property)) {
             return $this->{$property};
         }
-    }
-
-    /**
-     * PHPs magic set method to provide access to our mutable attributes.
-     *
-     * @param string $property
-     * @param mixed $value
-     *
-     * @return $this
-     *
-     * @throws CannotModifyImmutableProperty
-     */
-    public function __set($property, $value)
-    {
-        if (in_array($property, static::$mutableAttributes)) {
-            $this->{$property} = $value;
-        } else {
-            throw new CannotModifyImmutablePropertyException(
-                sprintf('Unable to modify immutable property "%s".', $property)
-            );
-        }
-
-        return $this;
     }
 
     /**

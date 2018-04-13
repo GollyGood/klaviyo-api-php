@@ -39,18 +39,6 @@ class ExclusionModel extends BaseModel
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function __set($property, $value)
-    {
-        if ($property === 'reason') {
-            return $this->setReason($value);
-        } else {
-            return parent::__set($property, $value);
-        }
-    }
-
-    /**
      * Set the reason the user was excluded.
      *
      * @param string $value

@@ -16,14 +16,14 @@ class ListModel extends BaseModel implements ListIdInterface
 {
     use ObjectIdTrait;
 
+    public $name;
+
     protected $id;
-    protected $name;
     protected $listType;
     protected $created;
     protected $updated;
     protected $personCount;
     protected $folder;
-    protected static $mutableAttributes = ['name'];
     protected static $optionalDefaults = [
         'object' => 'list',
         'id' => '',

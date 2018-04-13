@@ -34,18 +34,6 @@ class RenderedTemplateModel extends BaseModel
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function __set($property, $value)
-    {
-        if ($property === 'html') {
-            return $this->setHtml($value);
-        } else {
-            return parent::__set($property, $value);
-        }
-    }
-
-    /**
      * Set the html value.
      *
      * @param \DOMDocument|string $value
